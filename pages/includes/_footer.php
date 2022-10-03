@@ -6,7 +6,7 @@
             document.write(new Date().getFullYear());
             </script>
             , created ❤️ by
-            <a href="https://appzStory.dev" target="_blank" class="footer-link fw-bolder">AppzStory</a>
+            <a href="# target="_blank" class="footer-link fw-bolder">App</a>
         </div>
     </div>
 </footer>

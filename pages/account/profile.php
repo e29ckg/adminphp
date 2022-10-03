@@ -1,10 +1,14 @@
 <?php 
 
 require_once('../../server/authen.php');
-$sqlUser = 'SELECT u_id, firstname, lastname, username, image, role, status FROM users WHERE u_id = ? LIMIT 1';
+$sqlUser = 'SELECT u.id, p.name, p.sname, u.username, p.img, u.role, u.status 
+            FROM user as u
+            INNER JOIN `profile` as p ON p.user_id = u.id
+            WHERE u.id = ?
+            LIMIT 1';
 $stmtUser = $conn->prepare($sqlUser);
 $stmtUser->execute([cleanData($_SESSION['AD_ID'])]);
-$rowUser = $stmtUser->fetch(PDO::FETCH_ASSOC);
+$rowUser = $stmtUser->fetch(PDO::FETCH_OBJ);
 if(!$stmtUser->rowCount()){
     header('Location: ../../login.php');
 }
@@ -14,7 +18,7 @@ if(!$stmtUser->rowCount()){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-    <title>Account | AppzStory</title>
+    <title>Account | App</title>
     <link rel="shortcut icon" type="image/x-icon" href="../../assets/images/uploads/icon.ico">
     <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" >
     <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" >
@@ -41,7 +45,7 @@ if(!$stmtUser->rowCount()){
                                     <div class="card-body">
                                         <form action="../../server/account/upload-image.php" method="POST" enctype="multipart/form-data">
                                             <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                                <img src="../../assets/images/uploads/<?php echo $rowUser['image']; ?>" class="d-block rounded" height="100" width="100" id="uploadedAvatar">
+                                                <img src="../../assets/images/uploads/<?php echo $rowUser->image ?:  'avatar.png'; ?>" class="d-block rounded" height="100" width="100" id="uploadedAvatar">
                                                 <div class="button-wrapper">
                                                     <label for="upload" class="btn btn-primary me-2 mb-2" tabindex="0">
                                                         <span class="d-none d-sm-block">Upload new photo</span>
@@ -54,7 +58,7 @@ if(!$stmtUser->rowCount()){
                                                             hidden
                                                             accept="image/png, image/jpeg"
                                                         >
-                                                        <input type="hidden" name="image" value="<?php echo $rowUser['image']; ?>">
+                                                        <input type="hidden" name="image" value="<?php echo $rowUser->image; ?>">
                                                     </label>
                                                     <div class="btn-group d-none" id="group-action">
                                                         <button type="submit" class="btn btn-success btn-sm d-inline" name="upload-image"> save </button>
@@ -73,7 +77,7 @@ if(!$stmtUser->rowCount()){
                                                     <div class="col-sm-10 col-xxl-11">
                                                         <div class="input-group input-group-merge">
                                                             <span id="firstname" class="input-group-text"><i class="bx bxs-user-pin"></i></span>
-                                                            <input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $rowUser['firstname']; ?>" placeholder="firstname" required>
+                                                            <input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $rowUser->firstname; ?>" placeholder="firstname" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -82,7 +86,7 @@ if(!$stmtUser->rowCount()){
                                                     <div class="col-sm-10 col-xxl-11">
                                                         <div class="input-group input-group-merge">
                                                             <span id="lastname" class="input-group-text"><i class="bx bxs-user-pin"></i></span>
-                                                            <input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $rowUser['lastname']; ?>" placeholder="lastname" required>
+                                                            <input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $rowUser->lastname; ?>" placeholder="lastname" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -91,7 +95,7 @@ if(!$stmtUser->rowCount()){
                                                     <div class="col-sm-10 col-xxl-11">
                                                         <div class="input-group input-group-merge">
                                                             <p class="pt-1">
-                                                                <span class="badge bg-primary"> <?php echo $rowUser['username']; ?> </span>
+                                                                <span class="badge bg-primary"> <?php echo $rowUser->username; ?> </span>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -101,7 +105,7 @@ if(!$stmtUser->rowCount()){
                                                     <div class="col-sm-10 col-xxl-11">
                                                         <div class="input-group input-group-merge">
                                                             <p class="pt-1">
-                                                                <span class="badge bg-primary"> <?php echo $rowUser['role']; ?> </span>
+                                                                <span class="badge bg-primary"> <?php echo $rowUser->role; ?> </span>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -109,7 +113,7 @@ if(!$stmtUser->rowCount()){
                                                 <div class="row mb-4">
                                                     <label class="col-sm-2 col-xxl-1 col-form-label" for="role">status</label>
                                                     <div class="col-sm-10 col-xxl-11">
-                                                        <?php echo $rowUser['status'] == 'true' ? '<span class="badge bg-success"> Active </span>':'<span class="badge bg-danger"> Block </span>' ; ?>
+                                                        <?php echo $rowUser->status == '10' ? '<span class="badge bg-success"> Active </span>':'<span class="badge bg-danger"> Block </span>' ; ?>
                                                     </div>
                                                 </div>
                                             </div>

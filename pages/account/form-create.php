@@ -7,7 +7,7 @@ require_once('../../server/authen.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-    <title>Account | AppzStory</title>
+    <title>Account | App</title>
     <link rel="shortcut icon" type="image/x-icon" href="../../assets/images/uploads/icon.ico">
     <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" >
     <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" >

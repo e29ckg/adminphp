@@ -1,7 +1,10 @@
 <?php 
 
 require_once('../../server/authen.php'); 
-$sql = 'SELECT u_id, firstname, lastname, username, image, role, status, created_at FROM users WHERE u_id NOT IN ( 1 )';
+$sql = 'SELECT u.id, p.name, p.name, u.username, p.img, u.role, u.status, u.created_at 
+        FROM user as u 
+        INNER JOIN `profile` as p ON p.user_id = u.id 
+        WHERE u.id NOT IN ( 1 )';
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 ?>
@@ -10,7 +13,7 @@ $stmt->execute();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-    <title>Account | AppzStory</title>
+    <title>Account | App</title>
     <link rel="shortcut icon" type="image/x-icon" href="../../assets/images/uploads/icon.ico">
     <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" >
     <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" >
@@ -60,28 +63,28 @@ $stmt->execute();
                                             <tbody>
                                                 <?php 
                                                     $i = 0;
-                                                    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){ 
+                                                    while($row = $stmt->fetch(PDO::FETCH_OBJ)){ 
                                                     $i++;
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $i; ?></td>
-                                                    <td><img src="../../assets/images/uploads/<?php echo $row['image']; ?>" class="img-fluid" width="50px" alt="appzstory"> </td>
-                                                    <td><?php echo $row['firstname']; ?></td>
-                                                    <td><?php echo $row['lastname']; ?></td>
-                                                    <td><?php echo $row['username']; ?></td>
-                                                    <td><span class="badge bg-primary"> <?php echo $row['role']; ?></span></td>
+                                                    <td><img src="../../assets/images/uploads/<?php echo $row->img ?: 'avatar.png'; ?>" class="img-fluid" width="50px" alt="appzstory"> </td>
+                                                    <td><?php echo $row->name; ?></td>
+                                                    <td><?php echo $row->sname; ?></td>
+                                                    <td><?php echo $row->username; ?></td>
+                                                    <td><span class="badge bg-primary"> <?php echo $row->role; ?></span></td>
                                                     <td>
-                                                        <input class="toggle-event" type="checkbox" name="status" <?php echo $row['status'] == 'true' ? 'checked':'' ; ?> 
-                                                        data-id="<?php echo $row['u_id']; ?>" data-toggle="toggle" data-on="active" data-off="block" 
+                                                        <input class="toggle-event" type="checkbox" name="status" <?php echo $row->status == '10' ? 'checked':'' ; ?> 
+                                                        data-id="<?php echo $row->id; ?>" data-toggle="toggle" data-on="active" data-off="block" 
                                                         data-onstyle="success" data-style="ios" data-size="sm">
                                                     </td>
-                                                    <td><?php echo DateThai($row['created_at']); ?></td>
+                                                    <td><?php echo DateThai($row->created_at); ?></td>
                                                     <td>
                                                         <div class="btn-group" role="group">
-                                                            <a href="form-edit.php?u_id=<?php echo $row['u_id']; ?>"  class="btn btn-warning text-white">
+                                                            <a href="form-edit.php?u_id=<?php echo $row->id; ?>"  class="btn btn-warning text-white">
                                                                 <i class='bx bxs-edit-alt'></i> 
                                                             </a>
-                                                            <a href="../../server/account/delete.php?u_id=<?php echo $row['u_id']; ?>" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger text-white">
+                                                            <a href="../../server/account/delete.php?u_id=<?php echo $row->u_id; ?>" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger text-white">
                                                                 <i class='bx bxs-trash' ></i> 
                                                             </a>
                                                         </div>

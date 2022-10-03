@@ -1,13 +1,14 @@
 <?php 
 
 require_once('../../server/authen.php');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-    <title> Dashboard | AppzStory Studio (Admin PHP)</title>
+    <title> Dashboard | App</title>
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" >
     <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" >
     <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" >
@@ -145,6 +146,7 @@ require_once('../../server/authen.php');
                             </div>
                         </div>
                     </div>
+                    
                     <?php require_once('../includes/_footer.php') ?>
                     <div class="content-backdrop fade"></div>
                 </div>

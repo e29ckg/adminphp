@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-  <title>Login Page | AppzStory Studio (Admin PHP)</title>
+  <title>Login Page | App</title>
   <link rel="shortcut icon" type="image/x-icon" href="assets/images/uploads/icon.ico">
   <!-- stylesheet -->
   <!-- <link rel="stylesheet" href="assets/vendor/fonts/boxicons.css" > -->
@@ -65,12 +65,8 @@
                 </div>
               </div>
               <div class="mb-3">
-                <button class="btn btn-primary d-grid w-100 mute" type="submit" name="authen" v-if="!isLoading">
-                  Sign in                  
-                </button>
-                <button class="btn btn-primary d-grid w-100 mute" type="submit" name="authen" disabled v-else>
-                  Loading...            
-                </button>
+                <button class="btn btn-primary d-grid w-100 mute" type="submit" name="authen" v-if="!isLoading">Sign in</button>
+                <button class="btn btn-primary d-grid w-100 mute" type="submit" name="authen" disabled v-else>Loading...</button>
               </div>
             </form>
           </div>
@@ -118,10 +114,8 @@
         })
         .then(response => {
           if (response.data.status) {
-            var icon    = 'warning'
-            var message = response.data.message  
             Swal.fire({
-              position: 'top-end',
+              // position: 'top-end',
               icon: 'success',
               title: 'เข้าสู่ระบบ',
               showConfirmButton: false,

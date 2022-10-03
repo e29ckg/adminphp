@@ -6,7 +6,7 @@ error_reporting(0);
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "adminphp";
+$dbname = "main";
 
 /** เชื่อมต่อฐานข้อมูลด้วย PHP PDO */
 try {
