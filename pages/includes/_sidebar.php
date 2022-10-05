@@ -16,6 +16,33 @@
             </a>
         </li>
         <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Admin</span>
+        </li>
+        <li class="menu-item open <?php echo isActive('prepare') ?>">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-dock-top "></i>
+                <div>อำนวยการ</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item <?php echo isActiveFile('index') ?>">
+                    <a href="../venset/index.php" class="menu-link">
+                        <div>เตรียมข้อมูลบุคคล</div>
+                    </a>
+                </li>
+                <li class="menu-item <?php echo isActiveFile('venset') ?>">
+                    <a href="../venset/" class="menu-link">
+                        <div>เตรียมคำสัง</div>
+                    </a>
+                </li>
+                <li class="menu-item <?php echo isActiveFile('venset') ?>">
+                    <a href="../venset/" class="menu-link">
+                        <div>จัดเวร</div>
+                    </a>
+                </li>
+                
+            </ul>
+        </li>
+        <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Pages Menu</span>
         </li>
         <li class="menu-item open <?php echo isActive('account') ?>">

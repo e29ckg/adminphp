@@ -4,9 +4,8 @@
             ©
             <script>
             document.write(new Date().getFullYear());
-            </script>
-            , created ❤️ by
-            <a href="# target="_blank" class="footer-link fw-bolder">App</a>
+            </script>            
+            <a href="http://sites.google.com/view/pkkjc-ven-v1" target="_blank" class="footer-link fw-bolder">คู่มือ</a>
         </div>
     </div>
 </footer>
