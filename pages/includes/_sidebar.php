@@ -1,7 +1,7 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
         <a href="../" class="app-brand-link">
-            <span class="app-brand-text demo menu-text fw-bolder ms-2 text-uppercase">Admin PHP</span>
+            <span class="app-brand-text demo menu-text fw-bolder ms-2 text-uppercase">Admin</span>
         </a>
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
             <i class="bx bx-chevron-left bx-sm align-middle"></i>
@@ -23,10 +23,10 @@
             <i class="menu-icon tf-icons bx bx-dock-top "></i>
                 <div>อำนวยการ</div>
             </a>
-            <ul class="menu-sub">
+            <ul class="menu-sub">                
                 <li class="menu-item <?php echo isActiveFile('index') ?>">
                     <a href="../venset/index.php" class="menu-link">
-                        <div>เตรียมข้อมูลบุคคล</div>
+                        <div>เตรียมข้อมูลผู้อยู่เวร</div>
                     </a>
                 </li>
                 <li class="menu-item <?php echo isActiveFile('venset') ?>">
@@ -37,6 +37,31 @@
                 <li class="menu-item <?php echo isActiveFile('venset') ?>">
                     <a href="../venset/" class="menu-link">
                         <div>จัดเวร</div>
+                    </a>
+                </li>
+                
+            </ul>
+        </li>
+        
+        <li class="menu-item open <?php echo isActive('users') ?>">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-dock-top "></i>
+                <div>จัดการสมาชิก</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item <?php echo isActiveFile('index') ?>">
+                    <a href="../users/index.php" class="menu-link">
+                        <div>สมาชิก</div>
+                    </a>
+                </li>                
+                <li class="menu-item <?php echo isActiveFile('venset') ?>">
+                    <a href="../users/" class="menu-link">
+                        <div>คำนำหน้าชื่อ</div>
+                    </a>
+                </li>
+                <li class="menu-item <?php echo isActiveFile('venset') ?>">
+                    <a href="../users/" class="menu-link">
+                        <div>ตำแหน่ง</div>
                     </a>
                 </li>
                 
