@@ -49,8 +49,8 @@
                 <div>จัดการสมาชิก</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item <?php echo isActiveFile('index') ?>">
-                    <a href="../users/index.php" class="menu-link">
+                <li class="menu-item <?php echo isActiveFile('users') ?>">
+                    <a href="../users/" class="menu-link">
                         <div>สมาชิก</div>
                     </a>
                 </li>                
