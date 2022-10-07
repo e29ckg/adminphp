@@ -21,6 +21,9 @@ Vue.createApp({
         bank_comment : '',
         act : 'insert',
       },
+      sel_fname : [],
+      sel_dep : [],
+      sel_workgroup : [],
     
 
     isLoading : false,
@@ -31,6 +34,9 @@ Vue.createApp({
     this.url_base_app = window.location.protocol + '//' + window.location.host + '/adminphp/';
     // const d = 
     this.get_users()    
+    this.get_sel_fname()
+    this.get_sel_dep()
+    this.get_sel_group()
   },
   watch: {
     
@@ -67,6 +73,10 @@ Vue.createApp({
       .finally(() => {
         this.isLoading = false;
       })
+      
+    },
+    view(uid){
+      this.get_user(uid)
       this.$refs.show_modal_user.click()
     },
     reset_user(){
@@ -78,8 +88,165 @@ Vue.createApp({
     },
     user_insert(){
       console.log('user_insert')
+      if(this.user_form.username != '' && this.user_form.password != '' && this.user_form.repassword != '' && this.user_form.fname != '' 
+        && this.user_form.name != '' && this.user_form.sname != '' && this.user_form.password == this.user_form.repassword){
+          axios.post('../../server/users/user_insert.php',{user:this.user_form})
+            .then(response => {
+                console.log(response.data.respJSON);
+                if (response.data.status) {
+                  let icon = 'success' 
+                  this.alert(icon,response.data.message,1000)
+                  this.$refs.close_modal_user_form.click()
+                  this.get_users()
+                }else{
+                  let icon = 'warning' 
+                  let message = response.data.message
+                  this.alert(icon,message,0)
+                } 
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+      }else{
+        const message = []
+        if(this.user_form.password != this.user_form.repassword){message.push('password ไม่ตรงกัน')}
+        if(this.user_form.username == '' || this.user_form.password == '' || this.user_form.repassword == '' || this.user_form.fname == '' 
+        || this.user_form.name == '' || this.user_form.sname == ''){message.push('กรุณากรอกข้อมูลให้ครบ')}
+        let icon = 'warning' 
+        this.alert(icon,message,0)
+      }
     },
-    close_modal_user_form(){}
+    close_modal_user_form(){
+      this.user_form = {username : '', password : '', repassword : '', fname : '', name : '', sname : '', dep : '',
+                        workgroup : '', phone : '', bank_account : '', bank_comment : '', act : 'insert'}
+    },
+    get_sel_fname(){
+      axios.post('../../server/users/get_sel_fname.php')
+      .then(response => {
+          console.log(response.data.respJSON);
+          if (response.data.status) {
+            this.sel_fname = response.data.respJSON;
+          } 
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+    },
+    get_sel_dep(){
+      axios.post('../../server/users/get_sel_dep.php')
+      .then(response => {
+          console.log(response.data.respJSON);
+          if (response.data.status) {
+            this.sel_dep = response.data.respJSON;
+          } 
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+    },
+    get_sel_group(){
+      axios.post('../../server/users/get_sel_group.php')
+      .then(response => {
+          console.log(response.data.respJSON);
+          if (response.data.status) {
+            this.sel_workgroup = response.data.respJSON;
+          } 
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+    },
+    alert(icon,message,timer=0){
+        swal.fire({
+        icon: icon,
+        title: message,
+        showConfirmButton: true,
+        timer: timer
+      });
+    },
+    user_update(uid){
+      this.isLoading = true
+      axios.post('../../server/users/user.php',{uid:uid})
+      .then(response => {
+          console.log(response.data.respJSON);
+          if (response.data.status) {
+              this.user_form = response.data.respJSON;
+          } 
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+      .finally(() => {
+        this.isLoading = false;
+      })      
+      this.$refs.show_modal_user_update_form.click()
+    },
+    user_update_save(uid){
+      this.isLoading = true
+      axios.post('../../server/users/user_update_save.php',{user:this.user_form})
+      .then(response => {
+          console.log(response.data.respJSON);
+          if (response.data.status) {
+              this.user_form = response.data.respJSON;
+              this.get_users()
+              this.$refs.close_modal_user_update_form.click()
+              let icon = 'success'
+              let message = response.data.message
+              this.alert(icon,message,timer=1500)
+          }else{
+            let icon = 'error'
+              let message = response.data.message
+              this.alert(icon,message,timer=0)
+          }
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+      .finally(() => {
+        this.isLoading = false;
+      })      
+      this.$refs.show_modal_user_update_form.click()
+    },
+    user_status(id,st){
+      if(st == 1){
+        Swal.fire({
+          title: 'Are you sure?',
+          text  : "You won't be able to revert this!",
+          icon  : 'warning',
+          showCancelButton  : true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor : '#d33',
+          confirmButtonText : 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            axios.post('../../server/users/user_update_status.php',{user_id:id,st:st})
+                .then(response => {
+                    console.log(response.data.respJSON);
+                    if (response.data.status) {
+                        let icon = 'success'
+                        let message = response.data.message
+                        this.alert(icon,message,timer=1500)
+                        this.get_users()
+                    }else{
+                      let icon = 'error'
+                      let message = response.data.message
+                      this.alert(icon,message,timer=0)
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(() => {
+                  this.isLoading = false;
+                })   
+          }
+        })
+
+      }
+
+         
+    
+    }
   },
   
         

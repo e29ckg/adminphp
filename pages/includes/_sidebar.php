@@ -1,94 +1,98 @@
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-    <div class="app-brand demo">
-        <a href="../" class="app-brand-link">
-            <span class="app-brand-text demo menu-text fw-bolder ms-2 text-uppercase">Admin</span>
-        </a>
-        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-            <i class="bx bx-chevron-left bx-sm align-middle"></i>
-        </a>
+<div id="sidebar" class="active">
+    <div class="sidebar-wrapper active">
+        <div class="sidebar-header">
+            <div class="d-flex justify-content-between">
+                <div class="logo">
+                    <a href="index.html"><img src="../../assets/images/logo/logo.png" alt="Logo" srcset=""></a>
+                </div>
+                <div class="toggler">
+                    <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <ul class="menu">
+                <li class="sidebar-title">Menu</li>
+
+                <li class="sidebar-item <?php echo isActive('dashboard') ?>">
+                    <a href="../dashboard/" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>หน้าแรก</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item  has-sub <?php echo isActive('users') ?>">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-stack"></i>
+                        <span>admin</span>
+                    </a>
+                    <ul class="submenu <?php echo isActive('users') ?>">
+                        
+                        <li class="submenu-item <?php echo isActive('users') ?>">
+                            <a href="../users/">จัดการสมาชิก</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="component-breadcrumb.html">Breadcrumb</a>
+                        </li>
+                        
+                    </ul>
+                </li>
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-stack"></i>
+                        <span>Components</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item ">
+                            <a href="component-alert.html">Alert</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="component-badge.html">Badge</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="component-breadcrumb.html">Breadcrumb</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="component-button.html">Button</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="component-card.html">Card</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="component-carousel.html">Carousel</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="component-dropdown.html">Dropdown</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="component-list-group.html">List Group</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="component-modal.html">Modal</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="component-navs.html">Navs</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="component-pagination.html">Pagination</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="component-progress.html">Progress</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="component-spinner.html">Spinner</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="component-tooltip.html">Tooltip</a>
+                        </li>
+                    </ul>
+                </li>
+
+                
+
+            </ul>
+        </div>
+        <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
     </div>
-    <div class="menu-inner-shadow"></div>
-    <ul class="menu-inner py-1">
-        <li class="menu-item <?php echo isActive('dashboard') ?>">
-            <a href="../" class="menu-link">
-            <i class="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Dashboard</div>
-            </a>
-        </li>
-        <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Admin</span>
-        </li>
-        <li class="menu-item open <?php echo isActive('prepare') ?>">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bx bx-dock-top "></i>
-                <div>อำนวยการ</div>
-            </a>
-            <ul class="menu-sub">                
-                <li class="menu-item <?php echo isActiveFile('index') ?>">
-                    <a href="../venset/index.php" class="menu-link">
-                        <div>เตรียมข้อมูลผู้อยู่เวร</div>
-                    </a>
-                </li>
-                <li class="menu-item <?php echo isActiveFile('venset') ?>">
-                    <a href="../venset/" class="menu-link">
-                        <div>เตรียมคำสัง</div>
-                    </a>
-                </li>
-                <li class="menu-item <?php echo isActiveFile('venset') ?>">
-                    <a href="../venset/" class="menu-link">
-                        <div>จัดเวร</div>
-                    </a>
-                </li>
-                
-            </ul>
-        </li>
-        
-        <li class="menu-item open <?php echo isActive('users') ?>">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bx bx-dock-top "></i>
-                <div>จัดการสมาชิก</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item <?php echo isActiveFile('users') ?>">
-                    <a href="../users/" class="menu-link">
-                        <div>สมาชิก</div>
-                    </a>
-                </li>                
-                <li class="menu-item <?php echo isActiveFile('venset') ?>">
-                    <a href="../users/" class="menu-link">
-                        <div>คำนำหน้าชื่อ</div>
-                    </a>
-                </li>
-                <li class="menu-item <?php echo isActiveFile('venset') ?>">
-                    <a href="../users/" class="menu-link">
-                        <div>ตำแหน่ง</div>
-                    </a>
-                </li>
-                
-            </ul>
-        </li>
-        <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Pages Menu</span>
-        </li>
-        <li class="menu-item open <?php echo isActive('account') ?>">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bx bx-dock-top "></i>
-                <div>Account Settings</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item <?php echo isActiveFile('profile') ?>">
-                    <a href="../account/profile.php" class="menu-link">
-                        <div>My Profile</div>
-                    </a>
-                </li>
-                <?php if($_SESSION['AD_ROLE'] == "superadmin"){  ?>
-                <li class="menu-item <?php echo  in_array(pathCurrent(), $menuAdmin) ? 'active': '' ?>">
-                    <a href="../account/" class="menu-link">
-                        <div>Admin</div>
-                    </a>
-                </li>
-                <?php } ?>
-            </ul>
-        </li>
-    </ul>
-</aside>
+</div>
+

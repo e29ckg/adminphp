@@ -6,33 +6,25 @@ require_once('../../server/authen.php');
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" >
-    <title> Dashboard | App</title>
-    <link rel="icon" type="image/x-icon" href="../../assets/images/icon.ico" >
-
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../node_modules/sweetalert2/dist/sweetalert2.min.css">
-    
-    <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" >
-    <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" >
-    <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" >
-    <link rel="stylesheet" href="../../assets/css/demo.css" >
-    <!-- Helpers -->
-    <script src="../../assets/vendor/js/helpers.js"></script>
-    <script src="../../assets/js/config.js"></script>
+    <?php require_once('../includes/_header.php') ?>
     
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
     
 </head>
 <body>
-    <div class="layout-wrapper layout-content-navbar" >
-        <div class="layout-container">
-            <?php require_once('../includes/_sidebar.php') ?>
-            <div class="layout-page">
-                <?php require_once('../includes/_navbar.php') ?>
+    <div id="app">
+        <?php require_once('../includes/_sidebar.php') ?>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+            <div class="page-heading">
+                <h3>จัดการสมาชิก</h3>
+            </div> 
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper" id="dashboard">
@@ -80,17 +72,17 @@ require_once('../../server/authen.php');
                     <div class="content-backdrop fade"></div>
 
                 </div>
-            </div>
+                <?php require_once('../includes/_footer.php') ?>
         </div>
-        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-    <?php require_once('../includes/_footer.php') ?>
 
-    <!-- <script src="../../assets/vendor/libs/jquery/jquery.js"></script> -->
-    <script src="../../assets/vendor/libs/popper/popper.js"></script>
-    <script src="../../assets/vendor/js/bootstrap.js"></script>
-    <script src="../../assets/vendor/js/menu.js"></script>
+    <?php require_once('../includes/_footer.php') ?>
+    
+    <script src="../../assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+
     <script src="../../assets/js/main.js"></script>
+    <!--  -->
     <script src="../../node_modules/vue/dist/vue.global.js"></script>
     <script src="../../node_modules/vue/dist/vue.global.prod.js"></script>
     <script src="../../node_modules/axios/dist/axios.js"></script>

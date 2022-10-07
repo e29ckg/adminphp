@@ -20,7 +20,7 @@ $datas = array();
 
     // The request is using the POST method
     try{
-        $sql = "SELECT u.username,p.*
+        $sql = "SELECT u.username, u.status, p.*
                 FROM profile as p 
                 INNER JOIN `user` as u ON u.id = p.user_id
                 WHERE u.status = 10 
@@ -34,8 +34,10 @@ $datas = array();
             foreach($result as $rs){
                 array_push($datas,array(
                     'uid' => $rs->user_id,
+                    'username' => $rs->username,
                     'name'  => $rs->fname.$rs->name.' '.$rs->sname,
-                    'dep'   => $rs->dep
+                    'dep'   => $rs->dep,
+                    'status'   => $rs->status,
                 ));
             }
             http_response_code(200);

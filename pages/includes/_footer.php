@@ -1,11 +1,12 @@
-<footer class="content-footer footer bg-footer-theme">
-    <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-        <div class="mb-2 mb-md-0">
-            ©
-            <script>
-            document.write(new Date().getFullYear());
-            </script>            
+<footer>
+    <div class="footer clearfix mb-0 text-muted">
+        <div class="float-start">
+            <p>2021 &copy; Mazer</p>
             <a href="http://sites.google.com/view/pkkjc-ven-v1" target="_blank" class="footer-link fw-bolder">คู่มือ</a>
+        </div>
+        <div class="float-end">
+            <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
+                    href="http://ahmadsaugi.com">A. Saugi</a></p>
         </div>
     </div>
 </footer>
