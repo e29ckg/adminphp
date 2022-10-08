@@ -1,7 +1,6 @@
 <?php 
 
 require_once('../../server/authen.php');
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +38,7 @@ require_once('../../server/authen.php');
                                                 <th scope="col">username</th>
                                                 <th scope="col">ชื่อ-สกุล</th>
                                                 <th scope="col">ตำแหน่ง</th>
+                                                <th scope="col">สถานะ</th>
                                                 <th scope="col">act</th>
                                                 </tr>
                                             </thead>
@@ -52,10 +52,18 @@ require_once('../../server/authen.php');
                                                     <td>{{d.name}}</td>
                                                     <td>{{d.dep}}</td>
                                                     <td>
+                                                        <div class="form-check form-switch" v-if="d.status == 10" >
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" @click="user_status(d.uid,1)" checked >
+                                                            <!-- <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label> -->
+                                                        </div>
+                                                        <div class="form-check form-switch" v-else>
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" @click="user_status(d.uid,10)" >
+                                                            <!-- <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label> -->
+                                                        </div>
+                                                    </td>
+                                                    <td>
                                                         <button class="btn btn-primary btn-sm me-2 mb-1" @click="view(d.uid)">view</button>    
                                                         <button class="btn btn-warning btn-sm me-2 mb-1" @click="user_update(d.uid)">แก้ไข</button>    
-                                                        <button class="btn btn-danger btn-sm mb-1" v-if="d.status == 10" @click="user_status(d.uid,1)">ระงับการใช้งาน</button>    
-                                                        <button class="btn btn-primary btn-sm mb-1" v-else @click="user_status(d.uid,10)">เปิดใช้งาน</button>    
                                                     </td>
                                                 </tr>                                                
                                             </tbody>
@@ -166,8 +174,8 @@ require_once('../../server/authen.php');
                                             <input type="text" class="form-control" id="name" v-model="user_form.name">
                                         </div>
                                         <div class="col mb-3">
-                                            <label for="s-name" class="form-label">สกุล</label>
-                                            <input type="text" class="form-control" id="s-name" v-model="user_form.sname">
+                                            <label for="sname_uf" class="form-label">สกุล</label>
+                                            <input type="text" class="form-control" id="sname_uf" v-model="user_form.sname">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -223,7 +231,7 @@ require_once('../../server/authen.php');
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="staticBackdropLabel">User</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="close_modal_user_form()" ref="close_modal_user_update_form"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ref="close_modal_user_update_form"></button>
                             </div>
                             <div class="modal-body">
                                 <form @submit.prevent="user_update_save">
@@ -238,17 +246,17 @@ require_once('../../server/authen.php');
                                             </select>
                                         </div>
                                         <div class="col mb-3">
-                                            <label for="exampleInputPassword1" class="form-label">ชื่อ</label>
-                                            <input type="text" class="form-control" id="name" v-model="user_form.name">
+                                            <label for="name_uf" class="form-label">ชื่อ</label>
+                                            <input type="text" class="form-control" id="name_uf" v-model="user_form.name">
                                         </div>
                                         <div class="col mb-3">
-                                            <label for="s-name" class="form-label">สกุล</label>
-                                            <input type="text" class="form-control" id="s-name" v-model="user_form.sname">
+                                            <label for="sname_uuf" class="form-label">สกุล</label>
+                                            <input type="text" class="form-control" id="sname_uuf" v-model="user_form.sname">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col mb-3">
-                                            <label for="dep" class="form-label" >ตำแหน่ง</label>
+                                            <label for="dep_uf" class="form-label" >ตำแหน่ง</label>
                                             <!-- <input type="text" class="form-control" id="dep" aria-describedby="emailHelp" v-model="user_form.dep"> -->
                                             <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                                             <select class="form-select" aria-label="Default select example" v-model="user_form.dep">
@@ -256,26 +264,26 @@ require_once('../../server/authen.php');
                                             </select>
                                         </div>
                                         <div class="col mb-3">
-                                            <label for="workgroup" class="form-label">กลุ่มงาน</label>
+                                            <label for="workgroup_uf" class="form-label">กลุ่มงาน</label>
                                             <!-- <input type="text" class="form-control" id="workgroup" v-model="user_form.workgroup"> -->
                                             <select class="form-select" aria-label="Default select example" v-model="user_form.workgroup">
                                                 <option v-for="sw in sel_workgroup" :value="sw.name">{{sw.name}}</option>
                                             </select>
                                         </div>
                                         <div class="col-3 mb-3">
-                                            <label for="phone" class="form-label">โทรศัพท์</label>
-                                            <input type="text" class="form-control" id="phone" v-model="user_form.phone">
+                                            <label for="phone_uf" class="form-label">โทรศัพท์</label>
+                                            <input type="text" class="form-control" id="phone_uf" v-model="user_form.phone">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col mb-3">
-                                            <label for="bank_account" class="form-label" >เลขที่บัญชี</label>
-                                            <input type="text" class="form-control" id="bank_account" aria-describedby="emailHelp" v-model="user_form.bank_account">
+                                            <label for="bank_account_uf" class="form-label" >เลขที่บัญชี</label>
+                                            <input type="text" class="form-control" id="bank_account_uf" aria-describedby="emailHelp" v-model="user_form.bank_account">
                                             <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                                         </div>
                                         <div class="col mb-3">
-                                            <label for="bank_comment" class="form-label">สาขา</label>
-                                            <input type="text" class="form-control" id="bank_comment" v-model="user_form.bank_comment">
+                                            <label for="bank_comment_uuf" class="form-label">สาขา</label>
+                                            <input type="text" class="form-control" id="bank_comment_uff" v-model="user_form.bank_comment">
                                         </div>                                           
                                     </div>
                                     <div class="row">

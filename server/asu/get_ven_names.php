@@ -20,10 +20,9 @@ $datas = array();
 
     // The request is using the POST method
     try{
-        $sql = "SELECT u.username, u.status, p.*
-                FROM profile as p 
-                INNER JOIN `user` as u ON u.id = p.user_id
-                ORDER BY p.st ASC";
+        $sql = "SELECT *
+                FROM ven_name
+                ORDER BY srt ASC";
         $query = $conn->prepare($sql);
         // $query->bindParam(':kkey',$data->kkey, PDO::PARAM_STR);
         $query->execute();
@@ -32,11 +31,8 @@ $datas = array();
         if($query->rowCount() > 0){                        //count($result)  for odbc
             foreach($result as $rs){
                 array_push($datas,array(
-                    'uid' => $rs->user_id,
-                    'username' => $rs->username,
-                    'name'  => $rs->fname.$rs->name.' '.$rs->sname,
-                    'dep'   => $rs->dep,
-                    'status'   => $rs->status,
+                    'id'  => $rs->id,
+                    'name'  => $rs->name
                 ));
             }
             http_response_code(200);

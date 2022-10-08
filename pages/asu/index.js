@@ -262,4 +262,4 @@ Vue.createApp({
   
         
 
-}).mount('#usersIndex')
+}).mount('#asuIndex')

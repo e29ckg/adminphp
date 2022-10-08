@@ -13,6 +13,11 @@ $data = json_decode(file_get_contents("php://input"));
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if($_SESSION['AD_ROLE'] != 9){
+        http_response_code(200);
+        echo json_encode(array('staus' => false, 'message' => 'ไม่มีสิทธิ์'));
+        exit;
+    }
 
     if($data->user){
         $user = $data->user;

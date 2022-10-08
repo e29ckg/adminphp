@@ -3,7 +3,7 @@
         <div class="sidebar-header">
             <div class="d-flex justify-content-between">
                 <div class="logo">
-                    <a href="index.html"><img src="../../assets/images/logo/logo.png" alt="Logo" srcset=""></a>
+                    <a href="#" class="fs-5"> <i class="bi bi-person-circle"></i> <?=$_SESSION['AD_FIRSTNAME'] .' '. $_SESSION['AD_LASTNAME']?></a>
                 </div>
                 <div class="toggler">
                     <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -21,6 +21,24 @@
                     </a>
                 </li>
 
+                <li class="sidebar-item  has-sub <?php echo isActive('asu') ?>">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-stack"></i>
+                        <span>อำนวยการ</span>
+                    </a>
+                    <ul class="submenu <?php echo isActive('asu') ?>">
+                        
+                        <li class="submenu-item <?php echo isActiveFile('user_ven') ?>">
+                            <a href="../asu/user_ven.php">เตรียมคนอยู่เวร</a>
+                        </li>
+                        <li class="submenu-item <?php echo isActiveFile('work_name') ?>">
+                            <a href="../asu/work_name.php">กลุ่มหน้าที่</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
                 <li class="sidebar-item  has-sub <?php echo isActive('users') ?>">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-stack"></i>
@@ -37,6 +55,7 @@
                         
                     </ul>
                 </li>
+
                 <li class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-stack"></i>
