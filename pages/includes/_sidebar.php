@@ -32,7 +32,7 @@
                             <a href="../asu/user_ven.php">เตรียมคนอยู่เวร</a>
                         </li>
                         <li class="submenu-item <?php echo isActiveFile('work_name') ?>">
-                            <a href="../asu/work_name.php">กลุ่มหน้าที่</a>
+                            <a href="../asu/work_name.php">ชื่อเวร/กลุ่มหน้าที่</a>
                         </li>
                         
                         

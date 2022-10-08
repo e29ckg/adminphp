@@ -24,14 +24,13 @@ require_once('../../server/authen.php');
             </div>
             <div class="page-content" id="workName">
                 <div class="mb-2">
-                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#ven_name" ref="show_ven_name_form" >
+                    <button type="button" class="btn btn-success btn-sm" @click="show_ven_nfi" >
                         เพิ่มชื่อเวร
                     </button>
                 </div>
                 <section class="row">
                     <div class="col-12 col-lg-12">
-                        
-                        {{ven_names}}
+                        <!-- {{ven_names}} -->
                         <div class="row">
                             <div class="col col-4" v-for="vn in ven_names">                                
                                 <div class="card" >
@@ -39,34 +38,30 @@ require_once('../../server/authen.php');
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th colspan="2" class="text-center">{{vn.name}}</th>
+                                                    <th colspan="2" class="text-center">
+                                                        {{vn.name}}
+                                                        <span v-if="vn.DN == 'กลางวัน'">(☀️{{vn.DN}}) </span>
+                                                        <span v-if="vn.DN == 'กลางคืน'">(🌙{{vn.DN}}) </span>
+                                                    </th>
                                                     <th class="text-center">
-                                                        <button class="btn btn-warning btn-sm" @click="ven_name_update_show_form(vn.id)">แก้ไขชื่อ</button>
+                                                        <button class="btn btn-warning btn-sm" @click="ven_name_usf(vn.id)">แก้ไขชื่อ</button>
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Mark</td>
-                                                    <td class="text-center"><button class="btn btn-danger btn-sm">ลบ</button></td>
+                                            <tbody v-for="vns in ven_name_subs" >
+                                                <tr v-if="vn.id === vns.ven_name_id">
+                                                    <th scope="row">{{vns.srt}}</th>
+                                                    <td>{{vns.name}} </td>
+                                                    <td class="text-center"><button class="btn btn-danger btn-sm" @click="ven_name_s_del(vns.id)">ลบ</button></td>
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Jacob</td>
-                                                    <td>@fat</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>@twitter</td>
-                                                    <td>@twitter</td>
-                                                    <td>ลบ</td>
-                                                </tr>
-
                                             </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <td colspan="3" class="text-center">
-                                                        <button class="btn btn-success btn-sm">เพิ่มหน้าที่</button>
+                                                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#ven_name_sub" @click="vns_insert(vn.id)">
+                                                            เพิ่มชื่อเวร
+                                                        </button>
+                                                        <!-- <button class="btn btn-success btn-sm">เพิ่มหน้าที่</button> -->
                                                     </td>
                                                 </tr>
                                             </tfoot>
@@ -74,13 +69,15 @@ require_once('../../server/authen.php');
                                     </div>
                                 </div>
                             </div>
+                            <!-- {{ven_name_subs}} -->
                             
                         </div>    
                     </div>
                 </section>
 
-                
-
+                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#ven_name" ref="show_ven_name_form" hidden >
+                        เพิ่มชื่อเวร
+                </button>
                 <!-- Modal VenName Form -->
                 <div class="modal fade" id="ven_name" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
@@ -92,23 +89,61 @@ require_once('../../server/authen.php');
                             </div>
                             <div class="modal-body">
                                 <form @submit.prevent="ven_name_save">                                    
-                                    <div class="row">                                        
+                                    <div class="row mb-3">                                        
+                                        <div class="col mb-3">
+                                            <label for="srt" class="form-label">ลำดับ</label>
+                                            <input type="number" class="form-control" id="srt" v-model="ven_name_form.srt">
+                                        </div>
                                         <div class="col mb-3">
                                             <label for="namef" class="form-label">ชื่อเวร</label>
                                             <input type="text" class="form-control" id="namef" v-model="ven_name_form.name">
                                         </div>
                                         <div class="col mb-3">
+                                            <label for="DN" class="form-label">กลางวัน/กลางคืน</label>
+                                            <!-- <input type="text" class="form-control" id="DN" v-model="ven_name_form.DN"> -->
+                                            <select class="form-select" aria-label="Default select example" v-model="ven_name_form.DN">
+                                                <option value="กลางวัน">กลางวัน</option>
+                                                <option value="กลางคืน">กลางคืน</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="d-grid gap-2">
+                                        <button type="button" class="col-auto me-auto btn btn-danger" v-if="ven_name_form_act !='insert'" @click.prevent="ven_name_del()">ลบ {{ven_name_form.id}}</button>
+                                        <button type="submit" class="col-auto btn btn-primary">บันทึก</button>
+                                    </div>
+                                </form>
+                                <!-- {{ven_name_form}} -->
+                                <!-- {{ven_name_form_act}} -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal VenName Form -->
+                <div class="modal fade" id="ven_name_sub" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel"v-if="ven_name_form.act == 'insert'">เพิ่มตำแหน่งหน้าที่</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="clear_vnsf" ref="close_vnsf"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form @submit.prevent="ven_name_sub_save">                                    
+                                    <div class="row mb-2">                                        
+                                        <div class="col">
                                             <label for="srt" class="form-label">ลำดับ</label>
-                                            <input type="number" class="form-control" id="srt" v-model="ven_name_form.srt">
+                                            <input type="number" class="form-control" id="srt" v-model="ven_name_sub_form.srt">
+                                        </div>
+                                        <div class="col">
+                                            <label for="namef" class="form-label">ชื่อตำแหน่ง/หน้าที่</label>
+                                            <input type="text" class="form-control" id="namef" v-model="ven_name_sub_form.name">
                                         </div>
                                     </div>
                                     <div class="pull-end">
-                                        <button class="btn btn-danger" v-if="ven_name_form_act !='insert'" @click.prevent="ven_name_del()">ลบ {{ven_name_form.id}}</button>
                                         <button type="submit" class="btn btn-primary">บันทึก</button>
                                     </div>
                                 </form>
-                                {{ven_name_form}}
-                                {{ven_name_form_act}}
+                                <!-- {{ven_name_sub_form}} -->
                             </div>
                         </div>
                     </div>

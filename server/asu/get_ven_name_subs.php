@@ -18,7 +18,7 @@ $datas = array();
 
     // The request is using the POST method
     try{
-        $sql = "SELECT * FROM ven_name ORDER BY srt ASC";
+        $sql = "SELECT * FROM ven_name_sub ORDER BY srt ASC";
         $query = $conn->prepare($sql);
         // $query->bindParam(':kkey',$data->kkey, PDO::PARAM_STR);
         $query->execute();
@@ -29,7 +29,8 @@ $datas = array();
                 array_push($datas,array(
                     'id'    => $rs->id,
                     'name'  => $rs->name,
-                    'DN'  => $rs->DN
+                    'ven_name_id'  => $rs->ven_name_id,
+                    'srt'  => $rs->srt
                 ));
             }
             http_response_code(200);

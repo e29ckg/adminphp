@@ -19,37 +19,35 @@ $data = json_decode(file_get_contents("php://input"));
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $datas = array();
-    $ven_name    = $data->ven_name; 
-    $act         = $data->act;
-
+    $act    = $data->act;
+    
     try{
         if($act == 'insert'){
-            $name   = $ven_name->name;
-            $srt    = $ven_name->srt;
-            $DN     = $ven_name->DN;
+            $ven_name_sub   = $data->ven_name_sub;
+            $name           = $ven_name_sub->name;
+            $ven_name_id    = $ven_name_sub->ven_name_id;
+            $srt            = $ven_name_sub->srt;
 
-            $sql = "INSERT INTO ven_name(name, DN, srt) VALUE(:name, :DN, :srt);";        
+            $sql = "INSERT INTO ven_name_sub(name, ven_name_id, srt) VALUE(:name, :ven_name_id, :srt);";        
             $query = $conn->prepare($sql);
-            $query->bindParam(':name',$name, PDO::PARAM_STR);
-            $query->bindParam(':DN',$DN, PDO::PARAM_STR);
-            $query->bindParam(':srt',$srt, PDO::PARAM_INT);
+            $query->bindParam(':name', $name, PDO::PARAM_STR);
+            $query->bindParam(':ven_name_id', $ven_name_id, PDO::PARAM_INT);
+            $query->bindParam(':srt', $srt, PDO::PARAM_INT);
             $query->execute();
 
             http_response_code(200);
-            echo json_encode(array('status' => true, 'message' => 'ok', 'responseJSON' => $datas));
+            echo json_encode(array('status' => true, 'message' => 'ok', 'responseJSON' => $data));
             exit;                
         }    
         if($act == 'update'){
-            $id     = $ven_name->id;
-            $name   = $ven_name->name;
-            $DN     = $ven_name->DN;
-            $srt    = $ven_name->srt;
+            $id     = $ven_name_sub->id;
+            $name   = $ven_name_sub->name;
+            $srt    = $ven_name_sub->srt;
 
-            $sql = "UPDATE ven_name SET name =:name, DN=:DN, srt=:srt WHERE id = :id";   
+            $sql = "UPDATE ven_name_sub SET name =:name, srt=:srt WHERE id = :id";   
 
             $query = $conn->prepare($sql);
             $query->bindParam(':name',$name, PDO::PARAM_STR);
-            $query->bindParam(':DN',$DN, PDO::PARAM_STR);
             $query->bindParam(':srt',$srt, PDO::PARAM_INT);
             $query->bindParam(':id',$id, PDO::PARAM_INT);
             $query->execute();         
@@ -59,11 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;                
         }  
         if($act == 'delete'){
-            $id     = $ven_name->id;
-            $sql = "DELETE FROM ven_name WHERE id = $id";
-            $conn->exec($sql);
 
-            $sql = "DELETE FROM ven_name_sub WHERE ven_name_id = $id";
+            $id     = $data->id;
+            $sql = "DELETE FROM ven_name_sub WHERE id = $id";
             $conn->exec($sql);
 
             http_response_code(200);

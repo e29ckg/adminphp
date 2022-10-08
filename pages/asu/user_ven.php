@@ -22,56 +22,21 @@ require_once('../../server/authen.php');
             <div class="page-heading">
                 <h3>เตรียมคนอยู่เวร</h3>
             </div>
-            <div class="page-content" id="asuIndex">
-                <section class="row">
-                    <div class="col-12 col-lg-12">
-                        <div class="row">
-                            <div class="col col-4">                                
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">ผู้พิพากษา</h5>
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item font-monospace" >นายพเยาว์ สนพลาย ลบ</li>
-                                            <li class="list-group-item" v-for="n in 10">{{ n }} A second item</li>
-                                            <li class="list-group-item"><button class="btn btn-success">เพิ่ม</button></li>
-                                        </ul>
-                                            
-                                    </div>
-                                </div>
+            <div class="page-content" id="userVen">
+            {{ven_names}}
+            {{ven_name_subs}}
+                <section class="row" v-for="vn in ven_names">
+                    <div v-for="vns in ven_name_subs" >                         
+                        <div class="col" >
+                            <div class="card-body" v-if="vn.id == vns.ven_name_id">
+                                <h5 class="card-title">{{vn.name}} ({{vn.DN}}) {{vns.name}} </h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item font-monospace" >นายพเยาว์ สนพลาย ลบ</li>
+                                    <li class="list-group-item"><button class="btn btn-success">เพิ่ม</button></li>
+                                </ul>
                             </div>
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-body">
-                                        
-                                            
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-body">
-                                        
-                                            
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-body">
-                                        
-                                            
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-body">
-                                        
-                                            
-                                    </div>
-                                </div>
-                            </div>
-                        </div>    
+
+                        </div>
                     </div>
                 </section>
 
@@ -90,7 +55,7 @@ require_once('../../server/authen.php');
     <script src="../../node_modules/vue/dist/vue.global.prod.js"></script>
     <script src="../../node_modules/axios/dist/axios.js"></script>
     <script src="../../node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
-    <script src="./index.js"></script>
+    <script src="./user_ven.js"></script>
 </body>
 
 </html>
