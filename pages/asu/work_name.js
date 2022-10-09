@@ -9,7 +9,8 @@ Vue.createApp({
       },
       ven_name_form_act:'insert',
       ven_name_subs   :'',
-      ven_name_sub_form : {name : ''},
+      ven_name_sub_form : {name : '', price:''},
+      ven_name_sf_act:'insert',
       isLoading : false,
     }
   },
@@ -63,7 +64,7 @@ Vue.createApp({
                   let icon = 'success' 
                   this.alert(icon,response.data.message,1000)
                   this.$refs.close_ven_name_form.click()
-                  this.clear_ven_name_form()
+                  this.clear_vnsf()
                 }else{
                   let icon = 'warning' 
                   let message = response.data.message
@@ -80,7 +81,7 @@ Vue.createApp({
         this.alert(icon,message,0)
       }
     },
-    clear_ven_name_form(){
+    clear_vnsf(){
       this.ven_name_form = {name : ''}
       this.ven_name_form_act = 'insert'
     },
@@ -113,7 +114,7 @@ Vue.createApp({
                       let icon = 'success' 
                       this.alert(icon,response.data.message,1000)
                       this.$refs.close_ven_name_form.click()
-                      this.clear_ven_name_form()
+                      this.clear_vnsf()
                     }else{
                       let icon = 'warning' 
                       let message = response.data.message
@@ -160,8 +161,8 @@ Vue.createApp({
         this.isLoading = false;
       })      
     },
-    clear_ven_name_form(){
-      this.ven_name_sub_form = {name : ''}
+    clear_vnsf(){
+      this.ven_name_sub_form = {name : '', price:'',act:'insert'}
     },
     ven_name_update_show_form(id){
       this.ven_name_form_act = 'update'
@@ -171,16 +172,16 @@ Vue.createApp({
     vns_insert(ven_name_id){
       this.ven_name_sub_form.ven_name_id = ven_name_id
     },
-    ven_name_sub_save(ven_name_id){
-      if(this.ven_name_sub_form.name != '' ){
+    ven_name_sub_save(){
+      if(this.ven_name_sub_form.name != '' && this.ven_name_sub_form.price != ''){
         axios.post('../../server/asu/ven_name_sub_act.php',{ven_name_sub:this.ven_name_sub_form, act:'insert'})
           .then(response => {
               if (response.data.status) {
                 this.get_ven_names()
                 this.get_ven_name_subs()
-                this.alert('success',response.data.message,1000)
                 this.$refs.close_vnsf.click()
-                this.clear_ven_name_form()
+                this.alert('success',response.data.message,1000)
+                // this.clear_vnsf()
               }else{
                 this.alert('warning',response.data.message,0)
               } 
@@ -190,7 +191,7 @@ Vue.createApp({
           })
     }else{
       const message = []
-      if(this.ven_name_sub_form.name == ''){message.push('กรุณากรอกข้อมูลให้ครบ')}      
+      if(this.ven_name_sub_form.name == '' &&this.ven_name_sub_form.price == ''){message.push('กรุณากรอกข้อมูลให้ครบ')}      
       this.alert('warning',message,0)
     }
     },
@@ -214,7 +215,7 @@ Vue.createApp({
                       let icon = 'success' 
                       this.alert(icon,response.data.message,1000)
                       this.$refs.close_ven_name_form.click()
-                      this.clear_ven_name_form()
+                      this.ven_name_sub_form = {name : '', price:''}
                     }else{
                       let icon = 'warning' 
                       let message = response.data.message
@@ -226,194 +227,18 @@ Vue.createApp({
                   })
         }
       })
-
-    },
-
-
-
-    view(uid){
-      this.get_user(uid)
-      this.$refs.show_modal_user.click()
-    },
-    reset_user(){
-      this.user = '';
-    },
-    user_form_insert_show(){
-      this.$refs.show_modal_user_form.click()
-      this.user_form.act = 'insert'
-    },
-    user_insert(){
-      console.log('user_insert')
-      if(this.user_form.username != '' && this.user_form.password != '' && this.user_form.repassword != '' && this.user_form.fname != '' 
-        && this.user_form.name != '' && this.user_form.sname != '' && this.user_form.password == this.user_form.repassword){
-          axios.post('../../server/users/user_insert.php',{user:this.user_form})
-            .then(response => {
-                console.log(response.data.respJSON);
-                if (response.data.status) {
-                  let icon = 'success' 
-                  this.alert(icon,response.data.message,1000)
-                  this.$refs.close_modal_user_form.click()
-                  this.get_users()
-                }else{
-                  let icon = 'warning' 
-                  let message = response.data.message
-                  this.alert(icon,message,0)
-                } 
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-      }else{
-        const message = []
-        if(this.user_form.password != this.user_form.repassword){message.push('password ไม่ตรงกัน')}
-        if(this.user_form.username == '' || this.user_form.password == '' || this.user_form.repassword == '' || this.user_form.fname == '' 
-        || this.user_form.name == '' || this.user_form.sname == ''){message.push('กรุณากรอกข้อมูลให้ครบ')}
-        let icon = 'warning' 
-        this.alert(icon,message,0)
-      }
-    },
-    close_modal_user_form(){
-      this.user_form = {username : '', password : '', repassword : '', fname : '', name : '', sname : '', dep : '',
-                        workgroup : '', phone : '', bank_account : '', bank_comment : '', act : 'insert'}
-    },
-    get_sel_fname(){
-      axios.post('../../server/users/get_sel_fname.php')
-      .then(response => {
-          console.log(response.data.respJSON);
-          if (response.data.status) {
-            this.sel_fname = response.data.respJSON;
-          } 
-      })
-      .catch(function (error) {
-          console.log(error);
-      })
-    },
-    get_sel_dep(){
-      axios.post('../../server/users/get_sel_dep.php')
-      .then(response => {
-          console.log(response.data.respJSON);
-          if (response.data.status) {
-            this.sel_dep = response.data.respJSON;
-          } 
-      })
-      .catch(function (error) {
-          console.log(error);
-      })
-    },
-    get_sel_group(){
-      axios.post('../../server/users/get_sel_group.php')
-      .then(response => {
-          console.log(response.data.respJSON);
-          if (response.data.status) {
-            this.sel_workgroup = response.data.respJSON;
-          } 
-      })
-      .catch(function (error) {
-          console.log(error);
-      })
     },
     alert(icon,message,timer=0){
-        swal.fire({
-        icon: icon,
-        title: message,
-        showConfirmButton: true,
-        timer: timer
-      });
-    },
-    user_update(uid){
-      this.isLoading = true
-      axios.post('../../server/users/user.php',{uid:uid})
-      .then(response => {
-          console.log(response.data.respJSON);
-          if (response.data.status) {
-              this.user_form = response.data.respJSON;
-              this.$refs.show_modal_user_update_form.click()
-          } 
-      })
-      .catch(function (error) {
-          console.log(error);
-      })
-      .finally(() => {
-        this.isLoading = false;
-      })      
-    },
-    user_update_save(uid){
-      this.isLoading = true
-      axios.post('../../server/users/user_update_save.php',{user:this.user_form})
-      .then(response => {
-          console.log(response.data.respJSON);
-          if (response.data.status) {
-              this.get_users()
-              this.$refs.close_modal_user_update_form.click()
-              let icon = 'success'
-              let message = response.data.message
-              this.alert(icon,message,timer=1500)
-          }else{
-            let icon = 'error'
-              let message = response.data.message
-              this.alert(icon,message,timer=0)
-          }
-      })
-      .catch(function (error) {
-          console.log(error);
-      })
-      .finally(() => {
-        this.isLoading = false;
-      })      
-    },
-    user_status(id,st){
-      if(st == 1){
-        
-            this.isLoading = true;
-            axios.post('../../server/users/user_update_status.php',{user_id:id,st:st})
-                .then(response => {
-                    console.log(response.data.respJSON);
-                    if (response.data.status) {
-                        let icon = 'success'
-                        let message = response.data.message
-                        this.alert(icon,message,timer=1500)
-                        this.get_users()
-                    }else{
-                      let icon = 'error'
-                      let message = response.data.message
-                      this.alert(icon,message,timer=0)
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-                .finally(() => {
-                  this.isLoading = false;
-                })   
-        
+      swal.fire({
+      icon: icon,
+      title: message,
+      showConfirmButton: true,
+      timer: timer
+    });
+  },
 
-      }else{
-        this.isLoading = true;
-        axios.post('../../server/users/user_update_status.php',{user_id:id,st:st})
-                .then(response => {
-                    console.log(response.data.respJSON);
-                    if (response.data.status) {
-                        let icon = 'success'
-                        let message = response.data.message
-                        this.alert(icon,message,timer=1500)
-                        this.get_users()
-                    }else{
-                      let icon = 'error'
-                      let message = response.data.message
-                      this.alert(icon,message,timer=0)
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-                .finally(() => {
-                  this.isLoading = false;
-                })   
-      }
 
-         
-    
-    }
+
   },  
 
 }).mount('#workName')

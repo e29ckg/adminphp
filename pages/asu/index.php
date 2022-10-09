@@ -22,7 +22,7 @@ require_once('../../server/authen.php');
             <div class="page-heading">
                 <h3>เตรียมคนอยู่เวร</h3>
             </div>
-            <div class="page-content" id="asuIndex">
+            <div class="page-content" id="asuIndex" v-cloak>
                 <section class="row">
                     <div class="col-12 col-lg-12">
                         <div class="row">

@@ -22,7 +22,7 @@ require_once('../../server/authen.php');
                 <h3>ชื่อเวร/กลุ่มหน้าที่</h3>
                 <!-- Button trigger modal user update form-->
             </div>
-            <div class="page-content" id="workName">
+            <div class="page-content" id="workName" v-cloak>
                 <div class="mb-2">
                     <button type="button" class="btn btn-success btn-sm" @click="show_ven_nfi" >
                         เพิ่มชื่อเวร
@@ -32,7 +32,7 @@ require_once('../../server/authen.php');
                     <div class="col-12 col-lg-12">
                         <!-- {{ven_names}} -->
                         <div class="row">
-                            <div class="col col-4" v-for="vn in ven_names">                                
+                            <div class="col col-6" v-for="vn in ven_names">                                
                                 <div class="card" >
                                     <div class="card-body">
                                         <table class="table">
@@ -51,8 +51,10 @@ require_once('../../server/authen.php');
                                             <tbody v-for="vns in ven_name_subs" >
                                                 <tr v-if="vn.id === vns.ven_name_id">
                                                     <th scope="row">{{vns.srt}}</th>
-                                                    <td>{{vns.name}} </td>
-                                                    <td class="text-center"><button class="btn btn-danger btn-sm" @click="ven_name_s_del(vns.id)">ลบ</button></td>
+                                                    <td>{{vns.name}} (💰{{vns.price}}) </td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-danger btn-sm" @click="ven_name_s_del(vns.id)">ลบ</button>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                             <tfoot>
@@ -69,8 +71,7 @@ require_once('../../server/authen.php');
                                     </div>
                                 </div>
                             </div>
-                            <!-- {{ven_name_subs}} -->
-                            
+                            <!-- {{ven_name_subs}}                             -->
                         </div>    
                     </div>
                 </section>
@@ -138,8 +139,13 @@ require_once('../../server/authen.php');
                                             <label for="namef" class="form-label">ชื่อตำแหน่ง/หน้าที่</label>
                                             <input type="text" class="form-control" id="namef" v-model="ven_name_sub_form.name">
                                         </div>
+                                        <div class="col">
+                                            <label for="price" class="form-label">ค่าเวร</label>
+                                            <input type="number" class="form-control" id="price" v-model="ven_name_sub_form.price">
+                                        </div>
                                     </div>
                                     <div class="pull-end">
+                                        
                                         <button type="submit" class="btn btn-primary">บันทึก</button>
                                     </div>
                                 </form>

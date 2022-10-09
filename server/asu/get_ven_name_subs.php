@@ -30,6 +30,7 @@ $datas = array();
                     'id'    => $rs->id,
                     'name'  => $rs->name,
                     'ven_name_id'  => $rs->ven_name_id,
+                    'price'  => $rs->price,
                     'srt'  => $rs->srt
                 ));
             }

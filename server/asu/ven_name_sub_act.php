@@ -26,12 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ven_name_sub   = $data->ven_name_sub;
             $name           = $ven_name_sub->name;
             $ven_name_id    = $ven_name_sub->ven_name_id;
+            $price          = $ven_name_sub->price;
             $srt            = $ven_name_sub->srt;
 
-            $sql = "INSERT INTO ven_name_sub(name, ven_name_id, srt) VALUE(:name, :ven_name_id, :srt);";        
+            $sql = "INSERT INTO ven_name_sub(name, ven_name_id, price, srt) VALUE(:name, :ven_name_id, :price, :srt);";        
             $query = $conn->prepare($sql);
             $query->bindParam(':name', $name, PDO::PARAM_STR);
             $query->bindParam(':ven_name_id', $ven_name_id, PDO::PARAM_INT);
+            $query->bindParam(':price', $price, PDO::PARAM_INT);
             $query->bindParam(':srt', $srt, PDO::PARAM_INT);
             $query->execute();
 
@@ -42,12 +44,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if($act == 'update'){
             $id     = $ven_name_sub->id;
             $name   = $ven_name_sub->name;
+            $price   = $ven_name_sub->price;
             $srt    = $ven_name_sub->srt;
 
-            $sql = "UPDATE ven_name_sub SET name =:name, srt=:srt WHERE id = :id";   
+            $sql = "UPDATE ven_name_sub SET name =:name, price=:price, srt=:srt WHERE id = :id";   
 
             $query = $conn->prepare($sql);
             $query->bindParam(':name',$name, PDO::PARAM_STR);
+            $query->bindParam(':price',$price, PDO::PARAM_INT);
             $query->bindParam(':srt',$srt, PDO::PARAM_INT);
             $query->bindParam(':id',$id, PDO::PARAM_INT);
             $query->execute();         
