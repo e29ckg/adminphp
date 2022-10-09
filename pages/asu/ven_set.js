@@ -1,0 +1,411 @@
+// const { info } = require("console");
+
+
+
+Vue.createApp({
+  data() {
+    return {
+      q:'',
+      url_base:'',
+      url_base_app:'',
+      url_base_now:'',
+      datas: [
+        {
+            id: 'a',
+            title: 'my event',
+            start: '2022-09-01',
+            extendedProps: {
+                uid: 5555,
+                uname: '',
+                ven_date: '',
+                ven_time: '',
+                DN: '',
+                ven_month: '',
+                ven_com_id: '',
+                st: '',
+
+            }
+        }
+    ],
+    data_event:{ 
+        uid: 5555,
+        uname: '',
+        ven_date: '',
+        ven_time: '',
+        DN: '',
+        ven_month: '',
+        ven_com_id: '',
+        st: '',
+    },
+    profiles:[],
+
+    ven_name_index :'',
+    ven_name :'',
+    ven_names :'',
+    ven_name_sub :'',
+    ven_name_subs :'',
+    sel_ven_month : [],
+
+    ven_coms  :[],
+    ven_coms_index:'',
+
+    ven_com_id  : '',
+    ven_month   : '',
+    ven_time    : '',
+    ven_com_name : '',
+    ven_com_num : '',
+    DN          : '',
+    u_role      : '',
+    price       : '',
+
+    label_message : '<--กรุณาเลือกคำสั่ง',
+    isLoading : false,
+  }
+  },
+  mounted(){
+    this.url_base = window.location.protocol + '//' + window.location.host;
+    this.url_base_app = window.location.protocol + '//' + window.location.host + '/venset/';
+    // const d = 
+    this.ven_month = new Date();
+    this.get_vens()
+    // this.get_ven_names()
+    this.get_ven_coms()
+    this.get_ven_month1()
+    
+  },
+  watch: {
+    q(){
+      this.ch_search_pro()
+    }
+  },
+  methods: {
+    get_ven_names(){
+      axios.post('../../server/asu/get_ven_names.php')
+        .then(response => {
+          console.log(response.data);
+          if (response.data.status) {
+            this.ven_names = response.data.respJSON
+          } else{            
+            this.alert('warning',response.data.message,0)
+
+          }
+        })
+        .catch(function (error) {        
+        console.log(error);
+      });
+    },
+    ch_sel_ven_month(){
+      this.cal_render()
+      this.get_ven_names()
+      this.ven_name_index = ''
+      this.ven_name = ''
+      this.ven_name_sub = ''
+      this.profiles = ''
+    },
+    ch_sel_ven_name(ven_name_index){
+      this.ven_name_sub = ''
+      this.profiles = []
+      // console.log(ven_name_index)
+      this.ven_names[ven_name_index].id
+      this.ven_name = this.ven_names[ven_name_index].name
+
+      axios.post('../../server/asu/get_vns_vs.php',{id:this.ven_names[ven_name_index].id})
+        .then(response => {
+          console.log(response.data);
+          if (response.data.status) {
+            this.ven_name_subs = response.data.respJSON
+          } else{            
+            this.alert('warning',response.data.message,0)
+
+          }
+        })
+        .catch(function (error) {        
+        console.log(error);
+      });
+
+    },
+    ch_sel_vns(ven_name_sub){
+      if(ven_name_sub != ''){
+        axios.post('../../server/asu/get_user_set.php',{ven_name:this.ven_name , uvn:ven_name_sub})
+        .then(response => {
+          console.log(response.data);
+          if (response.data.status) {
+            this.profiles = response.data.respJSON
+            this.DN = response.data.respJSON[0].DN
+            this.price = response.data.respJSON[0].price
+            this.ven_time = response.data.respJSON[0].v_time
+          } else{            
+            this.alert('warning',response.data.message,0)
+            this.profiles = []
+          }
+        })
+        .catch(function (error) {        
+        console.log(error);
+      });
+
+      }
+    },
+    get_ven_month1(){
+      let   m = new Date();
+      let y = m.getFullYear().toString()
+      console.log(y)
+      for (let i = 0; i < 5; i++) {  
+        const d = new Date(y,m.getMonth()+i);
+        this.sel_ven_month.push({'ven_month':this.convertToYearMonthNum(d),'name': this.convertToDateThai(d)})
+      }
+    },
+    convertToYearMonthNum(date) {
+      var months_num = ["","01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+      return result   = date.getFullYear() + "-" + (months_num[( date.getMonth()+1 )]);
+    },
+    convertToDateThai(date) {
+      var month_th = ["","มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+      return result = month_th[( date.getMonth()+1 )]+" "+( date.getFullYear()+543 );
+    },
+
+
+
+    cal_render(){
+      var calendarEl = this.$refs['calendar'];
+      
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView : 'dayGridMonth',
+          initialDate : this.ven_month,
+          firstDay    : 1,
+          height      : 1200,
+          locale      : 'th',
+          events      : this.datas,
+          eventClick: (info)=> {
+              console.log(info.event.id +' '+info.event.title)
+              console.log(info.event.extendedProps)
+              this.cal_click(info.event.id)
+          },
+          dateClick:(date)=>{
+              console.log(date)
+              // this.cal_modal.date_meet = date.dateStr
+              this.$refs['modal-show'].click();
+          },
+          editable: true,
+          eventDrop: (info)=> {
+              console.log(info.event)
+                if(!this.event_drop(info.event.id,info.event.start)){
+                  info.revert();
+                }
+          },
+          droppable: true,
+          drop: (info)=> {
+              this.drop_insert(info.draggedEl.dataset.uid,info.dateStr)  
+          }
+      });
+      calendar.render(); 
+  },
+  
+  cal_click(id){
+    axios.post('../../server/asu/get_ven.php',{id:id})
+        .then(response => {
+          console.log(response.data);
+          if (response.data.status) {
+            this.data_event = response.data.respJSON[0]
+            this.$refs['show_modal'].click()
+
+          } else{
+            let icon    = 'warning'
+            let message = response.data.message                
+            this.alert(icon,message,0)
+
+          }
+      })
+      .catch(function (error) {        
+      console.log(error);
+
+    });
+
+  },
+  drop_insert(uid,dateStr){
+    if(this.ven_com_id){
+      axios.post(this.url_base_app + '/api/ven_set/ven_insert.php',{
+                          uid         : uid,
+                          ven_date    : dateStr,
+                          ven_com_id  : this.ven_com_id
+                        })
+          .then(response => {
+              console.log(response.data);
+              if (response.data.status) {
+                this.get_vens()
+                swal.fire({
+                  icon: 'success',
+                  title: response.data.message,
+                  showConfirmButton: true,
+                  timer: 1000
+                });
+              } else{
+                let icon    = 'warning'
+                let message = response.data.message                
+                this.alert(icon,message,0)
+                this.get_vens()
+                
+              }
+            })
+            .catch(function (error) {        
+              console.log(error);
+              
+            });
+    }else{
+      let icon    = 'warning'
+      let message = []
+      if(this.ven_com_id==''){message.push('กรุณาเลือกคำสั่ง')}            
+      this.alert(icon,message,0)
+      this.get_vens()
+    }
+    
+  }, 
+  event_drop(id,start){
+    axios.post(this.url_base_app + './api/ven_set/ven_move.php',{id:id,start:start})
+    .then(response => {
+        console.log(response.data.respJSON);
+        if (response.data.status) {
+            this.datas = response.data.respJSON;
+            this.get_vens()
+            swal.fire({
+              icon: 'success',
+              title: response.data.message,
+              showConfirmButton: true,
+              timer: 1000
+            });
+            return true
+        } else{
+          icon = 'warning'
+          message = response.data.message;
+          this.alert(icon,message,timer=0)
+          return false
+        }
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+  },
+  get_vens(){
+    axios.get('../../server/asu/get_vens.php')
+    .then(response => {
+        console.log(response.data.respJSON);
+        if (response.data.status) {
+            this.datas = response.data.respJSON;
+            this.cal_render()
+            this.$refs['calendar'].focus()
+        } 
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+  },
+  get_ven_coms(){
+    axios.get(this.url_base_app + './api/ven_set/get_ven_coms.php')
+    .then(response => {
+        console.log(response.data.respJSON);
+        if (response.data.status) {
+            this.ven_coms = response.data.respJSON;
+        } 
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+  },
+  sel_vem_com(ven_com_index){
+    let vci = this.ven_coms[ven_com_index].id
+    console.log(vci)
+    // this.get_profiles()
+    axios.post(this.url_base_app + './api/ven_set/get_users.php',{ven_com_id:vci})
+          .then(response => {
+              console.log(response.data.respJSON);
+              if (response.data.status) {
+                  // pfs = response.data.respJSON;
+                  this.profiles = response.data.respJSON;
+                  
+              } 
+          })
+          .catch(function (error) {
+              console.log(error);
+          });
+  },
+  get_profiles(){
+      axios.post(this.url_base_app + './api/ven_set/get_users.php',{ven_com_id:this.ven_com_id})
+          .then(response => {
+              console.log(response.data.respJSON);
+              if (response.data.status) {
+                  // pfs = response.data.respJSON;
+                  this.profiles = response.data.respJSON;
+                  // for (let i = 0; i < pfs.length; i++) {
+                  //     this.profiles.push({
+                  //         'id' : pfs[i].user_id,
+                  //         'uid' : pfs[i].user_id,
+                  //         'name' : pfs[i].name,
+                  //         'sname' : pfs[i].sname,
+                          
+                  //     })
+                  // }
+              } 
+          })
+          .catch(function (error) {
+              console.log(error);
+          });
+  },
+  set_ven_com(){
+    let i           = this.ven_coms_index
+    this.ven_com_id = this.ven_coms[i].id
+    this.ven_month  = this.ven_coms[i].ven_month
+    this.DN         = this.ven_coms[i].DN
+    this.u_role     = this.ven_coms[i].u_role
+    this.ven_com_name = this.ven_coms[i].ven_com_name
+    this.price      = this.ven_coms[i].price
+  },
+  ven_del(id){
+    Swal.fire({
+      title: 'Are you sure?',
+      text  : "You won't be able to revert this!",
+      icon  : 'warning',
+      showCancelButton  : true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor : '#d33',
+      confirmButtonText : 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.post(this.url_base_app + './api/ven_set/ven_del.php',{id:id})
+          .then(response => {
+              console.log(response.data.respJSON);
+              if (response.data.status) {
+                icon = "success";
+                message = response.data.message;
+                this.alert(icon,message,1000)
+                this.$refs['close_modal'].click()
+                this.get_vens()
+              }else{
+                icon = "warning";
+                message = response.data.message;
+                this.alert(icon,message)
+              } 
+          })
+          .catch(function (error) {
+              console.log(error);
+          });
+      }
+    })
+    
+  },
+  close_m(){
+    this.get_vens()
+  },   
+
+  alert(icon,message,timer=0){
+    swal.fire({
+    icon: icon,
+    title: message,
+    showConfirmButton: true,
+    timer: timer
+  });
+  },
+  
+  reset_search(){
+    this.q = ''
+  }      
+}
+}).mount('#venSet')

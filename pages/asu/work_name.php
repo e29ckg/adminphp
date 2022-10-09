@@ -40,8 +40,7 @@ require_once('../../server/authen.php');
                                                 <tr>
                                                     <th colspan="2" class="text-center">
                                                         {{vn.name}}
-                                                        <span v-if="vn.DN == 'กลางวัน'">(☀️{{vn.DN}}) </span>
-                                                        <span v-if="vn.DN == 'กลางคืน'">(🌙{{vn.DN}}) </span>
+                                                        <span >({{vn.DN == 'กลางวัน' ? '☀️' : ''}}{{vn.DN == 'กลางคืน' ? '🌙' : ''}} {{vn.DN}}) </span>
                                                     </th>
                                                     <th class="text-center">
                                                         <button class="btn btn-warning btn-sm" @click="ven_name_usf(vn.id)">แก้ไขชื่อ</button>
@@ -51,7 +50,7 @@ require_once('../../server/authen.php');
                                             <tbody v-for="vns in ven_name_subs" >
                                                 <tr v-if="vn.id === vns.ven_name_id">
                                                     <th scope="row">{{vns.srt}}</th>
-                                                    <td>{{vns.name}} (💰{{vns.price}}) </td>
+                                                    <td :style="'background-color: '+vns.color+';'">{{vns.name}} ({{vns.price ? '💰'+vns.price : '' }}) {{vns.color ? vns.color : ''}} </td>
                                                     <td class="text-center">
                                                         <button class="btn btn-danger btn-sm" @click="ven_name_s_del(vns.id)">ลบ</button>
                                                     </td>
@@ -93,7 +92,7 @@ require_once('../../server/authen.php');
                                     <div class="row mb-3">                                        
                                         <div class="col mb-3">
                                             <label for="srt" class="form-label">ลำดับ</label>
-                                            <input type="number" class="form-control" id="srt" v-model="ven_name_form.srt">
+                                            <input type="number" min="1"  max="9" class="form-control" id="srt" v-model="ven_name_form.srt">
                                         </div>
                                         <div class="col mb-3">
                                             <label for="namef" class="form-label">ชื่อเวร</label>
@@ -133,7 +132,7 @@ require_once('../../server/authen.php');
                                     <div class="row mb-2">                                        
                                         <div class="col">
                                             <label for="srt" class="form-label">ลำดับ</label>
-                                            <input type="number" class="form-control" id="srt" v-model="ven_name_sub_form.srt">
+                                            <input type="number" min="1"  max="9" class="form-control" id="srt" v-model="ven_name_sub_form.srt">
                                         </div>
                                         <div class="col">
                                             <label for="namef" class="form-label">ชื่อตำแหน่ง/หน้าที่</label>
@@ -141,7 +140,11 @@ require_once('../../server/authen.php');
                                         </div>
                                         <div class="col">
                                             <label for="price" class="form-label">ค่าเวร</label>
-                                            <input type="number" class="form-control" id="price" v-model="ven_name_sub_form.price">
+                                            <input type="number" min="1" class="form-control" id="price" v-model="ven_name_sub_form.price">
+                                        </div>
+                                        <div class="col">
+                                            <label for="namefcolor" class="form-label">สี</label>
+                                            <input type="text" class="form-control" id="namefcolor" v-model="ven_name_sub_form.color">
                                         </div>
                                     </div>
                                     <div class="pull-end">

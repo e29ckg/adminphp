@@ -27,13 +27,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name           = $ven_name_sub->name;
             $ven_name_id    = $ven_name_sub->ven_name_id;
             $price          = $ven_name_sub->price;
+            $color          = $ven_name_sub->color;
             $srt            = $ven_name_sub->srt;
 
-            $sql = "INSERT INTO ven_name_sub(name, ven_name_id, price, srt) VALUE(:name, :ven_name_id, :price, :srt);";        
+            $sql = "INSERT INTO ven_name_sub(name, ven_name_id, price, color, srt) VALUE(:name, :ven_name_id, :price, :color, :srt);";        
             $query = $conn->prepare($sql);
             $query->bindParam(':name', $name, PDO::PARAM_STR);
             $query->bindParam(':ven_name_id', $ven_name_id, PDO::PARAM_INT);
             $query->bindParam(':price', $price, PDO::PARAM_INT);
+            $query->bindParam(':color', $color, PDO::PARAM_STR);
             $query->bindParam(':srt', $srt, PDO::PARAM_INT);
             $query->execute();
 
@@ -45,13 +47,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id     = $ven_name_sub->id;
             $name   = $ven_name_sub->name;
             $price   = $ven_name_sub->price;
+            $color   = $ven_name_sub->color;
             $srt    = $ven_name_sub->srt;
 
-            $sql = "UPDATE ven_name_sub SET name =:name, price=:price, srt=:srt WHERE id = :id";   
+            $sql = "UPDATE ven_name_sub SET name =:name, price=:price, color=:color, srt=:srt WHERE id = :id";   
 
             $query = $conn->prepare($sql);
             $query->bindParam(':name',$name, PDO::PARAM_STR);
             $query->bindParam(':price',$price, PDO::PARAM_INT);
+            $query->bindParam(':color',$color, PDO::PARAM_INT);
             $query->bindParam(':srt',$srt, PDO::PARAM_INT);
             $query->bindParam(':id',$id, PDO::PARAM_INT);
             $query->execute();         
@@ -75,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }catch(PDOException $e){
         echo "Faild to connect to database" . $e->getMessage();
         http_response_code(400);
-        echo json_encode(array('status' => false, 'massege' => 'เกิดข้อผิดพลาด..' . $e->getMessage()));
+        echo json_encode(array('status' => false, 'message' => 'เกิดข้อผิดพลาด..' . $e->getMessage()));
     }
 }
 

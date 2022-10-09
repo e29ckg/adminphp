@@ -9,7 +9,7 @@ Vue.createApp({
       },
       ven_name_form_act:'insert',
       ven_name_subs   :'',
-      ven_name_sub_form : {name : '', price:''},
+      ven_name_sub_form : {name : '', price:'',color:''},
       ven_name_sf_act:'insert',
       isLoading : false,
     }
@@ -162,7 +162,7 @@ Vue.createApp({
       })      
     },
     clear_vnsf(){
-      this.ven_name_sub_form = {name : '', price:'',act:'insert'}
+      this.ven_name_sub_form = {name : '', price:'',color:'', act:'insert'}
     },
     ven_name_update_show_form(id){
       this.ven_name_form_act = 'update'
@@ -191,7 +191,8 @@ Vue.createApp({
           })
     }else{
       const message = []
-      if(this.ven_name_sub_form.name == '' &&this.ven_name_sub_form.price == ''){message.push('กรุณากรอกข้อมูลให้ครบ')}      
+      if(this.ven_name_sub_form.name == ''){message.push('ชื่อตำแหน่ง/หน้าที่')} 
+      if(this.ven_name_sub_form.price == ''){message.push('ค่าเวร')} 
       this.alert('warning',message,0)
     }
     },
@@ -215,7 +216,7 @@ Vue.createApp({
                       let icon = 'success' 
                       this.alert(icon,response.data.message,1000)
                       this.$refs.close_ven_name_form.click()
-                      this.ven_name_sub_form = {name : '', price:''}
+                      this.ven_name_sub_form = {name : '', price:'', color:''}
                     }else{
                       let icon = 'warning' 
                       let message = response.data.message

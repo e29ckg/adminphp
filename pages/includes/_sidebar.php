@@ -26,13 +26,18 @@
                         <i class="bi bi-stack"></i>
                         <span>อำนวยการ</span>
                     </a>
-                    <ul class="submenu <?php echo isActive('asu') ?>">
-                        
-                        <li class="submenu-item <?php echo isActiveFile('user_ven') ?>">
-                            <a href="../asu/user_ven.php">เตรียมคนอยู่เวร</a>
-                        </li>
+                    <ul class="submenu <?php echo isActive('asu') ?>">                        
                         <li class="submenu-item <?php echo isActiveFile('work_name') ?>">
                             <a href="../asu/work_name.php">ชื่อเวร/กลุ่มหน้าที่</a>
+                        </li>
+                        <li class="submenu-item <?php echo isActiveFile('user_ven') ?>">
+                            <a href="../asu/user_ven.php">เตรียมผู้อยู่เวร</a>
+                        </li>
+                        <li class="submenu-item <?php echo isActiveFile('ven_com') ?>">
+                            <a href="../asu/ven_com.php">เพิ่มคำสั่ง</a>
+                        </li>
+                        <li class="submenu-item <?php echo isActiveFile('ven_set') ?>">
+                            <a href="../asu/ven_set.php" target="_blank">จัดเวร</a>
                         </li>
                         
                         

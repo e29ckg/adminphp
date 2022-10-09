@@ -20,19 +20,31 @@ require_once('../../server/authen.php');
             </header>
 
             <div class="page-heading">
-                <h3>เตรียมคนอยู่เวร</h3>
+                <h3>เตรียมผู้อยู่เวร</h3>
             </div>
-
-            <div class="page-content" id="userVen" v-cloak>               
-                <section class="row" v-for="vn in ven_names">
-                    <div v-for="vns in ven_name_subs" >                         
+            
+            <div class="page-content" id="userVen" v-cloak>                 
+                <!-- {{ven_names}}             -->
+                <!-- {{ven_name_subs}}             -->
+                <!-- {{ven_users}}             -->
+                <!-- {{users}} -->
+                <section class="row" v-for="vn,vni in ven_names">
+                    <div v-for="vns, vnsi in ven_name_subs" >                         
                         <div class="col" >
                             <div class="card-body" v-if="vn.id == vns.ven_name_id">
-                                <h5 class="card-title" v-if="vn.DN == 'กลางวัน'">{{vn.name}} (☀️{{vn.DN}}) {{vns.name}} </h5>
-                                <h5 class="card-title" v-if="vn.DN == 'กลางคืน'">{{vn.name}} (🌙{{vn.DN}}) {{vns.name}} </h5>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item" >นายพเยาว์ สนพลาย ลบ</li>
-                                    <li class="list-group-item"><button class="btn btn-success" @click="vu_add">เพิ่ม</button></li>
+                                <h5 class="card-title" :style="'background-color: '+vns.color+' ;'" >{{vn.name}} ({{vn.DN == 'กลางวัน' ? '☀️' : '🌙'}} {{vn.DN}}) {{vns.name}} </h5>
+                                <ul class="list-group list-group-flush"  >
+                                    <div v-for="vu in ven_users">
+                                        <li class="list-group-item" v-if="vu.ven_name == vn.name && vns.name == vu.uvn">
+                                            {{vu.order + ' ' +vu.u_name + ' '}}  
+                                            <!-- {{vu.id}}  -->
+                                            <button @click="vu_del(vu.id)" class="btn btn-danger btn-sm">ลบ</button>
+                                        </li>
+                                    </div>
+                                    <li class="list-group-item"><button class="btn btn-success" @click="vu_add(vni,vnsi)">เพิ่ม</button></li>
+                                </ul>
+                                <ul>
+
                                 </ul>
                             </div>
 
@@ -54,24 +66,19 @@ require_once('../../server/authen.php');
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="clear_vu_form" ref="close_vu"></button>
                             </div>
                             <div class="modal-body">
+                                <!-- {{vu_form}} -->
                                 <form @submit.prevent="vu_save">                                    
                                     <div class="row mb-3">                                        
                                         <div class="col mb-3">
                                             <label for="srt" class="form-label">ลำดับ</label>
-                                            <!-- <input type="number" class="form-control" id="srt" v-model="ven_name_form.srt"> -->
+                                            <input type="number" min="1" class="form-control" id="srt" v-model="vu_form.order">
                                         </div>
                                         <div class="col mb-3">
-                                            <label for="namef" class="form-label">ชื่อเวร</label>
-                                            <!-- <input type="text" class="form-control" id="namef" v-model="ven_name_form.name"> -->
-                                        </div>
-                                        <div class="col mb-3">
-                                            <label for="DN" class="form-label">กลางวัน/กลางคืน</label>
-                                            <!-- <input type="text" class="form-control" id="DN" v-model="ven_name_form.DN"> -->
-                                            <!-- <select class="form-select" aria-label="Default select example" v-model="ven_name_form.DN">
-                                                <option value="กลางวัน">กลางวัน</option>
-                                                <option value="กลางคืน">กลางคืน</option>
-                                            </select> -->
-                                        </div>
+                                            <label for="nameuf" class="form-label">ชื่อ</label>
+                                            <select class="form-select" aria-label="Default select example" v-model="vu_form.user_id" >
+                                                <option v-for="u,ui in users" :value="u.uid" >{{u.name}}</option>
+                                            </select>
+                                        </div>                                        
                                     </div>
                                     <div class="d-grid gap-2">
                                         <!-- <button type="button" class="col-auto me-auto btn btn-danger" v-if="vu_form_act !='insert'" @click.prevent="ven_name_del()">ลบ {{ven_name_form.id}}</button> -->
@@ -83,6 +90,7 @@ require_once('../../server/authen.php');
                         </div>
                     </div>
                 </div>
+
 
             </div>
 
