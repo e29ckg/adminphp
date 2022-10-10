@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 10, 2022 at 02:23 AM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 7.3.29
+-- Generation Time: Oct 10, 2022 at 12:35 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -441,16 +441,20 @@ INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_res
 CREATE TABLE `ven` (
   `id` int(11) NOT NULL,
   `ven_date` date NOT NULL,
-  `ven_time` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ven_time` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `DN` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `ven_month` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ven_month` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `ven_com_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `user_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `file` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
+  `user_id` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`user_id`)),
   `comment` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `gcal_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ven_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ven_com_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `file` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ref1` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ref2` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
   `create_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -458,22 +462,16 @@ CREATE TABLE `ven` (
 -- Dumping data for table `ven`
 --
 
-INSERT INTO `ven` (`id`, `ven_date`, `ven_time`, `DN`, `ven_month`, `ven_com_id`, `user_id`, `file`, `status`, `comment`, `ref1`, `ref2`, `create_at`) VALUES
-(1664610391, '2022-10-07', '08:30:02', 'กลางวัน', '2022-10', '1663174000', '1566445991', NULL, 1, NULL, 'eC42TqsrHWAGnpZb8j1F', 'N7AMGxT2ZjH6tBY5qubW', '2022-10-01 09:46:31'),
-(1664610396, '2022-10-08', '08:30:02', 'กลางวัน', '2022-10', '1663174000', '1663499891', NULL, 1, NULL, '7OBGt96uKf24ncP0EgCF', 'N7AMGxT2ZjH6tBY5qubW', '2022-10-01 09:46:36'),
-(1664610400, '2022-10-09', '08:30:02', 'กลางวัน', '2022-10', '1663174000', '1663280470', NULL, 1, NULL, 'Nr8TtR0OWd4Zv7PfLoIK', 'N7AMGxT2ZjH6tBY5qubW', '2022-10-01 09:46:40'),
-(1664644893, '2022-10-13', '08:30:00', 'กลางวัน', '2022-10', '1663173998', '1566445991', NULL, 1, '', 'LqPrXUGMBdTSsgRCDdtgr8vsuE3VSp2F', 'd42Sbax3fFJWtBAHDQ6m', '2022-09-29 00:00:00'),
-(1664644925, '2022-10-14', '08:30:02', 'กลางวัน', '2022-10', '1663174000', '1566445991', NULL, 1, NULL, 'kS1piqBmN89KubrIsf5W', 'N7AMGxT2ZjH6tBY5qubW', '2022-10-01 19:22:05'),
-(1664644928, '2022-10-15', '08:30:02', 'กลางวัน', '2022-10', '1663174000', '1663499891', NULL, 1, NULL, '74NJs5GnSLdClfH8OTRP', 'N7AMGxT2ZjH6tBY5qubW', '2022-10-01 19:22:08'),
-(1664644931, '2022-10-16', '08:30:02', 'กลางวัน', '2022-10', '1663174000', '1663280470', NULL, 1, NULL, 'LBCkhDnE7zZb1iXFa46m', 'N7AMGxT2ZjH6tBY5qubW', '2022-10-01 19:22:11'),
-(1664644942, '2022-10-17', '08:30:03', 'กลางวัน', '2022-10', '1663174006', '1566445991', NULL, 1, NULL, 'mDKOg26lEcb57iLPxpUe', 'r7v6wD5W4HfUtViGLBEx', '2022-10-01 19:22:22'),
-(1664644947, '2022-10-18', '08:30:03', 'กลางวัน', '2022-10', '1663174006', '1566445991', NULL, 1, NULL, 'VyNu9I8m4dDr0UaonZs6', 'r7v6wD5W4HfUtViGLBEx', '2022-10-01 19:22:27'),
-(1664644952, '2022-10-19', '08:30:03', 'กลางวัน', '2022-10', '1663174006', '1663499891', NULL, 1, NULL, 'sxvm4I9SXGPV2lzO3T6E', 'r7v6wD5W4HfUtViGLBEx', '2022-10-01 19:22:32'),
-(1664718548, '2022-10-07', '08:30:01', 'กลางวัน', '2022-10', '1663174005', '9', NULL, 1, NULL, 'AK8wzUhupCNebo2JvWxD', 'dUhk2WvAcnDzG7Mu690N', '2022-10-02 15:49:08'),
-(1664977756, '2022-10-05', '08:30:02', 'กลางวัน', '2022-10', '1663174000', '1566445991', NULL, 1, NULL, '8ZDufSm5MjconzVyx6PG', 'N7AMGxT2ZjH6tBY5qubW', '2022-10-05 15:49:16'),
-(1664977834, '2022-10-05', '08:30:01', 'กลางวัน', '2022-10', '1663174005', '9', NULL, 1, NULL, '1AdGZlC7T9frRJ0csxMp', 'dUhk2WvAcnDzG7Mu690N', '2022-10-05 15:50:34'),
-(1664977981, '2022-10-02', '08:30:03', 'กลางวัน', '2022-10', '1663174006', '9', NULL, 1, NULL, 'xF0l7aX8TwIotOK5mL6Q', 'r7v6wD5W4HfUtViGLBEx', '2022-10-05 15:53:01'),
-(1665338449, '2022-11-08', NULL, NULL, '2022-11', '1665336100', '9', NULL, 1, NULL, '8WRyrApnDgISlJMPZXti', 'B5dtFORnaNmc8iZf27IQ', '2022-10-09 20:00:49');
+INSERT INTO `ven` (`id`, `ven_date`, `ven_time`, `DN`, `ven_month`, `ven_com_id`, `user_id`, `comment`, `gcal_id`, `ven_name`, `ven_com_name`, `file`, `ref1`, `ref2`, `price`, `status`, `create_at`) VALUES
+(1665383505, '2022-11-05', '08:30:11', 'กลางวัน', '2022-11', '[1665333961,1665333907]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'AhS4iRbW7dTnXGHsklpy', 'iU1yejWnhGAzH7qIDawv', NULL, 2, '2022-10-10 01:31:45'),
+(1665386631, '2022-11-09', '08:30:11', 'กลางวัน', '2022-11', '[1665333907,1665360756]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'Ih1OC4UE3RQYgLmk7azf', 'KqoVngcCIHQWu0RmO9b2', NULL, 2, '2022-10-10 02:23:51'),
+(1665386812, '2022-11-10', '08:30:11', 'กลางวัน', '2022-11', '[1665360756,1665333907]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'cjGvlDXQO6MZweIYknbC', 'wZXzUfKO4jLQmAd72JyM', NULL, 2, '2022-10-10 02:26:52'),
+(1665386877, '2022-11-08', '08:30:11', 'กลางวัน', '2022-11', '[1665333907,1665360756]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'IlNOqQdW4Z9RwgTcByMu', 'nhKtV2zcoUuRvFbBPA61', NULL, 2, '2022-10-10 02:27:57'),
+(1665389470, '2022-11-11', '08:30:11', 'กลางวัน', '2022-11', '[1665360756,1665333907,1665333961]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'jhu5oz2w1S0G6cYHamOX', 'fsAmb9JqIkrWRCFjZhiu', NULL, 2, '2022-10-10 03:11:10'),
+(1665389572, '2022-11-12', '16:30:42', 'กลางคืน', '2022-11', '[1665333907,1665360756]', '1665156263', NULL, NULL, 'ค้น จับ', '', NULL, 's9fgqTCK3EnDt50jlaw8', 'jblod7P5ktUI98szENuc', NULL, 2, '2022-10-10 03:12:52'),
+(1665392518, '2022-11-18', '08:30:11', 'กลางวัน', '2022-11', '[1665360756]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'yuCPYmkKvi1qBIO5e68s', 'HaFpLB0fOu8cxIPUMnAR', NULL, 2, '2022-10-10 04:01:58'),
+(1665392573, '2022-11-19', '16:30:42', 'กลางคืน', '2022-11', '[1665333961]', '9', NULL, NULL, 'ค้น จับ', '', NULL, '5rEG3bCLf9ASNj4hqQ2W', '7qOu6tChsFQDcewZAlmf', NULL, 2, '2022-10-10 04:02:53'),
+(1665392588, '2022-11-18', '16:30:42', 'กลางคืน', '2022-11', '[1665333961]', '9', NULL, NULL, 'ค้น จับ', '', NULL, 'Hrmtyd7MS59usUAe3gG1', '7qOu6tChsFQDcewZAlmf', NULL, 2, '2022-10-10 04:03:08');
 
 -- --------------------------------------------------------
 
@@ -539,10 +537,9 @@ CREATE TABLE `ven_com` (
 --
 
 INSERT INTO `ven_com` (`id`, `ven_com_num`, `ven_com_date`, `ven_month`, `ven_com_name`, `status`, `ven_name`, `DN`, `u_role`, `price`, `color`, `comment`, `file`, `ref`, `create_at`) VALUES
-(1665333907, '1222', '2022-10-09', '2022-11', '222', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'oCEVAQtdf23HiZUypLMW', NULL),
-(1665333961, '12455', '2022-10-09', '2022-11', '111', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '7qOu6tChsFQDcewZAlmf', NULL),
-(1665360756, 'ddd', '2022-10-10', '2022-11', 'ddd', '1', 'ฟื้นฟู/ปล่อยตัวชั่วคราว', NULL, NULL, NULL, NULL, NULL, NULL, 'HaFpLB0fOu8cxIPUMnAR', NULL),
-(1665360851, '154/65', '2022-10-10', '2022-11', '', '1', 'ฟื้นฟู/ปล่อยตัวชั่วคราว', NULL, NULL, NULL, NULL, NULL, NULL, 'qnHBm0uCoagfGs7rv9Sy', NULL);
+(1665333907, '1222', '2022-10-09', '2022-11', 'ฟื้นฟู', '1', 'ฟื้นฟู/ปล่อยตัวชั่วคราว', NULL, NULL, NULL, NULL, NULL, NULL, 'oCEVAQtdf23HiZUypLMW', NULL),
+(1665333961, '12455', '2022-10-09', '2022-11', 'ค้น จับ', '1', 'ค้น จับ', NULL, NULL, NULL, NULL, NULL, NULL, '7qOu6tChsFQDcewZAlmf', NULL),
+(1665360756, 'ddd', '2022-10-10', '2022-11', 'ddd', '1', 'เวรแขวง', NULL, NULL, NULL, NULL, NULL, NULL, 'HaFpLB0fOu8cxIPUMnAR', NULL);
 
 -- --------------------------------------------------------
 
@@ -1077,7 +1074,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `ven`
 --
 ALTER TABLE `ven`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1665338450;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1665392589;
 
 --
 -- AUTO_INCREMENT for table `ven_change`
