@@ -268,7 +268,7 @@ Vue.createApp({
     
   }, 
   event_drop(id,start){
-    axios.post(this.url_base_app + './api/ven_set/ven_move.php',{id:id,start:start})
+    axios.post('../../server/asu/ven_move.php',{id:id,start:start})
     .then(response => {
         console.log(response.data.respJSON);
         if (response.data.status) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 10, 2022 at 12:52 PM
+-- Generation Time: Oct 10, 2022 at 01:29 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.3.29
 
@@ -463,14 +463,16 @@ CREATE TABLE `ven` (
 --
 
 INSERT INTO `ven` (`id`, `ven_date`, `ven_time`, `DN`, `ven_month`, `ven_com_id`, `user_id`, `comment`, `gcal_id`, `ven_name`, `ven_com_name`, `file`, `ref1`, `ref2`, `price`, `status`, `create_at`) VALUES
-(1665383505, '2022-11-05', '08:30:11', 'กลางวัน', '2022-11', '[1665333961,1665333907]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'AhS4iRbW7dTnXGHsklpy', 'iU1yejWnhGAzH7qIDawv', NULL, 2, '2022-10-10 01:31:45'),
-(1665386631, '2022-11-09', '08:30:11', 'กลางวัน', '2022-11', '[1665333907,1665360756]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'Ih1OC4UE3RQYgLmk7azf', 'KqoVngcCIHQWu0RmO9b2', NULL, 2, '2022-10-10 02:23:51'),
-(1665386812, '2022-11-10', '08:30:11', 'กลางวัน', '2022-11', '[1665360756,1665333907]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'cjGvlDXQO6MZweIYknbC', 'wZXzUfKO4jLQmAd72JyM', NULL, 2, '2022-10-10 02:26:52'),
-(1665386877, '2022-11-08', '08:30:11', 'กลางวัน', '2022-11', '[1665333907,1665360756]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'IlNOqQdW4Z9RwgTcByMu', 'nhKtV2zcoUuRvFbBPA61', NULL, 2, '2022-10-10 02:27:57'),
-(1665389470, '2022-11-11', '08:30:11', 'กลางวัน', '2022-11', '[1665360756,1665333907]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'jhu5oz2w1S0G6cYHamOX', 'fsAmb9JqIkrWRCFjZhiu', NULL, 2, '2022-10-10 03:11:10'),
+(1665383505, '2022-11-10', '08:30:11', 'กลางวัน', '2022-11', '[1665333961,1665333907]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'AhS4iRbW7dTnXGHsklpy', 'iU1yejWnhGAzH7qIDawv', NULL, 2, '2022-10-10 01:31:45'),
+(1665386631, '2022-11-10', '08:30:11', 'กลางวัน', '2022-11', '[1665333907,1665360756]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'Ih1OC4UE3RQYgLmk7azf', 'KqoVngcCIHQWu0RmO9b2', NULL, 2, '2022-10-10 02:23:51'),
+(1665386812, '2022-11-10', '08:30:11', 'กลางวัน', '2022-11', '[1665333907]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'cjGvlDXQO6MZweIYknbC', 'wZXzUfKO4jLQmAd72JyM', NULL, 2, '2022-10-10 02:26:52'),
+(1665386877, '2022-11-10', '08:30:11', 'กลางวัน', '2022-11', '[1665333907,1665360756]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'IlNOqQdW4Z9RwgTcByMu', 'nhKtV2zcoUuRvFbBPA61', NULL, 2, '2022-10-10 02:27:57'),
+(1665389470, '2022-11-12', '08:30:11', 'กลางวัน', '2022-11', '[1665360756,1665333907]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'jhu5oz2w1S0G6cYHamOX', 'fsAmb9JqIkrWRCFjZhiu', NULL, 2, '2022-10-10 03:11:10'),
 (1665389572, '2022-11-12', '16:30:42', 'กลางคืน', '2022-11', '[1665333961]', '1665156263', NULL, NULL, 'ค้น จับ', '', NULL, 's9fgqTCK3EnDt50jlaw8', 'jblod7P5ktUI98szENuc', NULL, 2, '2022-10-10 03:12:52'),
 (1665392518, '2022-11-18', '08:30:11', 'กลางวัน', '2022-11', '[1665360756]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'yuCPYmkKvi1qBIO5e68s', 'HaFpLB0fOu8cxIPUMnAR', NULL, 2, '2022-10-10 04:01:58'),
-(1665398367, '2022-11-08', '08:30:11', 'กลางวัน', '2022-11', '[1665360756,1665333907]', '1665157498', NULL, NULL, 'เวรแขวง', '', NULL, '2dYmq9N3LD0ioZQkM5ru', 'HaFpLB0fOu8cxIPUMnAR', NULL, 2, '2022-10-10 05:39:27');
+(1665398367, '2022-11-08', '08:30:11', 'กลางวัน', '2022-11', '[1665360756,1665333907]', '1665157498', NULL, NULL, 'เวรแขวง', '', NULL, '2dYmq9N3LD0ioZQkM5ru', 'HaFpLB0fOu8cxIPUMnAR', NULL, 2, '2022-10-10 05:39:27'),
+(1665400352, '2022-11-12', '08:30:12', 'กลางวัน', '2022-11', '[1665360756]', '1663499891', NULL, NULL, 'เวรแขวง', '', NULL, 'J6mbzAdXOwyMpNvZ8jhI', 'HaFpLB0fOu8cxIPUMnAR', NULL, 2, '2022-10-10 06:12:32'),
+(1665400844, '2022-10-06', '08:30:11', 'กลางวัน', '2022-10', '[\"\"]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'xyhbpgM79XW1PIwqmaU3', '', NULL, 2, '2022-10-10 06:20:44');
 
 -- --------------------------------------------------------
 
@@ -1073,7 +1075,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `ven`
 --
 ALTER TABLE `ven`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1665398866;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1665400845;
 
 --
 -- AUTO_INCREMENT for table `ven_change`

@@ -20,7 +20,7 @@ $datas = array();
     try{
         $ven_month  = $data->ven_month;
 
-        $sql = "SELECT * FROM ven_com WHERE ven_month='$ven_month' AND status = 1 ORDER BY id ASC";
+        $sql = "SELECT * FROM ven_com WHERE ven_month='$ven_month' AND `status` = 1 ORDER BY id ASC";
         $query = $conn->prepare($sql);
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_OBJ);

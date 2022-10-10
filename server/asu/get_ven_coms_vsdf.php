@@ -21,7 +21,7 @@ $datas = array();
         $ven_month  = $data->ven_month;
         $ven_name  = $data->ven_name;
 
-        $sql = "SELECT * FROM ven_com WHERE ven_month='$ven_month' AND ven_name='$ven_name' AND status = 1";
+        $sql = "SELECT * FROM ven_com WHERE ven_month='$ven_month' AND ven_name='$ven_name' AND `status` = 1";
         $query = $conn->prepare($sql);
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_OBJ);
