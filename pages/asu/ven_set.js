@@ -34,29 +34,31 @@ Vue.createApp({
         ven_time: '',
         DN: '',
         ven_month: '',
-        ven_com_id: '',
+        ven_com_id: [],
         st: '',
     },
     profiles:[],
-
     ven_name_index :'',
     ven_name :'',
     ven_names :'',
     ven_name_sub :'',
     ven_name_subs :'',
     sel_ven_month : [],
-
+    
     ven_coms  :[],
     ven_coms_index:'',
+    ven_com_df : '',            //defalt
 
-    ven_com_id  : '',
+    // ven_com_id  : '',
     ven_month   : '',
     ven_time    : '',
-    ven_com_name : '',
+    ven_com_name : [],
     ven_com_num : '',
+    ven_com_id : [],
     DN          : '',
     u_role      : '',
     price       : '',
+    ref         : '',
 
     label_message : '<--กรุณาเลือกคำสั่ง',
     isLoading : false,
@@ -69,7 +71,7 @@ Vue.createApp({
     this.ven_month = new Date();
     this.get_vens()
     // this.get_ven_names()
-    this.get_ven_coms()
+    // this.get_ven_coms()
     this.get_ven_month1()
     
   },
@@ -98,13 +100,16 @@ Vue.createApp({
       this.cal_render()
       this.get_ven_names()
       this.ven_name_index = ''
-      this.ven_name = ''
-      this.ven_name_sub = ''
-      this.profiles = ''
+      this.ven_name       = ''
+      this.ven_name_sub   = ''
+      this.profiles       = ''
+      this.ven_com_id = []
     },
     ch_sel_ven_name(ven_name_index){
       this.ven_name_sub = ''
       this.profiles = []
+      this.get_ven_coms()
+      // this.get_ven_com_df()
       // console.log(ven_name_index)
       this.ven_names[ven_name_index].id
       this.ven_name = this.ven_names[ven_name_index].name
@@ -194,7 +199,8 @@ Vue.createApp({
           },
           droppable: true,
           drop: (info)=> {
-              this.drop_insert(info.draggedEl.dataset.uid,info.dateStr)  
+            // console.log(info.draggedEl.dataset)
+              this.drop_insert(info.draggedEl.dataset.uid, info.dateStr)  
           }
       });
       calendar.render(); 
@@ -205,8 +211,11 @@ Vue.createApp({
         .then(response => {
           console.log(response.data);
           if (response.data.status) {
-            this.data_event = response.data.respJSON[0]
+            this.data_event = response.data.respJSON
+            this.data_event.ven_com_id = JSON.parse(response.data.respJSON.ven_com_id)
             this.$refs['show_modal'].click()
+            this.ven_month = response.data.respJSON.ven_month
+            this.get_ven_coms()
 
           } else{
             let icon    = 'warning'
@@ -219,14 +228,21 @@ Vue.createApp({
       console.log(error);
 
     });
-
+    
   },
-  drop_insert(uid,dateStr){
-    if(this.ven_com_id){
-      axios.post(this.url_base_app + '/api/ven_set/ven_insert.php',{
+  drop_insert(uid,dateStr){    
+      axios.post('../../server/asu/ven_insert.php',{
                           uid         : uid,
                           ven_date    : dateStr,
-                          ven_com_id  : this.ven_com_id
+                          ven_time    : this.ven_time,
+                          DN          : this.DN,
+                          ven_month   : this.ven_month,
+                          ven_com_id  : this.ven_com_id,
+                          ven_name    : this.ven_name,
+                          ven_name    : this.ven_name,
+                          ven_com_num : this.ven_com_num,
+                          price       : this.price,
+                          act         : 'insert'
                         })
           .then(response => {
               console.log(response.data);
@@ -250,13 +266,7 @@ Vue.createApp({
               console.log(error);
               
             });
-    }else{
-      let icon    = 'warning'
-      let message = []
-      if(this.ven_com_id==''){message.push('กรุณาเลือกคำสั่ง')}            
-      this.alert(icon,message,0)
-      this.get_vens()
-    }
+    
     
   }, 
   event_drop(id,start){
@@ -299,9 +309,9 @@ Vue.createApp({
     });
   },
   get_ven_coms(){
-    axios.get(this.url_base_app + './api/ven_set/get_ven_coms.php')
+    axios.post('../../server/asu/get_ven_coms_vs.php',{ven_month:this.ven_month})
     .then(response => {
-        console.log(response.data.respJSON);
+        // console.log(response.data.respJSON);
         if (response.data.status) {
             this.ven_coms = response.data.respJSON;
         } 
@@ -310,54 +320,83 @@ Vue.createApp({
         console.log(error);
     });
   },
-  sel_vem_com(ven_com_index){
-    let vci = this.ven_coms[ven_com_index].id
-    console.log(vci)
-    // this.get_profiles()
-    axios.post(this.url_base_app + './api/ven_set/get_users.php',{ven_com_id:vci})
-          .then(response => {
-              console.log(response.data.respJSON);
-              if (response.data.status) {
-                  // pfs = response.data.respJSON;
-                  this.profiles = response.data.respJSON;
+  ven_save(){
+    axios.post('../../server/asu/ven_up_vcid.php',{data_event:this.data_event})
+    .then(response => {
+        console.log(response.data.respJSON);
+        if (response.data.status) {
+          this.get_vens()
+          this.cal_render()
+          this.alert('success',response.data.message,1000)
+          // this.$refs['close_modal'].click()
+        } 
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+  },
+  // get_ven_com_df(){
+  //   this.ven_com_id = []
+  //   axios.post('../../server/asu/get_ven_coms_vsdf.php',{ven_month:this.ven_month, ven_name:this.ven_name})
+  //   .then(response => {
+  //       console.log(response.data.respJSON);
+  //       if (response.data.status) {
+  //           this.ven_com_df = response.data.respJSON;
+  //           this.ven_com_id = response.data.respJSON[0].id  
+  //       } 
+  //   })
+  //   .catch(function (error) {
+  //       console.log(error);
+  //   });
+  // },
+  // sel_vem_com(ven_com_index){
+  //   let vci = this.ven_coms[ven_com_index].id
+  //   console.log(vci)
+  //   // this.get_profiles()
+  //   axios.post(this.url_base_app + './api/ven_set/get_users.php',{ven_com_id:vci})
+  //         .then(response => {
+  //             console.log(response.data.respJSON);
+  //             if (response.data.status) {
+  //                 // pfs = response.data.respJSON;
+  //                 this.profiles = response.data.respJSON;
                   
-              } 
-          })
-          .catch(function (error) {
-              console.log(error);
-          });
-  },
-  get_profiles(){
-      axios.post(this.url_base_app + './api/ven_set/get_users.php',{ven_com_id:this.ven_com_id})
-          .then(response => {
-              console.log(response.data.respJSON);
-              if (response.data.status) {
-                  // pfs = response.data.respJSON;
-                  this.profiles = response.data.respJSON;
-                  // for (let i = 0; i < pfs.length; i++) {
-                  //     this.profiles.push({
-                  //         'id' : pfs[i].user_id,
-                  //         'uid' : pfs[i].user_id,
-                  //         'name' : pfs[i].name,
-                  //         'sname' : pfs[i].sname,
+  //             } 
+  //         })
+  //         .catch(function (error) {
+  //             console.log(error);
+  //         });
+  // },
+  // get_profiles(){
+  //     axios.post(this.url_base_app + './api/ven_set/get_users.php',{ven_com_id:this.ven_com_id})
+  //         .then(response => {
+  //             console.log(response.data.respJSON);
+  //             if (response.data.status) {
+  //                 // pfs = response.data.respJSON;
+  //                 this.profiles = response.data.respJSON;
+  //                 // for (let i = 0; i < pfs.length; i++) {
+  //                 //     this.profiles.push({
+  //                 //         'id' : pfs[i].user_id,
+  //                 //         'uid' : pfs[i].user_id,
+  //                 //         'name' : pfs[i].name,
+  //                 //         'sname' : pfs[i].sname,
                           
-                  //     })
-                  // }
-              } 
-          })
-          .catch(function (error) {
-              console.log(error);
-          });
-  },
-  set_ven_com(){
-    let i           = this.ven_coms_index
-    this.ven_com_id = this.ven_coms[i].id
-    this.ven_month  = this.ven_coms[i].ven_month
-    this.DN         = this.ven_coms[i].DN
-    this.u_role     = this.ven_coms[i].u_role
-    this.ven_com_name = this.ven_coms[i].ven_com_name
-    this.price      = this.ven_coms[i].price
-  },
+  //                 //     })
+  //                 // }
+  //             } 
+  //         })
+  //         .catch(function (error) {
+  //             console.log(error);
+  //         });
+  // },
+  // set_ven_com(){
+  //   let i           = this.ven_coms_index
+  //   this.ven_com_id = this.ven_coms[i].id
+  //   this.ven_month  = this.ven_coms[i].ven_month
+  //   this.DN         = this.ven_coms[i].DN
+  //   this.u_role     = this.ven_coms[i].u_role
+  //   this.ven_com_name = this.ven_coms[i].ven_com_name
+  //   this.price      = this.ven_coms[i].price
+  // },
   ven_del(id){
     Swal.fire({
       title: 'Are you sure?',
@@ -369,7 +408,7 @@ Vue.createApp({
       confirmButtonText : 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.post(this.url_base_app + './api/ven_set/ven_del.php',{id:id})
+        axios.post('../../server/asu/ven_del.php',{id:id})
           .then(response => {
               console.log(response.data.respJSON);
               if (response.data.status) {

@@ -125,7 +125,9 @@
 <body>
 <div id="venSet">
   <div id='external-events2'>
-  {{ven_month}} |{{ven_name_index}} {{ven_name}} | {{ven_name_sub}} | {{DN}} | {{price}} | {{ven_time}}
+  {{ven_month}} |{{ven_name_index}} {{ven_name}} | {{ven_name_sub}} | {{DN}} | 
+  {{price}} | {{ven_time}} | 
+  <!-- {{ven_coms}} {{ven_com_id}} -->
   </div>
   <div id='external-events'>
     <form >
@@ -148,10 +150,10 @@
       
     </p>
     
-    <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event' v-for="pf,index in profiles" :data-event="pf.data_event" :data-uid="pf.uid">
+    <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event' v-for="pf,index in profiles" :data-event="pf.data_event" :data-uid="pf.user_id">
       <div class='fc-event-main'>{{index + 1}} {{pf.u_name}}</div>
     </div>    
-       
+       {{profiles}}
 
   </div>
   
@@ -185,27 +187,43 @@
               <tbody>
                 <tr>
                   <th scope="row">id</th>
-                  <!-- <td>{{data_event.id}}</td> -->
+                  <td>{{data_event.id}}</td>
                 </tr>
                 <tr>
                   <th scope="row">วันที่ เวลา</th>
-                  <!-- <td>{{data_event.ven_date}} เวลา {{data_event.ven_time}} น.</td> -->
+                  <td>{{data_event.ven_date}} เวลา {{data_event.ven_time}} น.</td>
                 </tr>
                 <tr>
-                  <th scope="row">เวร</th>
-                  <!-- <td>{{data_event.u_role}} | {{data_event.DN}} | {{data_event.ven_com_name}} <br>{{data_event.ven_com_num}} | {{data_event.price}}</td> -->
+                  <th scope="row">เวรตั้งต้น</th>
+                  <td>{{data_event.ven_name}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">คำสั่ง</th>
+                  <td>{{data_event.u_role}} | {{data_event.DN}} | {{data_event.ven_com_name}} <br>{{data_event.ven_com_num}} | {{data_event.price}}</td>
+                </tr>
+                <tr v-for="vc,i in ven_coms">
+                  <td></td>
+                  <td>
+                    <input type="checkbox"  :id="i" name="ckb" :value="vc.id" v-model="data_event.ven_com_id" @change.prevent="ven_save()">
+                    <label :for="i"> {{vc.id + ' ' +vc.ven_com_name+' '+i}}</label><br>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">ชื่อผู้อยู่</th>
-                  <!-- <td>{{data_event.fname}}{{data_event.name}} {{data_event.sname}}</td> -->
+                  <td>{{data_event.fname}}{{data_event.name}} {{data_event.sname}}</td>
                 </tr>
                 
               </tbody>
             </table>
+            <!-- {{ven_coms}} -->
+            {{data_event}}
           </div>
           <div class="row">
             <div>
               <button @click="ven_del(data_event.id)" class="btn btn-danger">ลบ</button>
+            </div>
+            <div>
+              <!-- <button @click="ven_save()" class="btn btn-primary">save</button> -->
             </div>
             <!-- <div class="float-right"> -->
               <!-- <button type="button" class="btn btn-success float-right" data-bs-dismiss="modal" aria-label="Close" ref="close_modal" @click="close_m()">ยกเลิก</button> -->
