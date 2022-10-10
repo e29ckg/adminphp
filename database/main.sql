@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2022 at 10:02 PM
+-- Generation Time: Oct 10, 2022 at 02:23 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.3.29
 
@@ -523,7 +523,7 @@ CREATE TABLE `ven_com` (
   `ven_month` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ven_com_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `ven_time` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ven_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `DN` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
   `u_role` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
   `price` int(10) DEFAULT NULL,
@@ -538,11 +538,11 @@ CREATE TABLE `ven_com` (
 -- Dumping data for table `ven_com`
 --
 
-INSERT INTO `ven_com` (`id`, `ven_com_num`, `ven_com_date`, `ven_month`, `ven_com_name`, `status`, `ven_time`, `DN`, `u_role`, `price`, `color`, `comment`, `file`, `ref`, `create_at`) VALUES
+INSERT INTO `ven_com` (`id`, `ven_com_num`, `ven_com_date`, `ven_month`, `ven_com_name`, `status`, `ven_name`, `DN`, `u_role`, `price`, `color`, `comment`, `file`, `ref`, `create_at`) VALUES
 (1665333907, '1222', '2022-10-09', '2022-11', '222', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'oCEVAQtdf23HiZUypLMW', NULL),
 (1665333961, '12455', '2022-10-09', '2022-11', '111', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '7qOu6tChsFQDcewZAlmf', NULL),
-(1665334509, '150', '2022-10-07', '2022-11', 'dkdkkdd', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '6UTIxS7Nui0r2pEj9ZkB', NULL),
-(1665336100, '1022/2565', '2022-10-10', '2022-11', 's,kdkd', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'B5dtFORnaNmc8iZf27IQ', NULL);
+(1665360756, 'ddd', '2022-10-10', '2022-11', 'ddd', '1', 'ฟื้นฟู/ปล่อยตัวชั่วคราว', NULL, NULL, NULL, NULL, NULL, NULL, 'HaFpLB0fOu8cxIPUMnAR', NULL),
+(1665360851, '154/65', '2022-10-10', '2022-11', '', '1', 'ฟื้นฟู/ปล่อยตัวชั่วคราว', NULL, NULL, NULL, NULL, NULL, NULL, 'qnHBm0uCoagfGs7rv9Sy', NULL);
 
 -- --------------------------------------------------------
 
@@ -1089,7 +1089,7 @@ ALTER TABLE `ven_change`
 -- AUTO_INCREMENT for table `ven_com`
 --
 ALTER TABLE `ven_com`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1665336101;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1665360852;
 
 --
 -- AUTO_INCREMENT for table `ven_com_panten`
