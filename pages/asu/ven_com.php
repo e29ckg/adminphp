@@ -48,7 +48,7 @@ require_once('../../server/authen.php');
                                             <tbody  v-for="vc in ven_coms">
                                                 <tr v-if="vc.ven_month == cvg.ven_month">
                                                         <td >  
-                                                            id {{vc.id}} | เลขคำสั่งที่ {{vc.ven_com_num}} | ลงวันที่ {{vc.ven_com_date}} | {{vc.ven_com_name}} 
+                                                            id {{vc.id}} | เลขคำสั่งที่ {{vc.ven_com_num}} | ลงวันที่ {{vc.ven_com_date}} | {{vc.ven_com_name}} ({{vc.ven_name}})
                                                             <!-- | {{vc.ref}} | {{vc.status}}  -->
     
                                                         </td>
@@ -112,10 +112,18 @@ require_once('../../server/authen.php');
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col ">
-                                            <label for="ven_com_name" class="form-label">ชื่อเวร</label>
-                                            <input type="text" class="form-control" id="ven_com_date" v-model="vc_form.ven_com_name">
+                                            <label for="ven_com_name" class="form-label">ชื่อเวรเต็ม</label>
+                                            <input type="text" class="form-control" id="ven_com_name" v-model="vc_form.ven_com_name">
+                                        </div>
+                                        <div class="col-3 ">
+                                            <label for="ven_name" class="form-label">ชื่อเวร</label>
+                                            <!-- <input type="text" class="form-control" id="ven_name" v-model="vc_form.ven_name"> -->
+                                            <select class="form-select" aria-label="Default select example" v-model="vc_form.ven_name" >
+                                                <option v-for="vn in ven_names" :value="vn.name" >{{vn.name}}</option>
+                                            </select>
                                         </div>
                                     </div>
+                                    <!-- {{ven_names}} -->
                                     <div class="d-grid gap-2">
                                          <button type="submit" class="col-auto btn btn-primary">บันทึก</button>
                                     </div>

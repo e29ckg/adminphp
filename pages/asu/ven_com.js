@@ -9,9 +9,11 @@ Vue.createApp({
         ven_com_date :'',
         ven_month :'',
         ven_com_name :'',
+        ven_name : ''
       },
       vc_form_act :'insert',
       sel_ven_month :[],
+      ven_names :'',
 
       isLoading : false,
     }
@@ -22,7 +24,7 @@ Vue.createApp({
     // const d = 
     this.get_ven_coms()
     this.get_ven_month()
-    // this.get_ven_name_subs()
+    this.get_ven_names()
     // this.get_ven_users()
     // this.get_users()
   },
@@ -43,10 +45,10 @@ Vue.createApp({
     },
     clear_vc_form(){
       console.log('clear_vc_form')
-      this.vc_form  = {ven_com_num :'', ven_com_date :'', ven_month :'', ven_com_name:''}
+      this.vc_form  = {ven_com_num :'', ven_com_date :'', ven_month :'', ven_com_name:'', ven_name:''}
     },
     vc_save(){
-      if(this.vc_form.ven_com_num != '' && this.vc_form.ven_com_date != '' && this.vc_form.ven_month != ''){
+      if(this.vc_form.ven_com_num != '' && this.vc_form.ven_com_date != '' && this.vc_form.ven_month != '' && this.vc_form.ven_name != ''){
         this.isLoading = true
         axios.post('../../server/asu/ven_com_act.php',{vc:this.vc_form, act:this.vc_form_act})
         .then(response => {
@@ -70,6 +72,7 @@ Vue.createApp({
         if(this.vc_form.ven_com_num == ''){message.push('เลขคำสั่ง')}
         if(this.vc_form.ven_com_date == ''){message.push('ลงวันที่')}
         if(this.vc_form.ven_month == ''){message.push('เวรเดือน')}
+        if(this.vc_form.ven_name == ''){message.push('ชื่อเวร')}
         this.alert('warning',message,0)
       }
     },
@@ -151,6 +154,22 @@ Vue.createApp({
         this.isLoading = false;
       })
     },
+    get_ven_names(){
+      this.isLoading = true
+      axios.post('../../server/asu/get_ven_names.php')
+      .then(response => {
+          console.log(response.data.respJSON);
+          if (response.data.status) {
+              this.ven_names = response.data.respJSON;
+          } 
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+      .finally(() => {
+        this.isLoading = false;
+      })
+    },
     get_ven_com(id){
       this.isLoading = true
       axios.post('../../server/asu/get_ven_com.php',{id:id})
@@ -169,8 +188,9 @@ Vue.createApp({
     },
     get_ven_month(){
       let   m = new Date();
+      let y = m.getFullYear().toString()
       for (let i = 0; i < 5; i++) {  
-        const d = new Date(m.getFullYear,m.getMonth()+i);
+        const d = new Date(y,m.getMonth()+i);
         this.sel_ven_month.push({'ven_month':this.convertToYearMonthNum(d),'name': this.convertToDateThai(d)})
       }
     },

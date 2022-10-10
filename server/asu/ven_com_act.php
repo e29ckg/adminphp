@@ -30,17 +30,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ven_com_date   = $vc->ven_com_date;
             $ven_month      = $vc->ven_month;
             $ven_com_name   = $vc->ven_com_name;
+            $ven_name       = $vc->ven_name;
             $ref            = generateRandomString();
             $status         = 1 ;
 
-            $sql = "INSERT INTO ven_com(id, ven_com_num, ven_com_date, ven_month, ven_com_name, ref, `status`) 
-                    VALUE(:id, :ven_com_num, :ven_com_date, :ven_month, :ven_com_name, :ref, :status);";        
+            $sql = "INSERT INTO ven_com(id, ven_com_num, ven_com_date, ven_month, ven_com_name, ven_name, ref, `status`) 
+                    VALUE(:id, :ven_com_num, :ven_com_date, :ven_month, :ven_com_name, :ven_name, :ref, :status);";        
             $query = $conn->prepare($sql);
             $query->bindParam(':id',$id, PDO::PARAM_INT);
             $query->bindParam(':ven_com_num',$ven_com_num, PDO::PARAM_STR);
             $query->bindParam(':ven_com_date',$ven_com_date, PDO::PARAM_STR);
             $query->bindParam(':ven_month',$ven_month, PDO::PARAM_STR);
             $query->bindParam(':ven_com_name',$ven_com_name, PDO::PARAM_STR);
+            $query->bindParam(':ven_name',$ven_name, PDO::PARAM_STR);
             $query->bindParam(':ref',$ref , PDO::PARAM_STR);
             $query->bindParam(':status',$status , PDO::PARAM_INT);
             $query->execute();
@@ -57,10 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ven_com_date   = $vc->ven_com_date;
             $ven_month      = $vc->ven_month;
             $ven_com_name   = $vc->ven_com_name;
+            $ven_name       = $vc->ven_name;
 
             $create_at  = Date("Y-m-d h:i:s");
 
-            $sql = "UPDATE ven_com SET ven_com_num=:ven_com_num, ven_com_date=:ven_com_date, ven_month=:ven_month, ven_com_name=:ven_com_name 
+            $sql = "UPDATE ven_com SET ven_com_num=:ven_com_num, ven_com_date=:ven_com_date, ven_month=:ven_month, ven_com_name=:ven_com_name, ven_name=:ven_name 
                     WHERE id = :id";   
 
             $query = $conn->prepare($sql);
@@ -68,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $query->bindParam(':ven_com_date',$ven_com_date, PDO::PARAM_STR);
             $query->bindParam(':ven_month',$ven_month, PDO::PARAM_STR);
             $query->bindParam(':ven_com_name',$ven_com_name, PDO::PARAM_STR);
+            $query->bindParam(':ven_name',$ven_name, PDO::PARAM_STR);
             $query->bindParam(':id',$id, PDO::PARAM_INT);
             $query->execute();
 
