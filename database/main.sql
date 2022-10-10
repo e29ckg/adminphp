@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 10, 2022 at 12:35 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Generation Time: Oct 10, 2022 at 12:52 PM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 7.3.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -467,11 +467,10 @@ INSERT INTO `ven` (`id`, `ven_date`, `ven_time`, `DN`, `ven_month`, `ven_com_id`
 (1665386631, '2022-11-09', '08:30:11', 'กลางวัน', '2022-11', '[1665333907,1665360756]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'Ih1OC4UE3RQYgLmk7azf', 'KqoVngcCIHQWu0RmO9b2', NULL, 2, '2022-10-10 02:23:51'),
 (1665386812, '2022-11-10', '08:30:11', 'กลางวัน', '2022-11', '[1665360756,1665333907]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'cjGvlDXQO6MZweIYknbC', 'wZXzUfKO4jLQmAd72JyM', NULL, 2, '2022-10-10 02:26:52'),
 (1665386877, '2022-11-08', '08:30:11', 'กลางวัน', '2022-11', '[1665333907,1665360756]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'IlNOqQdW4Z9RwgTcByMu', 'nhKtV2zcoUuRvFbBPA61', NULL, 2, '2022-10-10 02:27:57'),
-(1665389470, '2022-11-11', '08:30:11', 'กลางวัน', '2022-11', '[1665360756,1665333907,1665333961]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'jhu5oz2w1S0G6cYHamOX', 'fsAmb9JqIkrWRCFjZhiu', NULL, 2, '2022-10-10 03:11:10'),
-(1665389572, '2022-11-12', '16:30:42', 'กลางคืน', '2022-11', '[1665333907,1665360756]', '1665156263', NULL, NULL, 'ค้น จับ', '', NULL, 's9fgqTCK3EnDt50jlaw8', 'jblod7P5ktUI98szENuc', NULL, 2, '2022-10-10 03:12:52'),
+(1665389470, '2022-11-11', '08:30:11', 'กลางวัน', '2022-11', '[1665360756,1665333907]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'jhu5oz2w1S0G6cYHamOX', 'fsAmb9JqIkrWRCFjZhiu', NULL, 2, '2022-10-10 03:11:10'),
+(1665389572, '2022-11-12', '16:30:42', 'กลางคืน', '2022-11', '[1665333961]', '1665156263', NULL, NULL, 'ค้น จับ', '', NULL, 's9fgqTCK3EnDt50jlaw8', 'jblod7P5ktUI98szENuc', NULL, 2, '2022-10-10 03:12:52'),
 (1665392518, '2022-11-18', '08:30:11', 'กลางวัน', '2022-11', '[1665360756]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'yuCPYmkKvi1qBIO5e68s', 'HaFpLB0fOu8cxIPUMnAR', NULL, 2, '2022-10-10 04:01:58'),
-(1665392573, '2022-11-19', '16:30:42', 'กลางคืน', '2022-11', '[1665333961]', '9', NULL, NULL, 'ค้น จับ', '', NULL, '5rEG3bCLf9ASNj4hqQ2W', '7qOu6tChsFQDcewZAlmf', NULL, 2, '2022-10-10 04:02:53'),
-(1665392588, '2022-11-18', '16:30:42', 'กลางคืน', '2022-11', '[1665333961]', '9', NULL, NULL, 'ค้น จับ', '', NULL, 'Hrmtyd7MS59usUAe3gG1', '7qOu6tChsFQDcewZAlmf', NULL, 2, '2022-10-10 04:03:08');
+(1665398367, '2022-11-08', '08:30:11', 'กลางวัน', '2022-11', '[1665360756,1665333907]', '1665157498', NULL, NULL, 'เวรแขวง', '', NULL, '2dYmq9N3LD0ioZQkM5ru', 'HaFpLB0fOu8cxIPUMnAR', NULL, 2, '2022-10-10 05:39:27');
 
 -- --------------------------------------------------------
 
@@ -522,7 +521,7 @@ CREATE TABLE `ven_com` (
   `ven_com_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ven_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `DN` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ven_name_id` int(11) DEFAULT NULL,
   `u_role` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
   `price` int(10) DEFAULT NULL,
   `color` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -536,7 +535,7 @@ CREATE TABLE `ven_com` (
 -- Dumping data for table `ven_com`
 --
 
-INSERT INTO `ven_com` (`id`, `ven_com_num`, `ven_com_date`, `ven_month`, `ven_com_name`, `status`, `ven_name`, `DN`, `u_role`, `price`, `color`, `comment`, `file`, `ref`, `create_at`) VALUES
+INSERT INTO `ven_com` (`id`, `ven_com_num`, `ven_com_date`, `ven_month`, `ven_com_name`, `status`, `ven_name`, `ven_name_id`, `u_role`, `price`, `color`, `comment`, `file`, `ref`, `create_at`) VALUES
 (1665333907, '1222', '2022-10-09', '2022-11', 'ฟื้นฟู', '1', 'ฟื้นฟู/ปล่อยตัวชั่วคราว', NULL, NULL, NULL, NULL, NULL, NULL, 'oCEVAQtdf23HiZUypLMW', NULL),
 (1665333961, '12455', '2022-10-09', '2022-11', 'ค้น จับ', '1', 'ค้น จับ', NULL, NULL, NULL, NULL, NULL, NULL, '7qOu6tChsFQDcewZAlmf', NULL),
 (1665360756, 'ddd', '2022-10-10', '2022-11', 'ddd', '1', 'เวรแขวง', NULL, NULL, NULL, NULL, NULL, NULL, 'HaFpLB0fOu8cxIPUMnAR', NULL);
@@ -1074,7 +1073,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `ven`
 --
 ALTER TABLE `ven`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1665392589;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1665398866;
 
 --
 -- AUTO_INCREMENT for table `ven_change`
