@@ -76,7 +76,7 @@ require_once('../../server/authen.php');
                                         <div class="col mb-3">
                                             <label for="nameuf" class="form-label">ชื่อ</label>
                                             <select class="form-select" aria-label="Default select example" v-model="vu_form.user_id" >
-                                                <option v-for="u,ui in users" :value="u.uid" >{{u.name}}</option>
+                                                <option v-for="u in users" :value="u.uid" >{{u.name}}</option>
                                             </select>
                                         </div>                                        
                                     </div>

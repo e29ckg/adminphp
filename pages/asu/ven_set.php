@@ -146,14 +146,14 @@
 
     </form>
     <p>
-      <strong>{{ven_name}} | {{ven_name_sub}}</strong>
+      <strong>{{ven_name}}  {{ven_name_sub ? ' | '+ ven_name_sub : ''}}</strong>
       
     </p>
     
     <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event' v-for="pf,index in profiles" :data-event="pf.data_event" :data-uid="pf.user_id">
       <div class='fc-event-main'>{{index + 1}} {{pf.u_name}}</div>
     </div>    
-       {{profiles}}
+       <!-- {{profiles}} -->
 
   </div>
   
@@ -194,18 +194,23 @@
                   <td>{{data_event.ven_date}} เวลา {{data_event.ven_time}} น.</td>
                 </tr>
                 <tr>
-                  <th scope="row">เวรตั้งต้น</th>
-                  <td>{{data_event.ven_name}}</td>
+                  <th scope="row">เวร</th>
+                  <td>
+                    {{data_event.ven_name}} <br>
+                    {{data_event.ven_com_num_all}}
+
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">คำสั่ง</th>
-                  <td>{{data_event.u_role}} | {{data_event.DN}} | {{data_event.ven_com_name}} <br>{{data_event.ven_com_num}} | {{data_event.price}}</td>
+                  <td>
+                    {{data_event.u_role}} | {{data_event.DN}} | {{data_event.ven_com_name}} |{{data_event.price}}</td>
                 </tr>
                 <tr v-for="vc,i in ven_coms">
                   <td></td>
                   <td>
                     <input type="checkbox"  :id="i" name="ckb" :value="vc.id" v-model="data_event.ven_com_id" @change.prevent="ven_save()">
-                    <label :for="i"> {{vc.id + ' คำสั่งที่ ' + vc.ven_com_num + ' เวร ' +vc.ven_com_name+' '+i}}</label><br>
+                    <label :for="i"> {{' คำสั่งที่ ' + vc.ven_com_num + ' เวร ' +vc.ven_com_name}}</label><br>
                   </td>
                 </tr>
                 <tr>
@@ -216,7 +221,7 @@
               </tbody>
             </table>
             <!-- {{ven_coms}} -->
-            {{data_event}}
+            <!-- {{data_event}} -->
           </div>
           <div class="row">
             <div>

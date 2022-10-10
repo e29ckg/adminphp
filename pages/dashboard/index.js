@@ -94,14 +94,12 @@ Vue.createApp({
     cal_click(id){
       axios.post('../../server/dashboard/get_ven.php',{id:id})
           .then(response => {
-            console.log(response.data);
+            // console.log(response.data);
             if (response.data.status) {
-              this.data_event = response.data.respJSON[0]
+              this.data_event = response.data.respJSON
               this.$refs['show_modal'].click()  
-            }else{
-              let icon    = 'warning'
-              let message = response.data.message                
-              this.alert(icon,message,0)  
+            }else{               
+              this.alert('warning',response.data.message ,0)  
             }
         })
         .catch(function (error) {        
@@ -112,7 +110,7 @@ Vue.createApp({
     get_vens(){
       axios.get('../../server/dashboard/get_vens.php')
       .then(response => {
-          console.log(response.data.respJSON);
+          // console.log(response.data.respJSON);
           if (response.data.status) {
               this.datas = response.data.respJSON;
               this.cal_render()

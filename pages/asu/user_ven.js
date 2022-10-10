@@ -40,8 +40,7 @@ Vue.createApp({
     get_ven_names(){
       this.isLoading = true
       axios.post('../../server/asu/get_ven_names.php')
-      .then(response => {
-          console.log(response.data.respJSON);
+      .then(response => {;
           if (response.data.status) {
               this.ven_names = response.data.respJSON;
           } 
@@ -57,7 +56,6 @@ Vue.createApp({
       this.isLoading = true
       axios.post('../../server/asu/get_ven_name_subs.php')
       .then(response => {
-          console.log(response.data.respJSON);
           if (response.data.status) {
               this.ven_name_subs = response.data.respJSON;
           } 
@@ -73,7 +71,6 @@ Vue.createApp({
       this.isLoading = true
       axios.post('../../server/asu/get_ven_users.php')
       .then(response => {
-          console.log(response.data.respJSON);
           if (response.data.status) {
               this.ven_users = response.data.respJSON;
           } 
@@ -88,20 +85,20 @@ Vue.createApp({
     get_users(){
       axios.post('../../server/users/users.php')
       .then(response => {
-          console.log(response.data.respJSON);
           if (response.data.status) {
               this.users = response.data.respJSON;
           } 
       })
     },
     vu_add(vni,vnsi){
-      this.$refs.show_vu_form.click()
+      this.get_ven_users()
       this.vu_form.ven_name  = this.ven_names[vni].name
       this.vu_form.uvn    = this.ven_name_subs[vnsi].name
       this.vu_form.DN     = this.ven_names[vni].DN
       this.vu_form.v_time = this.DN[this.ven_names[vni].DN] +':'+this.ven_names[vni].srt + this.ven_name_subs[vnsi].srt
       this.vu_form.price  = this.ven_name_subs[vnsi].price
       this.vu_form.color  = this.ven_name_subs[vnsi].color
+      this.$refs.show_vu_form.click()
       
       
     },
@@ -114,7 +111,6 @@ Vue.createApp({
         this.isLoading = true;
         axios.post('../../server/asu/user_ven_act.php',{ven_user:this.vu_form, act:this.vu_form_act})
         .then(response => {
-            console.log(response.data.respJSON);
             if (response.data.status) {            
               this.$refs.close_vu.click()
               this.get_ven_names()
@@ -151,7 +147,6 @@ Vue.createApp({
         if (result.isConfirmed) {
           axios.post('../../server/asu/user_ven_act.php',{id:id, act:'delete'})
             .then(response => {
-                console.log(response.data.respJSON);
                 if (response.data.status) {  
                   this.get_ven_names()
                   this.get_ven_name_subs()
@@ -173,18 +168,12 @@ Vue.createApp({
     },
     alert(icon,message,timer=0){
       swal.fire({
-      icon: icon,
-      title: message,
-      showConfirmButton: true,
-      timer: timer
-    });
-  },
-
-
-    
-
-
-
+        icon: icon,
+        title: message,
+        showConfirmButton: true,
+        timer: timer
+      });
+    },
     
   },
   

@@ -46,7 +46,7 @@ Vue.createApp({
       this.isLoading = true
       axios.post('../../server/users/users.php')
       .then(response => {
-          console.log(response.data.respJSON);
+          
           if (response.data.status) {
               this.datas = response.data.respJSON;
           } 
@@ -62,7 +62,7 @@ Vue.createApp({
       this.isLoading = true
       axios.post('../../server/users/user.php',{uid:uid})
       .then(response => {
-          console.log(response.data.respJSON);
+          
           if (response.data.status) {
               this.user = response.data.respJSON;
           } 
@@ -92,7 +92,7 @@ Vue.createApp({
         && this.user_form.name != '' && this.user_form.sname != '' && this.user_form.password == this.user_form.repassword){
           axios.post('../../server/users/user_insert.php',{user:this.user_form})
             .then(response => {
-                console.log(response.data.respJSON);
+                
                 if (response.data.status) {
                   let icon = 'success' 
                   this.alert(icon,response.data.message,1000)
@@ -123,7 +123,7 @@ Vue.createApp({
     get_sel_fname(){
       axios.post('../../server/users/get_sel_fname.php')
       .then(response => {
-          console.log(response.data.respJSON);
+          
           if (response.data.status) {
             this.sel_fname = response.data.respJSON;
           } 
@@ -135,7 +135,7 @@ Vue.createApp({
     get_sel_dep(){
       axios.post('../../server/users/get_sel_dep.php')
       .then(response => {
-          console.log(response.data.respJSON);
+          
           if (response.data.status) {
             this.sel_dep = response.data.respJSON;
           } 
@@ -147,7 +147,7 @@ Vue.createApp({
     get_sel_group(){
       axios.post('../../server/users/get_sel_group.php')
       .then(response => {
-          console.log(response.data.respJSON);
+          
           if (response.data.status) {
             this.sel_workgroup = response.data.respJSON;
           } 
@@ -168,7 +168,7 @@ Vue.createApp({
       this.isLoading = true
       axios.post('../../server/users/user.php',{uid:uid})
       .then(response => {
-          console.log(response.data.respJSON);
+          
           if (response.data.status) {
               this.user_form = response.data.respJSON;
               this.$refs.show_modal_user_update_form.click()
@@ -185,7 +185,7 @@ Vue.createApp({
       this.isLoading = true
       axios.post('../../server/users/user_update_save.php',{user:this.user_form})
       .then(response => {
-          console.log(response.data.respJSON);
+          
           if (response.data.status) {
               this.get_users()
               this.$refs.close_modal_user_update_form.click()
@@ -211,7 +211,7 @@ Vue.createApp({
             this.isLoading = true;
             axios.post('../../server/users/user_update_status.php',{user_id:id,st:st})
                 .then(response => {
-                    console.log(response.data.respJSON);
+                    
                     if (response.data.status) {
                         let icon = 'success'
                         let message = response.data.message
@@ -235,7 +235,7 @@ Vue.createApp({
         this.isLoading = true;
         axios.post('../../server/users/user_update_status.php',{user_id:id,st:st})
                 .then(response => {
-                    console.log(response.data.respJSON);
+                    
                     if (response.data.status) {
                         let icon = 'success'
                         let message = response.data.message

@@ -28,7 +28,7 @@ Vue.createApp({
       this.isLoading = true
       axios.post('../../server/asu/get_ven_names.php')
       .then(response => {
-          console.log(response.data.respJSON);
+          
           if (response.data.status) {
               this.ven_names = response.data.respJSON;
           } 
@@ -108,7 +108,7 @@ Vue.createApp({
         if (result.isConfirmed) {
           axios.post('../../server/asu/ven_name_act.php',{ven_name:this.ven_name_form,act:'delete'})
                 .then(response => {
-                    console.log(response.data.respJSON);
+                    
                     if (response.data.status) {
                       this.get_ven_names()
                       let icon = 'success' 
@@ -133,7 +133,7 @@ Vue.createApp({
       this.isLoading = true
       axios.post('../../server/asu/get_ven_name_subs.php')
       .then(response => {
-          console.log(response.data.respJSON);
+          
           if (response.data.status) {
               this.ven_name_subs = response.data.respJSON;
           } 
@@ -149,7 +149,7 @@ Vue.createApp({
       this.isLoading = true
       axios.post('../../server/asu/get_ven_name_sub.php',{id:id})
       .then(response => {
-          console.log(response.data.respJSON);
+          
           if (response.data.status) {
             this.ven_name_sub_form = response.data.respJSON;
           } 
@@ -209,7 +209,7 @@ Vue.createApp({
         if (result.isConfirmed) {
           axios.post('../../server/asu/ven_name_sub_act.php',{id:id, act:'delete'})
                 .then(response => {
-                    console.log(response.data.respJSON);
+                    
                     if (response.data.status) {
                       this.get_ven_names()
                       this.get_ven_name_subs()

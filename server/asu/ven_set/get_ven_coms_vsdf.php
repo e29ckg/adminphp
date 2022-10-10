@@ -5,34 +5,33 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 // header("'Access-Control-Allow-Credentials', 'true'");
 // header('Content-Type: application/javascript');
 header("Content-Type: application/json; charset=utf-8");
-
-include "../connect.php";
-include "../function.php";
+include "../../connect.php";
+include "../../function.php";
 
 $data = json_decode(file_get_contents("php://input"));
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-/**
- *           
- */
+
 $datas = array();
 
     // The request is using the POST method
     try{
-        $id = $data->id;
+        $ven_month  = $data->ven_month;
+        $ven_name  = $data->ven_name;
 
-        $sql = "SELECT * FROM ven_name_sub WHERE ven_name_id =:id ORDER BY srt ASC";
+        $sql = "SELECT * FROM ven_com WHERE ven_month='$ven_month' AND ven_name='$ven_name' AND `status` = 1";
         $query = $conn->prepare($sql);
-        $query->bindParam(':id',$id, PDO::PARAM_INT);
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_OBJ);
 
-        if($result){                        //count($result)  for odbc
+        if($query->rowCount() > 0){                        //count($result)  for odbc
             // foreach($result as $rs){
             //     array_push($datas,array(
-            //         'id'  => $rs->id,
-            //         'name'  => $rs->name
+            //         'id'    => $rs->id,
+            //         'name'  => $rs->name,
+            //         'DN'  => $rs->DN,
+            //         'srt'  => $rs->srt
             //     ));
             // }
             http_response_code(200);

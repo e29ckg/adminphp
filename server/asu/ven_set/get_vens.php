@@ -6,21 +6,20 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 // header('Content-Type: application/javascript');
 header("Content-Type: application/json; charset=utf-8");
 
-include "../connect.php";
+include "../../connect.php";
+include "../../function.php";
 
 // $data = json_decode(file_get_contents("php://input"));
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 $datas = array();
 
-
-    // The request is using the POST method
     try{
-        $sql = "SELECT v.id, v.ven_date, v.ven_time, p.name, p.sname 
-        FROM ven as v 
+        $sql = "SELECT v.id, v.ven_date, v.ven_time, p.name, p.sname FROM ven as v 
         INNER JOIN `profile` as p ON v.user_id = p.user_id
-        WHERE v.status = 1 OR v.status = 2 
+        WHERE v.status = 1 OR v.status = 2 AND p.`status` = 10
         ORDER BY v.ven_date DESC, v.ven_time ASC
         LIMIT 200";
         $query = $conn->prepare($sql);
@@ -30,13 +29,11 @@ $datas = array();
 
         if($query->rowCount() > 0){                        //count($result)  for odbc
             foreach($result as $rs){
-                $bcolor = backgroundColor($rs->ven_time);
                 
                 array_push($datas,array(
                     'id'    => $rs->id,
                     'title' => $rs->name. ' '. $rs->sname,
-                    'start' => $rs->ven_date.' '.$rs->ven_time,
-                    // 'backgroundColor'   => $bcolor,
+                    'start' => $rs->ven_date.' '.$rs->ven_time
                 ));
             }
             http_response_code(200);
@@ -54,31 +51,4 @@ $datas = array();
     }
 }
 
-function BackGroundColor($time)
-	{
-        // if($st == 2){return 'orange';}
-        $color_index = substr($time,-2);
 
-        $color = [
-            '00' => 'rgb(76, 0, 51)',
-            '01' => 'rgb(76, 0, 51)',
-            '02' => 'rgb(76, 0, 51)',
-            '03' => 'rgb(76, 0, 51)',
-            '04' => 'rgb(76, 0, 51)',
-            '05' => 'rgb(76, 0, 51)',
-            '06' => 'rgb(76, 0, 51)',
-            '07' => 'rgb(76, 0, 51)',
-            '08' => 'rgb(76, 0, 51)',
-            '09' => 'rgb(76, 0, 51)',
-            '10' => 'rgb(76, 0, 51)',
-            '11' => 'rgb(175, 50, 10)',
-            '12' => 'rgb(232, 15, 136)',
-            '13' => 'rgb(200, 12, 82)',
-            '14' => 'rgb(242, 211, 136)',
-            '15' => 'rgb(201, 132, 116)',
-            '16' => 'rgb(135, 76, 98)',
-            '17' => 'rgb(76, 0, 51)',
-        ];
-
-        return $color[$color_index] ? $color[$color_index] : '';
-    }

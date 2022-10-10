@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 10, 2022 at 01:29 PM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 7.3.29
+-- Generation Time: Oct 10, 2022 at 07:43 PM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -316,7 +317,7 @@ CREATE TABLE `profile` (
 --
 
 INSERT INTO `profile` (`id`, `user_id`, `id_card`, `fname`, `name`, `sname`, `img`, `birthday`, `bloodtype`, `dep`, `workgroup`, `address`, `phone`, `bank_account`, `bank_comment`, `status`, `created_at`, `updated_at`, `st`) VALUES
-(0, '1665156263', NULL, 'นางสาว', 'dadadad', '223', NULL, NULL, NULL, 'นักจิตวิทยาชำนาญการ', 'กลุ่มงานคดี', NULL, '00', '', '00', 10, '2022-10-07 05:24:23', '2022-10-08 10:03:05', NULL),
+(0, '1665156263', NULL, 'นางสาว', 'สมชาย', 'อยูสุข', NULL, NULL, NULL, 'ผู้พิพากษาศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์', 'ผู้พิพากษา', NULL, '00', '', '00', 10, '2022-10-07 05:24:23', '2022-10-10 11:05:26', NULL),
 (9, '9', '', 'นางสาว', 'สุทธินี', 'ตรงชิต', 'a646991171ead3ed21147413e089c57c.jpg', NULL, 'A', 'เจ้าพนักงานศาลยุติธรรมชำนาญการพิเศษ', 'กลุ่มงานคดี', '', '', NULL, NULL, 10, '2017-06-12 08:01:03', '2022-10-08 04:01:08', 3),
 (1566445991, '1566445991', '', 'นาย', 'admin', 'admin', NULL, NULL, NULL, 'นักจิตวิทยาชำนาญการ', 'กลุ่มงานคลัง', '', '032000', '000', 'Plldkd', 10, NULL, '2022-10-08 03:39:47', NULL),
 (1663280470, '1663280470', '10', 'นางสาว', '222', '222', NULL, NULL, NULL, 'นักจิตวิทยาปฏิบัติการ', '', '', '', NULL, NULL, 10, NULL, '2022-10-09 12:46:39', 33),
@@ -427,7 +428,7 @@ INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_res
 (1566445991, 'admin', 'qdYs15wrU3R7ghAuAuXNMc-fFxlZ8QyT', '$2y$13$UmmYnhZMbjISIu8HAyn5nOPgW7pEXwczrjAhTHBsEs0FF5da5vbVK', 'VSorsXwWyDjK0WwK76PNqcdsextFlwai_1566445992', '', 9, 10, '0000-00-00 00:00:00', '2022-10-08 03:39:47'),
 (1663280470, 'user2', 'LT1ykKY4zcaELtsbcj88wR0o-7hqXihW', '$2y$13$.Uwt1vTzaEp.tYYjOXQQhuobfnaqJ0eGYwkqox60fkTbgaRNdJyka', 'Bbq2ME3JbltAOYwYWWxCU6tFL4kvfL8D_1663280470', '', 1, 10, '0000-00-00 00:00:00', '2022-10-09 12:46:39'),
 (1663499891, 'user3', '_FXb4-Rs1aYhqgG6oZXAH08gdnBmXBMC', '$2y$13$A8Su1pPmstGg99.2qkNnQevdlrSXnYrjFcpT6iLOGvOhU.M67wKdS', 'dn7OYHjduxfvL5FJPWqDZwyeEcdgDhu9_1663499891', '', 1, 10, '0000-00-00 00:00:00', '2022-10-09 12:46:46'),
-(1665156263, 'admin2', NULL, '$2y$10$om9EN1pHwHHpRwKSgaCiJeLqCamBjoKfd./e5e/.rDNwZAogdLbJG', NULL, NULL, 1, 10, '2022-10-07 05:24:23', '2022-10-08 10:03:05'),
+(1665156263, 'admin2', NULL, '$2y$10$om9EN1pHwHHpRwKSgaCiJeLqCamBjoKfd./e5e/.rDNwZAogdLbJG', NULL, NULL, 1, 10, '2022-10-07 05:24:23', '2022-10-10 11:03:53'),
 (1665157498, 'admin3', NULL, '$2y$10$u06iSb5ysEbrErhCjDz9supGihJhHk/1oZoU/EmyBrzpgJ2pV1RvK', NULL, NULL, 1, 10, '2022-10-07 05:44:58', '2022-10-08 03:37:09'),
 (1665163313, 'user4', NULL, '$2y$10$sJuRGdbJQ94z1lt/iAGQO.E6uJYY10pkT3i4oFYwzqVEK/nCxoXDO', NULL, NULL, 1, 10, '2022-10-07 07:21:53', '2022-10-08 03:37:17'),
 (1665163480, 'user5', NULL, '$2y$10$nENRaKcnrmpU56lTo0aTcOnfxN3jomfskoX3clg7ese8De9pG6oUq', NULL, NULL, 1, 10, '2022-10-07 07:24:40', '2022-10-09 12:47:07');
@@ -440,20 +441,22 @@ INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_res
 
 CREATE TABLE `ven` (
   `id` int(11) NOT NULL,
+  `user_id` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `ven_com_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ven_date` date NOT NULL,
   `ven_time` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `DN` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ven_month` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `ven_com_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `user_id` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`user_id`)),
-  `comment` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `gcal_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `ven_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `DN` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ven_com_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `file` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ven_com_num_all` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ven_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `u_role` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ref1` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ref2` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
+  `file` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `comment` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `gcal_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `create_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -462,17 +465,25 @@ CREATE TABLE `ven` (
 -- Dumping data for table `ven`
 --
 
-INSERT INTO `ven` (`id`, `ven_date`, `ven_time`, `DN`, `ven_month`, `ven_com_id`, `user_id`, `comment`, `gcal_id`, `ven_name`, `ven_com_name`, `file`, `ref1`, `ref2`, `price`, `status`, `create_at`) VALUES
-(1665383505, '2022-11-10', '08:30:11', 'กลางวัน', '2022-11', '[1665333961,1665333907]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'AhS4iRbW7dTnXGHsklpy', 'iU1yejWnhGAzH7qIDawv', NULL, 2, '2022-10-10 01:31:45'),
-(1665386631, '2022-11-10', '08:30:11', 'กลางวัน', '2022-11', '[1665333907,1665360756]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'Ih1OC4UE3RQYgLmk7azf', 'KqoVngcCIHQWu0RmO9b2', NULL, 2, '2022-10-10 02:23:51'),
-(1665386812, '2022-11-10', '08:30:11', 'กลางวัน', '2022-11', '[1665333907]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'cjGvlDXQO6MZweIYknbC', 'wZXzUfKO4jLQmAd72JyM', NULL, 2, '2022-10-10 02:26:52'),
-(1665386877, '2022-11-10', '08:30:11', 'กลางวัน', '2022-11', '[1665333907,1665360756]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'IlNOqQdW4Z9RwgTcByMu', 'nhKtV2zcoUuRvFbBPA61', NULL, 2, '2022-10-10 02:27:57'),
-(1665389470, '2022-11-12', '08:30:11', 'กลางวัน', '2022-11', '[1665360756,1665333907]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'jhu5oz2w1S0G6cYHamOX', 'fsAmb9JqIkrWRCFjZhiu', NULL, 2, '2022-10-10 03:11:10'),
-(1665389572, '2022-11-12', '16:30:42', 'กลางคืน', '2022-11', '[1665333961]', '1665156263', NULL, NULL, 'ค้น จับ', '', NULL, 's9fgqTCK3EnDt50jlaw8', 'jblod7P5ktUI98szENuc', NULL, 2, '2022-10-10 03:12:52'),
-(1665392518, '2022-11-18', '08:30:11', 'กลางวัน', '2022-11', '[1665360756]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'yuCPYmkKvi1qBIO5e68s', 'HaFpLB0fOu8cxIPUMnAR', NULL, 2, '2022-10-10 04:01:58'),
-(1665398367, '2022-11-08', '08:30:11', 'กลางวัน', '2022-11', '[1665360756,1665333907]', '1665157498', NULL, NULL, 'เวรแขวง', '', NULL, '2dYmq9N3LD0ioZQkM5ru', 'HaFpLB0fOu8cxIPUMnAR', NULL, 2, '2022-10-10 05:39:27'),
-(1665400352, '2022-11-12', '08:30:12', 'กลางวัน', '2022-11', '[1665360756]', '1663499891', NULL, NULL, 'เวรแขวง', '', NULL, 'J6mbzAdXOwyMpNvZ8jhI', 'HaFpLB0fOu8cxIPUMnAR', NULL, 2, '2022-10-10 06:12:32'),
-(1665400844, '2022-10-06', '08:30:11', 'กลางวัน', '2022-10', '[\"\"]', '1665156263', NULL, NULL, 'เวรแขวง', '', NULL, 'xyhbpgM79XW1PIwqmaU3', '', NULL, 2, '2022-10-10 06:20:44');
+INSERT INTO `ven` (`id`, `user_id`, `ven_com_id`, `ven_date`, `ven_time`, `ven_month`, `DN`, `ven_com_name`, `ven_com_num_all`, `ven_name`, `u_role`, `ref1`, `ref2`, `price`, `file`, `comment`, `gcal_id`, `status`, `create_at`) VALUES
+(1665419336, '1665163313', '[1665360756]', '2022-11-08', '08:30:11', '2022-11', 'กลางวัน', '', NULL, 'เวรแขวง', 'ผู้พิพากษา', 'GIUrNTc1x7Z9CVpywfhW', 'HaFpLB0fOu8cxIPUMnAR', '3500.00', NULL, NULL, NULL, 2, '2022-10-10 11:28:56'),
+(1665419352, '1665163313', '[\"\"]', '2022-10-01', '08:30:11', '2022-10', 'กลางวัน', '', NULL, 'เวรแขวง', 'ผู้พิพากษา', 'j8NdBzHiu3SAoP4tl06b', '', '3500.00', NULL, NULL, NULL, 2, '2022-10-10 11:29:12'),
+(1665420315, '1665163313', '[1665360756]', '2022-11-09', '08:30:11', '2022-11', 'กลางวัน', '', NULL, 'เวรแขวง', 'ผู้พิพากษา', 'e0IRWQHPUp21lJaM9qiv', 'HaFpLB0fOu8cxIPUMnAR', '3500.00', NULL, NULL, NULL, 2, '2022-10-10 11:45:15'),
+(1665420318, '1665157498', '[1665360756,1665333961]', '2022-11-10', '08:30:11', '2022-11', 'กลางวัน', 'แขวง, ค้น จับ', '245/2565, 12455', 'เวรแขวง', 'ผู้พิพากษา', '3TaRQh82pX7wEnVoOcMP', 'HaFpLB0fOu8cxIPUMnAR', '3500.00', NULL, NULL, NULL, 2, '2022-10-10 11:45:18'),
+(1665420558, '1665163313', '[1665420515]', '2022-12-01', '08:30:11', '2022-12', 'กลางวัน', '', NULL, 'เวรแขวง', 'ผู้พิพากษา', 'W2BLwOE5XC703HIA8jtU', '3oci9vHhN6ug1qUwGExl', '3500.00', NULL, NULL, NULL, 2, '2022-10-10 11:49:18'),
+(1665420561, '1665157498', '[1665420515]', '2022-12-02', '08:30:11', '2022-12', 'กลางวัน', 'แขวง ธค', '234/65', 'เวรแขวง', 'ผู้พิพากษา', 'I3FUyShwgQfO9uqbkBZ2', '3oci9vHhN6ug1qUwGExl', '3500.00', NULL, NULL, NULL, 2, '2022-10-10 11:49:21'),
+(1665421649, '1665163313', '[1665360756]', '2022-11-11', '08:30:11', '2022-11', 'กลางวัน', '', NULL, 'เวรแขวง', 'ผู้พิพากษา', 'YkEIhu2W0vi7g1GJLCUj', 'HaFpLB0fOu8cxIPUMnAR', '3500.00', NULL, NULL, NULL, 2, '2022-10-11 12:07:29'),
+(1665421730, '1665163313', '[1665360756]', '2022-11-12', '08:30:11', '2022-11', 'กลางวัน', '', NULL, 'เวรแขวง', 'ผู้พิพากษา', 'GwbKYuyFdE7BArJHCcSZ', 'HaFpLB0fOu8cxIPUMnAR', '3500.00', NULL, NULL, NULL, 2, '2022-10-11 12:08:50'),
+(1665422094, '1665157498', '[1665360756]', '2022-11-08', '08:30:11', '2022-11', 'กลางวัน', NULL, NULL, 'เวรแขวง', 'ผู้พิพากษา', 'mztVXxaHgM6S90UfI3As', 'HaFpLB0fOu8cxIPUMnAR', '3500.00', NULL, NULL, NULL, 2, '2022-10-11 12:14:54'),
+(1665422196, '1665157498', '[1665360756,1665333961,1665333907]', '2022-11-07', '08:30:11', '2022-11', 'กลางวัน', 'แขวง, ค้น จับ, ฟื้นฟู', '245/2565, 12455, 122/2565', 'เวรแขวง', 'ผู้พิพากษา', 'd7ENZ3p0UcjzuOtXKn2e', 'HaFpLB0fOu8cxIPUMnAR', '3500.00', NULL, NULL, NULL, 2, '2022-10-11 12:16:36'),
+(1665422298, '1665157498', '[1665360756]', '2022-11-13', '08:30:11', '2022-11', 'กลางวัน', 'แขวง', '245/2565', 'เวรแขวง', 'ผู้พิพากษา', 'ncklG3wM6Krx8S1aYjZQ', 'HaFpLB0fOu8cxIPUMnAR', '3500.00', NULL, NULL, NULL, 2, '2022-10-11 12:18:18'),
+(1665422451, '1665157498', '[1665360756]', '2022-11-09', '08:30:11', '2022-11', 'กลางวัน', 'แขวง', NULL, 'เวรแขวง', 'ผู้พิพากษา', 'K65nafANY3kMjmOCphbP', 'HaFpLB0fOu8cxIPUMnAR', '3500.00', NULL, NULL, NULL, 2, '2022-10-11 12:20:51'),
+(1665422615, '1665157498', '[1665360756]', '2022-11-12', '08:30:11', '2022-11', 'กลางวัน', 'แขวง', NULL, 'เวรแขวง', 'ผู้พิพากษา', 'jyL6WvQ7TXfqGxNmRtlo', 'HaFpLB0fOu8cxIPUMnAR', '3500.00', NULL, NULL, NULL, 2, '2022-10-11 12:23:35'),
+(1665422745, '1665157498', '[1665360756]', '2022-11-11', '08:30:11', '2022-11', 'กลางวัน', 'แขวง', NULL, 'เวรแขวง', 'ผู้พิพากษา', 'bDcSULyVu3Et6RPOwBp7', 'HaFpLB0fOu8cxIPUMnAR', '3500.00', NULL, NULL, NULL, 2, '2022-10-11 12:25:45'),
+(1665422950, '1665157498', '[1665360756]', '2022-11-05', '08:30:11', '2022-11', 'กลางวัน', 'แขวง', '245/2565', 'เวรแขวง', 'ผู้พิพากษา', 'SRPDG1qn8otrLaMQ7fWE', 'HaFpLB0fOu8cxIPUMnAR', '3500.00', NULL, NULL, NULL, 2, '2022-10-11 12:29:10'),
+(1665422960, '1665163313', '[1665360756]', '2022-11-04', '08:30:11', '2022-11', 'กลางวัน', 'แขวง', '245/2565', 'เวรแขวง', 'ผู้พิพากษา', 'louK21zFaIYTyhXm9pEA', 'HaFpLB0fOu8cxIPUMnAR', '3500.00', NULL, NULL, NULL, 2, '2022-10-11 12:29:20'),
+(1665423532, '1665163313', '[1665420515]', '2022-12-03', '08:30:11', '2022-12', 'กลางวัน', 'แขวง ธค', '234/65', 'เวรแขวง', 'ผู้พิพากษา', '7Fv45VOPUA2mk1ZujKrM', '3oci9vHhN6ug1qUwGExl', '3500.00', NULL, NULL, NULL, 2, '2022-10-11 12:38:52'),
+(1665423676, '1665163313', '[1665360756]', '2022-11-06', '08:30:11', '2022-11', 'กลางวัน', 'แขวง', '245/2565', 'เวรแขวง', 'ผู้พิพากษา', 'WaXwxuUdRO9fn6E5s2JQ', 'HaFpLB0fOu8cxIPUMnAR', '3500.00', NULL, NULL, NULL, 2, '2022-10-11 12:41:16');
 
 -- --------------------------------------------------------
 
@@ -538,9 +549,11 @@ CREATE TABLE `ven_com` (
 --
 
 INSERT INTO `ven_com` (`id`, `ven_com_num`, `ven_com_date`, `ven_month`, `ven_com_name`, `status`, `ven_name`, `ven_name_id`, `u_role`, `price`, `color`, `comment`, `file`, `ref`, `create_at`) VALUES
-(1665333907, '1222', '2022-10-09', '2022-11', 'ฟื้นฟู', '1', 'ฟื้นฟู/ปล่อยตัวชั่วคราว', NULL, NULL, NULL, NULL, NULL, NULL, 'oCEVAQtdf23HiZUypLMW', NULL),
+(1665333907, '122/2565', '2022-10-09', '2022-11', 'ฟื้นฟู', '1', 'ฟื้นฟู/ปล่อยตัวชั่วคราว', NULL, NULL, NULL, NULL, NULL, NULL, 'oCEVAQtdf23HiZUypLMW', NULL),
 (1665333961, '12455', '2022-10-09', '2022-11', 'ค้น จับ', '1', 'ค้น จับ', NULL, NULL, NULL, NULL, NULL, NULL, '7qOu6tChsFQDcewZAlmf', NULL),
-(1665360756, 'ddd', '2022-10-10', '2022-11', 'ddd', '1', 'เวรแขวง', NULL, NULL, NULL, NULL, NULL, NULL, 'HaFpLB0fOu8cxIPUMnAR', NULL);
+(1665360756, '245/2565', '2022-10-10', '2022-11', 'แขวง', '1', 'เวรแขวง', NULL, NULL, NULL, NULL, NULL, NULL, 'HaFpLB0fOu8cxIPUMnAR', NULL),
+(1665420515, '234/65', '2022-10-10', '2022-12', 'แขวง ธค', '1', 'เวรแขวง', NULL, NULL, NULL, NULL, NULL, NULL, '3oci9vHhN6ug1qUwGExl', NULL),
+(1665420616, 'ๅ/ฝถุ', '2022-10-10', '2022-12', 'ฟูกกก ธค', '1', 'ฟื้นฟู/ปล่อยตัวชั่วคราว', NULL, NULL, NULL, NULL, NULL, NULL, 'eCxEzXRtIDB5Mg4s8haT', NULL);
 
 -- --------------------------------------------------------
 
@@ -591,7 +604,8 @@ CREATE TABLE `ven_name` (
 INSERT INTO `ven_name` (`id`, `name`, `DN`, `srt`) VALUES
 (13, 'ค้น จับ', 'กลางคืน', 4),
 (14, 'เวรแขวง', 'กลางวัน', 1),
-(15, 'ฟื้นฟู/ปล่อยตัวชั่วคราว', 'กลางวัน', 2);
+(15, 'ฟื้นฟู/ปล่อยตัวชั่วคราว', 'กลางวัน', 2),
+(16, 'ค้น จับ', 'กลางวัน', 3);
 
 -- --------------------------------------------------------
 
@@ -627,7 +641,9 @@ INSERT INTO `ven_name_sub` (`id`, `name`, `ven_name_id`, `price`, `color`, `srt`
 (70, 'ปชส.', 15, 1500, NULL, 3),
 (71, 'การเงิน', 15, 1500, NULL, 4),
 (72, 'หมาย ', 15, 1500, NULL, 5),
-(73, 'หน้าบัลลังก์', 15, 1500, NULL, 6);
+(73, 'หน้าบัลลังก์', 15, 1500, NULL, 6),
+(80, 'ผู้พิพากษา', 16, 3500, 'red', 1),
+(81, 'จนท.', 16, 1500, 'blue', 2);
 
 -- --------------------------------------------------------
 
@@ -657,16 +673,11 @@ CREATE TABLE `ven_user` (
 INSERT INTO `ven_user` (`id`, `user_id`, `u_name`, `order`, `ven_name`, `uvn`, `DN`, `v_time`, `price`, `color`, `comment`, `create_at`) VALUES
 (1, 1566445991, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ผู้พิพากษา', NULL),
 (4, 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ผู้พิพากษา', NULL),
-(5, 1665156263, 'นางสาวdadadad 223', 0, 'เวรแขวง', 'ผู้พิพากษา', 'กลางวัน', '08:30:11', '3500', NULL, NULL, '2022-10-09 08:43:56'),
-(7, 1663499891, 'นางuser3 user3', 1, 'เวรแขวง', 'รับฟ้อง/บัลลังก์', 'กลางวัน', '08:30:17', '1500', NULL, NULL, '2022-10-09 08:47:11'),
-(8, 1665157498, 'นางee DDD', 2, 'เวรแขวง', 'รับฟ้อง/บัลลังก์', 'กลางวัน', '08:30:17', '1500', NULL, NULL, '2022-10-09 08:48:26'),
 (12, 1665156263, 'นางสาวdadadad 223', 1, 'ค้น จับ', 'จนท.', 'กลางคืน', '16:30:42', '1500', NULL, NULL, '2022-10-09 09:28:48'),
 (13, 9, 'นางสาวสุทธินี ตรงชิต', 1, 'ค้น จับ', 'จนท.', 'กลางคืน', '16:30:42', '1500', NULL, NULL, '2022-10-09 09:28:55'),
 (14, NULL, ' ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-10-09 11:10:49'),
-(15, 1665156263, 'นางสาวdadadad 223', 2, 'เวรแขวง', 'ผู้พิพากษา', 'กลางวัน', '08:30:11', '3500', NULL, NULL, '2022-10-10 02:10:01'),
-(16, 1665157498, 'นางee DDD', 3, 'เวรแขวง', 'ผู้พิพากษา', 'กลางวัน', '08:30:11', '3500', NULL, NULL, '2022-10-10 02:10:10'),
-(17, 1663499891, 'นางuser3 user3', 3, 'เวรแขวง', 'ผู้พิพากษา2', 'กลางวัน', '08:30:12', '3500', NULL, NULL, '2022-10-10 02:10:18'),
-(18, 1663499891, 'นางuser3 user3', 1, 'เวรแขวง', 'หน.กลุ่มงาน', 'กลางวัน', '08:30:13', '1500', NULL, NULL, '2022-10-10 02:56:38');
+(21, 1665163313, 'นางสาวxxx xxx', 1, 'เวรแขวง', 'ผู้พิพากษา', 'กลางวัน', '08:30:11', '3500', NULL, NULL, '2022-10-10 11:23:06'),
+(22, 1665157498, 'นางee DDD', 2, 'เวรแขวง', 'ผู้พิพากษา', 'กลางวัน', '08:30:11', '3500', NULL, NULL, '2022-10-10 11:43:40');
 
 -- --------------------------------------------------------
 
@@ -1075,7 +1086,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `ven`
 --
 ALTER TABLE `ven`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1665400845;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1665423677;
 
 --
 -- AUTO_INCREMENT for table `ven_change`
@@ -1087,7 +1098,7 @@ ALTER TABLE `ven_change`
 -- AUTO_INCREMENT for table `ven_com`
 --
 ALTER TABLE `ven_com`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1665360852;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1665420617;
 
 --
 -- AUTO_INCREMENT for table `ven_com_panten`
@@ -1099,19 +1110,19 @@ ALTER TABLE `ven_com_panten`
 -- AUTO_INCREMENT for table `ven_name`
 --
 ALTER TABLE `ven_name`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `ven_name_sub`
 --
 ALTER TABLE `ven_name_sub`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `ven_user`
 --
 ALTER TABLE `ven_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `web_link`

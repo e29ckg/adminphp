@@ -52,7 +52,6 @@ Vue.createApp({
         this.isLoading = true
         axios.post('../../server/asu/ven_com_act.php',{vc:this.vc_form, act:this.vc_form_act})
         .then(response => {
-            console.log(response.data.respJSON);
             if (response.data.status) {
               this.$refs.close_vc.click()
               this.get_ven_coms()
@@ -95,7 +94,6 @@ Vue.createApp({
           this.isLoading = true;
           axios.post('../../server/asu/ven_com_act.php',{id:id, act:'delete'})
             .then(response => {
-                console.log(response.data.respJSON);
                 if (response.data.status) { 
                   this.$refs.close_vc.click()
                   this.get_ven_coms()
@@ -117,7 +115,6 @@ Vue.createApp({
       this.isLoading = true;
       axios.post('../../server/asu/ven_com_act.php',{id:id, act:'status', st:st})
             .then(response => {
-                console.log(response.data.respJSON);
                 if (response.data.status) { 
                   this.get_ven_coms()
                   this.alert('success',response.data.message,1500)
@@ -134,13 +131,10 @@ Vue.createApp({
     },  
 
 
-
-
     get_ven_coms(){
       this.isLoading = true
       axios.post('../../server/asu/get_ven_coms.php')
       .then(response => {
-          console.log(response.data.respJSON);
           if (response.data.status) {
               this.ven_coms = response.data.respJSON;
               this.ven_coms_g = response.data.respJSON_G;
@@ -158,7 +152,6 @@ Vue.createApp({
       this.isLoading = true
       axios.post('../../server/asu/get_ven_names.php')
       .then(response => {
-          console.log(response.data.respJSON);
           if (response.data.status) {
               this.ven_names = response.data.respJSON;
           } 
@@ -174,7 +167,6 @@ Vue.createApp({
       this.isLoading = true
       axios.post('../../server/asu/get_ven_com.php',{id:id})
       .then(response => {
-          console.log(response.data.respJSON);
           if (response.data.status) {
               this.vc_form = response.data.respJSON;
           } 
@@ -212,7 +204,6 @@ Vue.createApp({
       this.isLoading = true
       axios.post('../../server/asu/get_ven_name_subs.php')
       .then(response => {
-          console.log(response.data.respJSON);
           if (response.data.status) {
               this.ven_name_subs = response.data.respJSON;
           } 
@@ -228,7 +219,6 @@ Vue.createApp({
       this.isLoading = true
       axios.post('../../server/asu/get_ven_users.php')
       .then(response => {
-          console.log(response.data.respJSON);
           if (response.data.status) {
               this.ven_users = response.data.respJSON;
           } 
@@ -243,7 +233,6 @@ Vue.createApp({
     get_users(){
       axios.post('../../server/users/users.php')
       .then(response => {
-          console.log(response.data.respJSON);
           if (response.data.status) {
               this.users = response.data.respJSON;
           } 
@@ -269,7 +258,6 @@ Vue.createApp({
         this.isLoading = true;
         axios.post('../../server/asu/user_ven_act.php',{ven_user:this.vu_form, act:this.vu_form_act})
         .then(response => {
-            console.log(response.data.respJSON);
             if (response.data.status) {            
               this.$refs.close_vu.click()
               this.get_ven_names()
@@ -306,7 +294,6 @@ Vue.createApp({
         if (result.isConfirmed) {
           axios.post('../../server/asu/user_ven_act.php',{id:id, act:'delete'})
             .then(response => {
-                console.log(response.data.respJSON);
                 if (response.data.status) {  
                   this.get_ven_names()
                   this.get_ven_name_subs()

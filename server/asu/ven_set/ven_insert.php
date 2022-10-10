@@ -5,9 +5,8 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 // header("'Access-Control-Allow-Credentials', 'true'");
 // header('Content-Type: application/javascript');
 header("Content-Type: application/json; charset=utf-8");
-
-include "../connect.php";
-include "../function.php";
+include "../../connect.php";
+include "../../function.php";
 
 $data = json_decode(file_get_contents("php://input"));
 
@@ -31,24 +30,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $DN             = $data->DN;
             $ven_month      = $data->ven_month;
             $ven_name       = $data->ven_name;
+            $ven_con_name = '';
 
-            $sql_vcid = "SELECT id, ref FROM ven_com WHERE ven_month = '$ven_month' AND ven_name = '$ven_name' LIMIT 1 ";
+            $sql_vcid = "SELECT id, ref, ven_com_name, ven_com_num FROM ven_com WHERE ven_month = '$ven_month' AND ven_name = '$ven_name' LIMIT 1 ";
             $query_vcid = $conn->prepare($sql_vcid);
             $query_vcid->execute();
             $res_vcid = $query_vcid->fetch(PDO::FETCH_OBJ);
             if($res_vcid){
-                $r_vcid = $res_vcid->id;
-                $r_ref  = $res_vcid->ref;
+                $r_vcid     = $res_vcid->id;
+                $r_ref      = $res_vcid->ref;
+                $ven_com_name       = $res_vcid->ven_com_name;
+                $ven_com_num_all    = $res_vcid->ven_com_num;
             }else{
                 $r_vcid = '';
                 $r_ref  ='';
+                $ven_con_name = "";
+                $ven_com_num_all   = '';
+
             } 
 
             $ven_com_id     = json_encode([$r_vcid]);
             $user_id        = $data->uid;
-            $ven_com_name   = $data->ven_com_num;
+            $u_role         = $data->u_role;
+            $ven_com_name   = $ven_com_name;
             $ref1           = generateRandomString();
             $ref2           = $r_ref;
+            $price          = $data->price;
             $status         = 2 ;
             $create_at      = Date("Y-m-d h:i:s");
 
@@ -92,8 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } 
 
 
-            $sql = "INSERT INTO ven(id, ven_date, ven_time, DN, ven_month, ven_com_id, user_id, ven_name, ven_com_name, ref1,ref2, `status`, create_at) 
-                    VALUE(:id, :ven_date, :ven_time, :DN, :ven_month, :ven_com_id, :user_id, :ven_name, :ven_com_name, :ref1, :ref2, :status, :create_at);";        
+            $sql = "INSERT INTO ven(id, ven_date, ven_time, DN, ven_month, ven_com_id, user_id, u_role, ven_name, ven_com_name, ven_com_num_all, ref1, ref2, price, `status`, create_at) 
+                    VALUE(:id, :ven_date, :ven_time, :DN, :ven_month, :ven_com_id, :user_id, :u_role, :ven_name, :ven_com_name, :ven_com_num_all, :ref1, :ref2, :price, :status, :create_at);";        
             $query = $conn->prepare($sql);
             $query->bindParam(':id',$id, PDO::PARAM_INT);
             $query->bindParam(':ven_date',$ven_date, PDO::PARAM_STR);
@@ -102,10 +109,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $query->bindParam(':ven_month',$ven_month, PDO::PARAM_STR);
             $query->bindParam(':ven_com_id',$ven_com_id, PDO::PARAM_STR);
             $query->bindParam(':user_id',$user_id, PDO::PARAM_STR);
+            $query->bindParam(':u_role',$u_role, PDO::PARAM_STR);
             $query->bindParam(':ven_name',$ven_name, PDO::PARAM_STR);
             $query->bindParam(':ven_com_name',$ven_com_name, PDO::PARAM_STR);
+            $query->bindParam(':ven_com_num_all',$ven_com_num_all, PDO::PARAM_STR);
             $query->bindParam(':ref1',$ref1 , PDO::PARAM_STR);
             $query->bindParam(':ref2',$ref2 , PDO::PARAM_STR);
+            $query->bindParam(':price',$price , PDO::PARAM_STR);
             $query->bindParam(':status',$status , PDO::PARAM_INT);
             $query->bindParam(':create_at',$create_at , PDO::PARAM_STR);
             $query->execute();

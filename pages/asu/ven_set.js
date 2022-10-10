@@ -1,6 +1,3 @@
-// const { info } = require("console");
-
-
 
 Vue.createApp({
   data() {
@@ -37,24 +34,24 @@ Vue.createApp({
         ven_com_id: [],
         st: '',
     },
-    profiles:[],
-    ven_name_index :'',
-    ven_name :'',
-    ven_names :'',
-    ven_name_sub :'',
-    ven_name_subs :'',
-    sel_ven_month : [],
+    profiles        : [],
+    ven_name_index  : '',
+    ven_name        : '',
+    ven_names       : '',
+    ven_name_sub    : '',
+    ven_name_subs   : '',
+    sel_ven_month   : [],
     
-    ven_coms  :[],
-    ven_coms_index:'',
-    ven_com_df : '',            //defalt
+    ven_coms        : [],
+    ven_coms_index  : '',
+    ven_com_df      : '',            //defalt
 
     // ven_com_id  : '',
-    ven_month   : '',
-    ven_time    : '',
-    ven_com_name : [],
-    ven_com_num : '',
-    ven_com_id : [],
+    ven_month     : '',
+    ven_time      : '',
+    ven_com_name  : [],
+    ven_com_num   : '',
+    ven_com_id    : [],
     DN          : '',
     u_role      : '',
     price       : '',
@@ -82,9 +79,8 @@ Vue.createApp({
   },
   methods: {
     get_ven_names(){
-      axios.post('../../server/asu/get_ven_names.php')
+      axios.post('../../server/asu/ven_set/get_ven_names.php')
         .then(response => {
-          console.log(response.data);
           if (response.data.status) {
             this.ven_names = response.data.respJSON
           } else{            
@@ -114,9 +110,8 @@ Vue.createApp({
       this.ven_names[ven_name_index].id
       this.ven_name = this.ven_names[ven_name_index].name
 
-      axios.post('../../server/asu/get_vns_vs.php',{id:this.ven_names[ven_name_index].id})
+      axios.post('../../server/asu/ven_set/get_vns_vs.php',{id:this.ven_names[ven_name_index].id})
         .then(response => {
-          console.log(response.data);
           if (response.data.status) {
             this.ven_name_subs = response.data.respJSON
           } else{            
@@ -131,12 +126,12 @@ Vue.createApp({
     },
     ch_sel_vns(ven_name_sub){
       if(ven_name_sub != ''){
-        axios.post('../../server/asu/get_user_set.php',{ven_name:this.ven_name , uvn:ven_name_sub})
+        axios.post('../../server/asu/ven_set/get_user_set.php',{ven_name:this.ven_name , uvn:ven_name_sub})
         .then(response => {
-          console.log(response.data);
           if (response.data.status) {
             this.profiles = response.data.respJSON
             this.DN = response.data.respJSON[0].DN
+            this.u_role = response.data.respJSON[0].uvn
             this.price = response.data.respJSON[0].price
             this.ven_time = response.data.respJSON[0].v_time
           } else{            
@@ -180,18 +175,18 @@ Vue.createApp({
           locale      : 'th',
           events      : this.datas,
           eventClick: (info)=> {
-              console.log(info.event.id +' '+info.event.title)
-              console.log(info.event.extendedProps)
+              // console.log(info.event.id +' '+info.event.title)
+              // console.log(info.event.extendedProps)
               this.cal_click(info.event.id)
           },
           dateClick:(date)=>{
-              console.log(date)
+              // console.log(date)
               // this.cal_modal.date_meet = date.dateStr
               this.$refs['modal-show'].click();
           },
           editable: true,
           eventDrop: (info)=> {
-              console.log(info.event)
+              // console.log(info.event)
                 if(!this.event_drop(info.event.id,info.event.start)){
                   info.revert();
                 }
@@ -206,9 +201,8 @@ Vue.createApp({
   },
   
   cal_click(id){
-    axios.post('../../server/asu/get_ven.php',{id:id})
+    axios.post('../../server/asu/ven_set/get_ven.php',{id:id})
         .then(response => {
-          console.log(response.data);
           if (response.data.status) {
             this.data_event = response.data.respJSON
             this.data_event.ven_com_id = JSON.parse(response.data.respJSON.ven_com_id)
@@ -229,7 +223,7 @@ Vue.createApp({
     });    
   },
   drop_insert(uid,dateStr){    
-      axios.post('../../server/asu/ven_insert.php',{
+      axios.post('../../server/asu/ven_set/ven_insert.php',{
                           uid         : uid,
                           ven_date    : dateStr,
                           ven_time    : this.ven_time,
@@ -237,13 +231,13 @@ Vue.createApp({
                           ven_month   : this.ven_month,
                           ven_com_id  : this.ven_com_id,
                           ven_name    : this.ven_name,
-                          ven_name    : this.ven_name,
                           ven_com_num : this.ven_com_num,
+                          u_role      : this.u_role,
                           price       : this.price,
                           act         : 'insert'
                         })
           .then(response => {
-              console.log(response.data);
+              // console.log(response.data);
               if (response.data.status) {
                 this.get_vens()
                 swal.fire({
@@ -252,10 +246,8 @@ Vue.createApp({
                   showConfirmButton: true,
                   timer: 1000
                 });
-              } else{
-                let icon    = 'warning'
-                let message = response.data.message                
-                this.alert(icon,message,0)
+              } else{              
+                this.alert('warning',response.data.message   ,0)
                 this.get_vens()
                 
               }
@@ -268,9 +260,9 @@ Vue.createApp({
     
   }, 
   event_drop(id,start){
-    axios.post('../../server/asu/ven_move.php',{id:id,start:start})
+    axios.post('../../server/asu/ven_set/ven_move.php',{id:id,start:start})
     .then(response => {
-        console.log(response.data.respJSON);
+        
         if (response.data.status) {
             this.datas = response.data.respJSON;
             this.get_vens()
@@ -293,9 +285,9 @@ Vue.createApp({
     });
   },
   get_vens(){
-    axios.get('../../server/asu/get_vens.php')
+    axios.get('../../server/asu/ven_set/get_vens.php')
     .then(response => {
-        console.log(response.data.respJSON);
+        
         if (response.data.status) {
             this.datas = response.data.respJSON;
             this.cal_render()
@@ -307,9 +299,9 @@ Vue.createApp({
     });
   },
   get_ven_coms(){
-    axios.post('../../server/asu/get_ven_coms_vs.php',{ven_month:this.ven_month})
+    axios.post('../../server/asu/ven_set/get_ven_coms_vs.php',{ven_month:this.ven_month})
     .then(response => {
-        // console.log(response.data.respJSON);
+        // 
         if (response.data.status) {
             this.ven_coms = response.data.respJSON;
         } 
@@ -319,9 +311,9 @@ Vue.createApp({
     });
   },
   ven_save(){
-    axios.post('../../server/asu/ven_up_vcid.php',{data_event:this.data_event})
+    axios.post('../../server/asu/ven_set/ven_up_vcid.php',{data_event:this.data_event})
     .then(response => {
-        console.log(response.data.respJSON);
+        
         if (response.data.status) {
           this.get_vens()
           this.cal_render()
@@ -337,7 +329,7 @@ Vue.createApp({
   //   this.ven_com_id = []
   //   axios.post('../../server/asu/get_ven_coms_vsdf.php',{ven_month:this.ven_month, ven_name:this.ven_name})
   //   .then(response => {
-  //       console.log(response.data.respJSON);
+  //       
   //       if (response.data.status) {
   //           this.ven_com_df = response.data.respJSON;
   //           this.ven_com_id = response.data.respJSON[0].id  
@@ -353,7 +345,7 @@ Vue.createApp({
   //   // this.get_profiles()
   //   axios.post(this.url_base_app + './api/ven_set/get_users.php',{ven_com_id:vci})
   //         .then(response => {
-  //             console.log(response.data.respJSON);
+  //             
   //             if (response.data.status) {
   //                 // pfs = response.data.respJSON;
   //                 this.profiles = response.data.respJSON;
@@ -367,7 +359,7 @@ Vue.createApp({
   // get_profiles(){
   //     axios.post(this.url_base_app + './api/ven_set/get_users.php',{ven_com_id:this.ven_com_id})
   //         .then(response => {
-  //             console.log(response.data.respJSON);
+  //             
   //             if (response.data.status) {
   //                 // pfs = response.data.respJSON;
   //                 this.profiles = response.data.respJSON;
@@ -406,9 +398,9 @@ Vue.createApp({
       confirmButtonText : 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.post('../../server/asu/ven_del.php',{id:id})
+        axios.post('../../server/asu/ven_set/ven_del.php',{id:id})
           .then(response => {
-              console.log(response.data.respJSON);
+              
               if (response.data.status) {
                 icon = "success";
                 message = response.data.message;

@@ -6,10 +6,11 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 // header('Content-Type: application/javascript');
 header("Content-Type: application/json; charset=utf-8");
 
-include "../connect.php";
+include "../../connect.php";
+include "../../function.php";
 
 $data = json_decode(file_get_contents("php://input"));
-$id = $data->id;
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -17,12 +18,10 @@ $datas = array();
 
     // The request is using the POST method
     try{
-        $sql = "SELECT v.*
-        FROM ven as v 
-        WHERE v.id = $id  
-        ORDER BY v.ven_date DESC";
+        $ven_month  = $data->ven_month;
+
+        $sql = "SELECT * FROM ven_com WHERE ven_month='$ven_month' AND `status` = 1 ORDER BY id ASC";
         $query = $conn->prepare($sql);
-        // $query->bindParam(':kkey',$data->kkey, PDO::PARAM_STR);
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_OBJ);
 
@@ -30,17 +29,18 @@ $datas = array();
             // foreach($result as $rs){
             //     array_push($datas,array(
             //         'id'    => $rs->id,
-            //         'title' => $rs->name,
-            //         'start' => $rs->ven_date.' '.$rs->ven_time,
+            //         'name'  => $rs->name,
+            //         'DN'  => $rs->DN,
+            //         'srt'  => $rs->srt
             //     ));
             // }
             http_response_code(200);
-            echo json_encode(array('status' => true, 'message' => 'สำเร็จ', 'respJSON' => $result ));
+            echo json_encode(array('status' => true, 'message' => 'สำเร็จ', 'respJSON' => $result));
             exit;
         }
      
         http_response_code(200);
-        echo json_encode(array('status' => true, 'message' => 'ไม่พบข้อมูล ', 'respJSON' => $result));
+        echo json_encode(array('false' => true, 'message' => 'ไม่พบข้อมูล '));
     
     }catch(PDOException $e){
         echo "Faild to connect to database" . $e->getMessage();

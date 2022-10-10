@@ -6,10 +6,10 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 // header('Content-Type: application/javascript');
 header("Content-Type: application/json; charset=utf-8");
 
-include "../connect.php";
-include "../function.php";
+include "../../connect.php";
+include "../../function.php";
 
-$data = json_decode(file_get_contents("php://input"));
+// $data = json_decode(file_get_contents("php://input"));
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -18,24 +18,23 @@ $datas = array();
 
     // The request is using the POST method
     try{
-        $ven_month  = $data->ven_month;
-
-        $sql = "SELECT * FROM ven_com WHERE ven_month='$ven_month' AND `status` = 1 ORDER BY id ASC";
+        $sql = "SELECT * FROM ven_name ORDER BY srt ASC";
         $query = $conn->prepare($sql);
+        // $query->bindParam(':kkey',$data->kkey, PDO::PARAM_STR);
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_OBJ);
 
         if($query->rowCount() > 0){                        //count($result)  for odbc
-            // foreach($result as $rs){
-            //     array_push($datas,array(
-            //         'id'    => $rs->id,
-            //         'name'  => $rs->name,
-            //         'DN'  => $rs->DN,
-            //         'srt'  => $rs->srt
-            //     ));
-            // }
+            foreach($result as $rs){
+                array_push($datas,array(
+                    'id'    => $rs->id,
+                    'name'  => $rs->name,
+                    'DN'  => $rs->DN,
+                    'srt'  => $rs->srt
+                ));
+            }
             http_response_code(200);
-            echo json_encode(array('status' => true, 'message' => 'สำเร็จ', 'respJSON' => $result));
+            echo json_encode(array('status' => true, 'message' => 'สำเร็จ', 'respJSON' => $datas));
             exit;
         }
      

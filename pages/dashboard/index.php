@@ -63,6 +63,8 @@ require_once('../../server/authen.php');
                                             <button type="submit" class="btn btn-primary" >save</button>
                                         </div>
                                     </form>
+
+                                    {{data_event}}
                                 </div>
                             </div>
                         </div>

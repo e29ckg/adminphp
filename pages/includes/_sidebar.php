@@ -54,14 +54,12 @@
                         <li class="submenu-item <?php echo isActive('users') ?>">
                             <a href="../users/">จัดการสมาชิก</a>
                         </li>
-                        <li class="submenu-item ">
-                            <a href="component-breadcrumb.html">Breadcrumb</a>
-                        </li>
+                        
                         
                     </ul>
                 </li>
 
-                <li class="sidebar-item  has-sub">
+                <!-- <li class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-stack"></i>
                         <span>Components</span>
@@ -110,7 +108,7 @@
                             <a href="component-tooltip.html">Tooltip</a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
 
                 
 
