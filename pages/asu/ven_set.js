@@ -171,8 +171,7 @@ Vue.createApp({
 
 
     cal_render(){
-      var calendarEl = this.$refs['calendar'];
-      
+      var calendarEl = this.$refs['calendar'];      
       var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView : 'dayGridMonth',
           initialDate : this.ven_month,
@@ -227,8 +226,7 @@ Vue.createApp({
       .catch(function (error) {        
       console.log(error);
 
-    });
-    
+    });    
   },
   drop_insert(uid,dateStr){    
       axios.post('../../server/asu/ven_insert.php',{

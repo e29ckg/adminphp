@@ -205,7 +205,7 @@
                   <td></td>
                   <td>
                     <input type="checkbox"  :id="i" name="ckb" :value="vc.id" v-model="data_event.ven_com_id" @change.prevent="ven_save()">
-                    <label :for="i"> {{vc.id + ' ' +vc.ven_com_name+' '+i}}</label><br>
+                    <label :for="i"> {{vc.id + ' คำสั่งที่ ' + vc.ven_com_num + ' เวร ' +vc.ven_com_name+' '+i}}</label><br>
                   </td>
                 </tr>
                 <tr>

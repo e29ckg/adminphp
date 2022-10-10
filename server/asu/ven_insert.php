@@ -36,12 +36,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $query_vcid = $conn->prepare($sql_vcid);
             $query_vcid->execute();
             $res_vcid = $query_vcid->fetch(PDO::FETCH_OBJ);
+            if($res_vcid){
+                $r_vcid = $res_vcid->id;
+                $r_ref  = $res_vcid->ref;
+            }else{
+                $r_vcid = '';
+                $r_ref  ='';
+            } 
 
-            $ven_com_id     = json_encode([$res_vcid->id]);
+            $ven_com_id     = json_encode([$r_vcid]);
             $user_id        = $data->uid;
             $ven_com_name   = $data->ven_com_num;
             $ref1           = generateRandomString();
-            $ref2           = $res_vcid->ref;
+            $ref2           = $r_ref;
             $status         = 2 ;
             $create_at      = Date("Y-m-d h:i:s");
 
