@@ -21,8 +21,10 @@ $datas = array();
 
         $ven_name   = $data->ven_name;
         $uvn        = $data->uvn;
-
+        $uvn_sst    = '';
+        
         $sql = "SELECT * FROM ven_user WHERE ven_name = :ven_name AND uvn =:uvn ORDER BY v_time ASC";
+
         $query = $conn->prepare($sql);
         $query->bindParam(':ven_name',$ven_name, PDO::PARAM_STR);
         $query->bindParam(':uvn',$uvn, PDO::PARAM_STR);
@@ -39,7 +41,7 @@ $datas = array();
             //     ));
             // }
             http_response_code(200);
-            echo json_encode(array('status' => true, 'message' => 'สำเร็จ', 'respJSON' => $result));
+            echo json_encode(array('status' => true, 'message' => 'สำเร็จ'.strlen($uvn) , 'respJSON' => $result));
             exit;
         }
      

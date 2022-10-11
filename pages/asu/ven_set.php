@@ -249,7 +249,7 @@
     <script src="../../node_modules/vue/dist/vue.global.prod.js"></script>
     <script src="../../node_modules/axios/dist/axios.js"></script>
     <script src="../../node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
-    <script src="./ven_set.js"></script>
+    <script src="./js/ven_set.js"></script>
     <!-- <script src="../plugins/toastr/toastr.min.js"></script> -->
     <!-- <script src="./node_modules/fullcalendar/main.min.js"></script> -->
 

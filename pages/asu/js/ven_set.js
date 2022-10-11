@@ -125,14 +125,15 @@ Vue.createApp({
 
     },
     ch_sel_vns(ven_name_sub){
+
       if(ven_name_sub != ''){
         axios.post('../../server/asu/ven_set/get_user_set.php',{ven_name:this.ven_name , uvn:ven_name_sub})
         .then(response => {
           if (response.data.status) {
             this.profiles = response.data.respJSON
-            this.DN = response.data.respJSON[0].DN
-            this.u_role = response.data.respJSON[0].uvn
-            this.price = response.data.respJSON[0].price
+            this.DN       = response.data.respJSON[0].DN
+            this.u_role   = response.data.respJSON[0].uvn
+            this.price    = response.data.respJSON[0].price
             this.ven_time = response.data.respJSON[0].v_time
           } else{            
             this.alert('warning',response.data.message,0)
@@ -255,8 +256,7 @@ Vue.createApp({
             .catch(function (error) {        
               console.log(error);
               
-            });
-    
+            });    
     
   }, 
   event_drop(id,start){

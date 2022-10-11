@@ -90,6 +90,7 @@ Vue.createApp({
           } 
       })
     },
+    
     vu_add(vni,vnsi){
       this.get_ven_users()
       this.vu_form.ven_name  = this.ven_names[vni].name
@@ -98,10 +99,53 @@ Vue.createApp({
       this.vu_form.v_time = this.DN[this.ven_names[vni].DN] +':'+this.ven_names[vni].srt + this.ven_name_subs[vnsi].srt
       this.vu_form.price  = this.ven_name_subs[vnsi].price
       this.vu_form.color  = this.ven_name_subs[vnsi].color
-      this.$refs.show_vu_form.click()
-      
-      
+      this.$refs.show_vu_form.click()      
     },
+    vu_add_user_all(vni,vnsi){
+      this.vu_form.ven_name  = this.ven_names[vni].name
+      this.vu_form.uvn    = this.ven_name_subs[vnsi].name
+      this.vu_form.DN     = this.ven_names[vni].DN
+      this.vu_form.v_time = this.DN[this.ven_names[vni].DN] +':'+this.ven_names[vni].srt + this.ven_name_subs[vnsi].srt
+      this.vu_form.price  = this.ven_name_subs[vnsi].price
+      this.vu_form.color  = this.ven_name_subs[vnsi].color
+
+      this.isLoading = true;
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "คุณต้องการเพิ่ม USER ทั้งหมดนะ!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Is it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.post('../../server/asu/user_ven_insert_all.php',{
+            ven_name  : this.ven_names[vni].name,
+            uvn    : this.ven_name_subs[vnsi].name,
+            DN     : this.ven_names[vni].DN,
+            v_time : this.DN[this.ven_names[vni].DN] +':'+this.ven_names[vni].srt + this.ven_name_subs[vnsi].srt,
+            price  : this.ven_name_subs[vnsi].price,
+            color  : this.ven_name_subs[vnsi].color,
+          })
+          .then(response => {
+              if (response.data.status) {            
+                this.alert('success',response.data.message,1000)
+                this.get_ven_users()
+                
+              } 
+          })
+          .catch(function (error) {
+              console.log(error);
+          })
+          .finally(() => {
+            this.isLoading = false;
+          })         
+        }
+        this.isLoading = false;
+      })
+    },
+
     clear_vu_form(){
       this.vu_form = {user_id :'',order : '',DN : '',price : '',ven_name : '',uvn : '',v_time : '',color : ''}
     },
@@ -117,7 +161,7 @@ Vue.createApp({
               this.get_ven_name_subs()
               this.get_ven_users()
               this.get_users()
-              this.alert('success',response.data.message,1500)
+              this.alert('success',response.data.message,1000)
                 // this.ven_name_subs = response.data.respJSON;
             } 
         })
@@ -135,16 +179,16 @@ Vue.createApp({
       }
     },
     vu_del(id){
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
+      // Swal.fire({
+      //   title: 'Are you sure?',
+      //   text: "You won't be able to revert this!",
+      //   icon: 'warning',
+      //   showCancelButton: true,
+      //   confirmButtonColor: '#3085d6',
+      //   cancelButtonColor: '#d33',
+      //   confirmButtonText: 'Yes, delete it!'
+      // }).then((result) => {
+      //   if (result.isConfirmed) {
           axios.post('../../server/asu/user_ven_act.php',{id:id, act:'delete'})
             .then(response => {
                 if (response.data.status) {  
@@ -152,7 +196,7 @@ Vue.createApp({
                   this.get_ven_name_subs()
                   this.get_ven_users()
                   this.get_users()
-                  this.alert('success',response.data.message,1500)
+                  this.alert('success',response.data.message,1000)
                 }else{
                   this.alert('warning',response.data.message,0)
                 } 
@@ -163,8 +207,8 @@ Vue.createApp({
             .finally(() => {
               this.isLoading = false;
             })
-        }
-      })
+        // }
+      // })
     },
     alert(icon,message,timer=0){
       swal.fire({

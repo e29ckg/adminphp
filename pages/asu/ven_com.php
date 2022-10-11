@@ -20,7 +20,7 @@ require_once('../../server/authen.php');
             </header>
 
             <div class="page-heading">
-                <h3>เตรียมผู้อยู่เวร</h3>
+                <h3>คำสั่ง</h3>
             </div>
             
             <div class="page-content" id="venCom" v-cloak> 
@@ -48,7 +48,7 @@ require_once('../../server/authen.php');
                                             <tbody  v-for="vc in ven_coms">
                                                 <tr v-if="vc.ven_month == cvg.ven_month">
                                                         <td >  
-                                                            id {{vc.id}} | เลขคำสั่งที่ {{vc.ven_com_num}} | ลงวันที่ {{vc.ven_com_date}} | {{vc.ven_com_name}} ({{vc.ven_name}})
+                                                            เลขคำสั่งที่ {{vc.ven_com_num}} | ลงวันที่ {{vc.ven_com_date}} | {{vc.ven_com_name}} ({{vc.ven_name}})
                                                             <!-- | {{vc.ref}} | {{vc.status}}  -->
     
                                                         </td>
@@ -149,7 +149,7 @@ require_once('../../server/authen.php');
     <script src="../../node_modules/vue/dist/vue.global.prod.js"></script>
     <script src="../../node_modules/axios/dist/axios.js"></script>
     <script src="../../node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
-    <script src="./ven_com.js"></script>
+    <script src="./js/ven_com.js"></script>
 </body>
 
 </html>

@@ -23,7 +23,7 @@ require_once('../../server/authen.php');
             </header>
 
             <div class="page-heading">
-                <h3>จัดการสมาชิก</h3>
+                <h3>หน้าแรก</h3>
             </div> 
 
                 <!-- Content wrapper -->

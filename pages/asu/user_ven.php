@@ -41,11 +41,12 @@ require_once('../../server/authen.php');
                                             <button @click="vu_del(vu.id)" class="btn btn-danger btn-sm">ลบ</button>
                                         </li>
                                     </div>
-                                    <li class="list-group-item"><button class="btn btn-success" @click="vu_add(vni,vnsi)">เพิ่ม</button></li>
+                                    <li class="list-group-item">
+                                        <button class="btn btn-success me-2" @click="vu_add(vni,vnsi)">เพิ่มที่ละคน</button>
+                                        <button class="btn btn-success" @click="vu_add_user_all(vni,vnsi)">{{isLoading ? 'Loading...' : 'เพิ่ม USER ทั้งหมด'}}</button>
+                                    </li>
                                 </ul>
-                                <ul>
-
-                                </ul>
+                                
                             </div>
 
                         </div>
@@ -54,7 +55,7 @@ require_once('../../server/authen.php');
 
                 <!-- Modal venUser Form -->
                 <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#ven_user" ref="show_vu_form" hidden >
-                        เพิมผู้อยู่เวร
+                        เพิ่มผู้อยู่เวร
                 </button>
                 <!-- Modal venUser Form -->
                 <div class="modal fade" id="ven_user" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -69,10 +70,10 @@ require_once('../../server/authen.php');
                                 <!-- {{vu_form}} -->
                                 <form @submit.prevent="vu_save">                                    
                                     <div class="row mb-3">                                        
-                                        <!-- <div class="col mb-3">
+                                        <div class="col mb-3">
                                             <label for="srt" class="form-label">ลำดับ</label>
                                             <input type="number" min="1" class="form-control" id="srt" v-model="vu_form.order">
-                                        </div> -->
+                                        </div>
                                         <div class="col mb-3">
                                             <label for="nameuf" class="form-label">ชื่อ</label>
                                             <select class="form-select" aria-label="Default select example" v-model="vu_form.user_id" >
@@ -84,8 +85,7 @@ require_once('../../server/authen.php');
                                         <!-- <button type="button" class="col-auto me-auto btn btn-danger" v-if="vu_form_act !='insert'" @click.prevent="ven_name_del()">ลบ {{ven_name_form.id}}</button> -->
                                         <button type="submit" class="col-auto btn btn-primary">บันทึก</button>
                                     </div>
-                                </form>
-                                
+                                </form>                                
                             </div>
                         </div>
                     </div>
@@ -106,7 +106,7 @@ require_once('../../server/authen.php');
     <script src="../../node_modules/vue/dist/vue.global.prod.js"></script>
     <script src="../../node_modules/axios/dist/axios.js"></script>
     <script src="../../node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
-    <script src="./user_ven.js"></script>
+    <script src="./js/user_ven.js"></script>
 </body>
 
 </html>

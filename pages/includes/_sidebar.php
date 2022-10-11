@@ -1,4 +1,4 @@
-<div id="sidebar" class="active">
+<div id="sidebar" class="active d-print-none">
     <div class="sidebar-wrapper active">
         <div class="sidebar-header">
             <div class="d-flex justify-content-between">

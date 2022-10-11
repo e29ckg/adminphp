@@ -1,4 +1,4 @@
-<ul class="nav nav-pills flex-column flex-md-row mb-3">
+<ul class="nav nav-pills flex-column flex-md-row mb-3 d-print-none">
     <li class="nav-item">
         <a class="nav-link <?php echo isActiveFile('profile') ?>" href="../account/profile.php"><i class="bx bx-user me-1"></i> My Profile </a>
     </li>

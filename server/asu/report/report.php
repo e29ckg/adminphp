@@ -9,17 +9,26 @@ header("Content-Type: application/json; charset=utf-8");
 include "../../connect.php";
 include "../../function.php";
 
-// $data = json_decode(file_get_contents("php://input"));
+$data = json_decode(file_get_contents("php://input"));
+$vcid = $data->vcid;
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $datas = array();
 
     // The request is using the POST method
     try{
 
-        $sql = "SELECT * FROM ven WHERE ven_month = '2022-11' AND status=2 ORDER BY ven_time ASC, ven_date ASC";
+        $sql = "SELECT * FROM ven_com WHERE id = $vcid";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $vc = $query->fetch(PDO::FETCH_OBJ);
+
+
+
+        $sql = "SELECT * FROM ven WHERE ven_month = '$vc->ven_month' AND status=2 ORDER BY ven_date ASC, ven_time ASC";
         $query = $conn->prepare($sql);
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_OBJ);
@@ -32,11 +41,19 @@ $datas = array();
         if($query->rowCount() > 0){                        //count($result)  for odbc
             $vd_o = '';
             foreach($result as $rs){
-                if($vd_o != $rs->ven_date){
-                    array_push($vd,$rs->ven_date);
-                    $vd_o = $rs->ven_date;
+                $aVCI = json_decode($rs->ven_com_id);
+                foreach($aVCI as $r){
+                    if($r == $vcid){
+                        if($vd_o != $rs->ven_date){
+                            array_push($vd,$rs->ven_date);
+                            $vd_o = $rs->ven_date;
+                        }
+                    }
                 }
             }
+//             http_response_code(200);
+// echo json_encode(array('false' => true, 'message' => $vd));
+// exit; 
 
             foreach($vd as $r){                         /**    เวียนวัน  $r วันที่ 2022-11-01  */
                 $vt         = array();
@@ -83,7 +100,7 @@ $datas = array();
             }
             
             http_response_code(200);
-            echo json_encode(array('status' => true, 'message' => substr('ผู้พิพากษา3', 0, 30). ' สำเร็จ '.  strlen('ผู้พิพากษา3'), 'respJSON' => $datas));
+            echo json_encode(array('status' => true, 'message' => ' สำเร็จ ', 'respJSON' => $datas , 'vc'=>$vc));
             exit;
         }
      

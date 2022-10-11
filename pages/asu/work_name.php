@@ -172,7 +172,7 @@ require_once('../../server/authen.php');
     <script src="../../node_modules/vue/dist/vue.global.prod.js"></script>
     <script src="../../node_modules/axios/dist/axios.js"></script>
     <script src="../../node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
-    <script src="./work_name.js"></script>
+    <script src="./js/work_name.js"></script>
 </body>
 
 </html>

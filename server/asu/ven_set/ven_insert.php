@@ -35,16 +35,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $query_vcid = $conn->prepare($sql_vcid);
             $query_vcid->execute();
             $res_vcid = $query_vcid->fetch(PDO::FETCH_OBJ);
+
+            if($query_vcid->rowCount() < 1){    
+                http_response_code(200);
+                echo json_encode(array('status' => false, 'message' => 'กรุณาออกคำสั่ง ' . $ven_name .' เดือน '.$ven_month , 'responseJSON' => $data));
+                exit; 
+            }
             if($res_vcid){
                 $r_vcid     = $res_vcid->id;
                 $r_ref      = $res_vcid->ref;
                 $ven_com_name       = $res_vcid->ven_com_name;
                 $ven_com_num_all    = $res_vcid->ven_com_num;
             }else{
-                $r_vcid = '';
-                $r_ref  ='';
-                $ven_con_name = "";
-                $ven_com_num_all   = '';
+                $r_vcid     = '';
+                $r_ref      = '';
+                $ven_com_name       = '';
+                $ven_com_num_all    = '';
             } 
 
             $ven_com_id     = json_encode([$r_vcid]);

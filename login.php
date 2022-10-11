@@ -89,8 +89,7 @@
                 <label class="form-label" for="form3Example4">Password</label>
               </div>
 
-              <div class="d-flex justify-content-between align-items-center">
-                <!-- Checkbox -->
+              <!-- <div class="d-flex justify-content-between align-items-center">
                 <div class="form-check mb-0">
                   <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
                   <label class="form-check-label" for="form2Example3">
@@ -98,7 +97,7 @@
                   </label>
                 </div>
                 <a href="#!" class="text-body">Forgot password?</a>
-              </div>
+              </div> -->
 
               <div class="text-center text-lg-start mt-4 pt-2">
                 <!-- <button type="button" class="btn btn-primary btn-lg"
