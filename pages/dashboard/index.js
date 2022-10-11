@@ -76,7 +76,7 @@ Vue.createApp({
         initialView : 'dayGridMonth',
         initialDate : this.ven_month,
         firstDay    : 1,
-        height      : 1200,
+        height      : 650,
         locale      : 'th',
         firstDay    : 1,
         allDayContent      : true,

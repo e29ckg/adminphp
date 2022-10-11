@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(200);
         $response = array('status'=>true,'message' => 'success');
         echo json_encode($response);
+        exit;
 
     } else {
         // echo "<script> alert('ไม่สามารถเข้าสู่ระบบได้')</script>";
@@ -49,5 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(200);
         $response = array('status'=>false, 'message' => 'ไม่สามารถเข้าระบบได้');
         echo json_encode($response);
+        exit;
     }
 }

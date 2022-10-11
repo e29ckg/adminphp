@@ -171,7 +171,7 @@ Vue.createApp({
           initialView : 'dayGridMonth',
           initialDate : this.ven_month,
           firstDay    : 1,
-          height      : 1200,
+          height      : 650,
           locale      : 'th',
           events      : this.datas,
           eventClick: (info)=> {

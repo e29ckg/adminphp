@@ -45,18 +45,18 @@ require_once('../../server/authen.php');
                                         <td>
                                             {{d.u_name}} <br>
                                             {{d.u_role}}
-                                            <ul>
+                                            <!-- <ul>
                                                 <li>dddd</li>
                                                 <li>dddd</li>
                                                 <li>dddd</li>
 
-                                            </ul>
+                                            </ul> -->
                                         </td>
                                         <td> 
-                                            {{d.u_name}} <br>
-                                            {{d.u_role}}
+                                            <!-- {{d.u_name}} <br>
+                                            {{d.u_role}} -->
                                         </td>
-                                        <td>หมายเหตุ</td>
+                                        <td></td>
                                     </tr>
                                 </table>  
                                 {{datas}}                                          

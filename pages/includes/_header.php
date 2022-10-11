@@ -12,9 +12,17 @@
 <link rel="stylesheet" href="../../assets/vendors/bootstrap-icons/bootstrap-icons.css">
 <link rel="stylesheet" href="../../assets/css/app.css">
 <link rel="stylesheet" href="../../node_modules/sweetalert2/dist/sweetalert2.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300&display=swap" rel="stylesheet">
 
 <style>
     [v-cloak] > * { display:none; }
     [v-cloak]::before { content: "loading..."; }
+
+    script {
+        display: none;
+    }
+    body{
+      font-family: 'Mitr', sans-serif;
+	}
 </style>
      

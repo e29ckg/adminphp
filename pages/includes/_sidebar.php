@@ -4,9 +4,10 @@
             <div class="d-flex justify-content-between">
                 <div class="logo">
                     <a href="#" class="fs-5"> <i class="bi bi-person-circle"></i> <?=$_SESSION['AD_FIRSTNAME'] .' '. $_SESSION['AD_LASTNAME']?></a>
+                    <a href="../logout.php" onclick="return confirm('ต้องการออกจากระบบ..')" class="btn btn-danger btn-sm">logout</a>
                 </div>
                 <div class="toggler">
-                    <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                    <a class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
                 </div>
             </div>
         </div>

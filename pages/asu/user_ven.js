@@ -83,7 +83,7 @@ Vue.createApp({
       })
     },
     get_users(){
-      axios.post('../../server/users/users.php')
+      axios.post('../../server/asu/get_users.php')
       .then(response => {
           if (response.data.status) {
               this.users = response.data.respJSON;
@@ -107,7 +107,7 @@ Vue.createApp({
     },
 
     vu_save(){
-      if(this.vu_form.user_id != '' && this.vu_form.order != ''){
+      if(this.vu_form.user_id != '' ){
         this.isLoading = true;
         axios.post('../../server/asu/user_ven_act.php',{ven_user:this.vu_form, act:this.vu_form_act})
         .then(response => {

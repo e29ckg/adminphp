@@ -34,9 +34,9 @@ require_once('../../server/authen.php');
                             <div class="card-body" v-if="vn.id == vns.ven_name_id">
                                 <h5 class="card-title" :style="'background-color: '+vns.color+' ;'" >{{vn.name}} ({{vn.DN == 'กลางวัน' ? '☀️' : '🌙'}} {{vn.DN}}) {{vns.name}} </h5>
                                 <ul class="list-group list-group-flush"  >
-                                    <div v-for="vu in ven_users">
+                                    <div v-for="vu,vui in ven_users">
                                         <li class="list-group-item" v-if="vu.ven_name == vn.name && vns.name == vu.uvn">
-                                            {{vu.order + ' ' +vu.u_name + ' '}}  
+                                            {{vn.DN == 'กลางวัน' ? '☀️' : '🌙'}}{{vu.u_name + ' '}}  
                                             <!-- {{vu.id}}  -->
                                             <button @click="vu_del(vu.id)" class="btn btn-danger btn-sm">ลบ</button>
                                         </li>
@@ -69,10 +69,10 @@ require_once('../../server/authen.php');
                                 <!-- {{vu_form}} -->
                                 <form @submit.prevent="vu_save">                                    
                                     <div class="row mb-3">                                        
-                                        <div class="col mb-3">
+                                        <!-- <div class="col mb-3">
                                             <label for="srt" class="form-label">ลำดับ</label>
                                             <input type="number" min="1" class="form-control" id="srt" v-model="vu_form.order">
-                                        </div>
+                                        </div> -->
                                         <div class="col mb-3">
                                             <label for="nameuf" class="form-label">ชื่อ</label>
                                             <select class="form-select" aria-label="Default select example" v-model="vu_form.user_id" >

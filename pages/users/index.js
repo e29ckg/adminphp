@@ -83,11 +83,13 @@ Vue.createApp({
       this.user = '';
     },
     user_form_insert_show(){
+      this.close_modal_user_form()
       this.$refs.show_modal_user_form.click()
       this.user_form.act = 'insert'
     },
     user_insert(){
-      console.log('user_insert')
+
+      // console.log('user_insert')
       if(this.user_form.username != '' && this.user_form.password != '' && this.user_form.repassword != '' && this.user_form.fname != '' 
         && this.user_form.name != '' && this.user_form.sname != '' && this.user_form.password == this.user_form.repassword){
           axios.post('../../server/users/user_insert.php',{user:this.user_form})

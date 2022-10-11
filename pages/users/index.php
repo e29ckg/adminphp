@@ -37,7 +37,6 @@ require_once('../../server/authen.php');
                                                 <th scope="col">#</th>
                                                 <th scope="col">username</th>
                                                 <th scope="col">ชื่อ-สกุล</th>
-                                                <th scope="col">ตำแหน่ง</th>
                                                 <th scope="col">สถานะ</th>
                                                 <th scope="col">act</th>
                                                 </tr>
@@ -45,12 +44,10 @@ require_once('../../server/authen.php');
                                             <tbody>
                                                 <tr v-for="d,index in datas">
                                                     <th scope="row">{{index+1}}</th>
-                                                    <th >{{d.username}} 
-                                                        <span class="text-primary text-sm" v-if="d.status == 10">(ปกติ)</span> 
-                                                        <span class="text-danger text-sm" v-else>(ระงับการใช้งาน)</span> 
+                                                    <th >{{d.username}} <br>
+                                                        <span class="text-primary text-sm">{{d.status == 10 ? '(ปกติ)' : '(ระงับการใช้งาน)'}}</span>                                                        
                                                     </th>
-                                                    <td>{{d.name}}</td>
-                                                    <td>{{d.dep}}</td>
+                                                    <td>{{d.name}} <br> {{d.dep}}</td>
                                                     <td>
                                                         <div class="form-check form-switch" v-if="d.status == 10" >
                                                             <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" @click="user_status(d.uid,1)" checked >
@@ -124,7 +121,7 @@ require_once('../../server/authen.php');
                                         </tr>                                            
                                     </tbody>
                                 </table>
-                                {{user}}
+                                <!-- {{user}} -->
                             </div>
                         </div>
                     </div>
@@ -214,7 +211,7 @@ require_once('../../server/authen.php');
                                         <button type="submit" class="btn btn-primary">บันทึก</button>
                                     </div>
                                 </form>
-                                {{user_form}}
+                                <!-- {{user_form}} -->
                             </div>
                         </div>
                     </div>
@@ -290,7 +287,7 @@ require_once('../../server/authen.php');
                                         <button type="submit" class="btn btn-primary">บันทึก</button>
                                     </div>
                                 </form>
-                                {{user_form}}
+                                <!-- {{user_form}} -->
                             </div>
                         </div>
                     </div>
