@@ -204,7 +204,7 @@
                 <tr>
                   <th scope="row">คำสั่ง</th>
                   <td>
-                    {{data_event.u_role}} | {{data_event.DN}} | {{data_event.ven_com_name}} |{{data_event.price}}</td>
+                    {{data_event.u_role}} | {{data_event.DN}} | {{data_event.ven_com_name}} | {{data_event.price}}</td>
                 </tr>
                 <tr v-for="vc,i in ven_coms">
                   <td></td>

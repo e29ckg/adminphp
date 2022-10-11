@@ -39,7 +39,9 @@
                         <li class="submenu-item <?php echo isActiveFile('ven_set') ?>">
                             <a href="../asu/ven_set.php" target="_blank">จัดเวร</a>
                         </li>
-                        
+                        <li class="submenu-item <?php echo isActiveFile('report') ?>">
+                            <a href="../asu/report.php">รายงาน</a>
+                        </li>                        
                         
                     </ul>
                 </li>

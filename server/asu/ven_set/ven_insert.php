@@ -22,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try{
         if($act == 'insert'){
-            // $vc      = $data->uid; 
 
             $id = time();
             $ven_date       = $data->ven_date;
@@ -46,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $r_ref  ='';
                 $ven_con_name = "";
                 $ven_com_num_all   = '';
-
             } 
 
             $ven_com_id     = json_encode([$r_vcid]);
@@ -58,49 +56,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $price          = $data->price;
             $status         = 2 ;
             $create_at      = Date("Y-m-d h:i:s");
-
          
-        $sql_VU = "SELECT * FROM ven WHERE user_id = $user_id AND ven_date = '$ven_date' LIMIT 1 ";
-        $query_VU = $conn->prepare($sql_VU);
-        $query_VU->execute();
-        $res_VU = $query_VU->fetch(PDO::FETCH_OBJ);
+            $sql_VU = "SELECT * FROM ven WHERE user_id = $user_id AND ven_date = '$ven_date' LIMIT 1 ";
+            $query_VU = $conn->prepare($sql_VU);
+            $query_VU->execute();
+            $res_VU = $query_VU->fetch(PDO::FETCH_OBJ);
 
-        if($res_VU){
-            http_response_code(200);
-            echo json_encode(array('status' => false, 'message' => 'วันนี้มีเวรอยู่แล้ว', 'respJSON' => $res_VU));
-            exit;
-        }
-
-        if($DN =='กลางคืน'){
-            $ven_date_u1 = date("Y-m-d", strtotime('+1 day', strtotime($ven_date)));
-            $sql = "SELECT * FROM ven WHERE user_id = $user_id AND ven_date = '$ven_date_u1' AND DN='กลางวัน' LIMIT 1";
-            $query = $conn->prepare($sql);
-            $query->execute();
-            $res = $query->fetch(PDO::FETCH_OBJ);
-
-            if($res){
+            if($res_VU){
                 http_response_code(200);
-                echo json_encode(array('status' => false, 'message' => 'วันพรุ่งนี้('.$ven_date_u1.')มีกลางวัน', 'respJSON' => $res));
+                echo json_encode(array('status' => false, 'message' => 'วันนี้มีเวรอยู่แล้ว', 'respJSON' => $res_VU));
                 exit;
             }
-        }
-        if($DN =='กลางวัน'){
-            $ven_date_u1 = date("Y-m-d", strtotime('-1 day', strtotime($ven_date)));
-            $sql = "SELECT * FROM ven WHERE user_id = $user_id AND ven_date = '$ven_date_u1' AND DN='กลางคืน' LIMIT 1";
-            $query = $conn->prepare($sql);
-            $query->execute();
-            $res = $query->fetch(PDO::FETCH_OBJ);
 
-            if($res){
-                http_response_code(200);
-                echo json_encode(array('status' => false, 'message' => 'วันที่('.$ven_date_u1.')มีเวรกลางคืน', 'respJSON' => $res));
-                exit;
+            if($DN =='กลางคืน'){
+                $ven_date_u1 = date("Y-m-d", strtotime('+1 day', strtotime($ven_date)));
+                $sql = "SELECT * FROM ven WHERE user_id = $user_id AND ven_date = '$ven_date_u1' AND DN='กลางวัน' LIMIT 1";
+                $query = $conn->prepare($sql);
+                $query->execute();
+                $res = $query->fetch(PDO::FETCH_OBJ);
+
+                if($res){
+                    http_response_code(200);
+                    echo json_encode(array('status' => false, 'message' => 'วันพรุ่งนี้('.$ven_date_u1.')มีกลางวัน', 'respJSON' => $res));
+                    exit;
+                }
             }
-        } 
+            if($DN =='กลางวัน'){
+                $ven_date_u1 = date("Y-m-d", strtotime('-1 day', strtotime($ven_date)));
+                $sql = "SELECT * FROM ven WHERE user_id = $user_id AND ven_date = '$ven_date_u1' AND DN='กลางคืน' LIMIT 1";
+                $query = $conn->prepare($sql);
+                $query->execute();
+                $res = $query->fetch(PDO::FETCH_OBJ);
 
+                if($res){
+                    http_response_code(200);
+                    echo json_encode(array('status' => false, 'message' => 'วันที่('.$ven_date_u1.')มีเวรกลางคืน', 'respJSON' => $res));
+                    exit;
+                }
+            } 
 
-            $sql = "INSERT INTO ven(id, ven_date, ven_time, DN, ven_month, ven_com_id, user_id, u_role, ven_name, ven_com_name, ven_com_num_all, ref1, ref2, price, `status`, create_at) 
-                    VALUE(:id, :ven_date, :ven_time, :DN, :ven_month, :ven_com_id, :user_id, :u_role, :ven_name, :ven_com_name, :ven_com_num_all, :ref1, :ref2, :price, :status, :create_at);";        
+            $sql_u = "SELECT fname, name, sname FROM profile WHERE user_id =:user_id LIMIT 1 ";
+            $query_u = $conn->prepare($sql_u);
+            $query_u->bindParam(':user_id',$user_id, PDO::PARAM_INT);
+            $query_u->execute();
+            $res_u = $query_u->fetch(PDO::FETCH_OBJ);
+
+            $u_name = $res_u->fname.$res_u->name. ' '.$res_u->sname;
+
+            $sql = "INSERT INTO ven(id, ven_date, ven_time, DN, ven_month, ven_com_id, user_id, u_name, u_role, ven_name, ven_com_name, ven_com_num_all, ref1, ref2, price, `status`, create_at) 
+                    VALUE(:id, :ven_date, :ven_time, :DN, :ven_month, :ven_com_id, :user_id, :u_name, :u_role, :ven_name, :ven_com_name, :ven_com_num_all, :ref1, :ref2, :price, :status, :create_at);";        
             $query = $conn->prepare($sql);
             $query->bindParam(':id',$id, PDO::PARAM_INT);
             $query->bindParam(':ven_date',$ven_date, PDO::PARAM_STR);
@@ -109,6 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $query->bindParam(':ven_month',$ven_month, PDO::PARAM_STR);
             $query->bindParam(':ven_com_id',$ven_com_id, PDO::PARAM_STR);
             $query->bindParam(':user_id',$user_id, PDO::PARAM_STR);
+            $query->bindParam(':u_name',$u_name, PDO::PARAM_STR);
             $query->bindParam(':u_role',$u_role, PDO::PARAM_STR);
             $query->bindParam(':ven_name',$ven_name, PDO::PARAM_STR);
             $query->bindParam(':ven_com_name',$ven_com_name, PDO::PARAM_STR);
@@ -170,8 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             http_response_code(200);
             echo json_encode(array('status' => true, 'message' => 'ok'));
             exit;                
-        }  
-        
+        } 
         
     }catch(PDOException $e){
         echo "Faild to connect to database" . $e->getMessage();
