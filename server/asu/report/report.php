@@ -76,7 +76,7 @@ $datas = array();
                             $st_ul      = strlen($rs->u_role);
                             $st_urlo    = $rs->u_role;
                             if($st_ul > 30){
-                                $st_urlo = substr($st_ul, 0, 30);
+                                $st_urlo = substr($st_urlo, 0, 30);
                             }
                             if($st_urlo == 'ผู้พิพากษา'){
                                 array_push($u_namej,$rs->u_name );

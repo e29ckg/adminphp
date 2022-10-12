@@ -62,8 +62,7 @@ require_once('../../server/authen.php');
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel"v-if="vu_form_act == 'insert'">เพิ่มชื่อผู้อยู่เวร</h5>
-                                <h5 class="modal-title" id="staticBackdropLabel" v-else>แก้ไขชื่อผู้อยู่เวร</h5>
+                                <h5 class="modal-title" id="staticBackdropLabel">{{vu_form_act == 'insert' ? 'เพิ่มชื่อผู้อยู่เวร' : 'แก้ไขชื่อผู้อยู่เวร'}}</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="clear_vu_form" ref="close_vu"></button>
                             </div>
                             <div class="modal-body">

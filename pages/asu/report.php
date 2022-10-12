@@ -29,7 +29,6 @@ require_once('../../server/authen.php');
                         <!-- {{ven_coms_g}} -->
                         <div class="row">
                             <div class="col-12 text-end mb-2">
-                                <button class="btn btn-success btn-sm" @click="ven_com_add()">เพิ่มคำสั่ง</button>
                             </div>
                             <div class="col col-12">                                
                                 <div class="card" v-for='cvg in ven_coms_g'>
@@ -38,7 +37,7 @@ require_once('../../server/authen.php');
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th colspan="3" class="text-start">
+                                                    <th colspan="2" class="text-start">
                                                     เวรเดือน {{cvg.ven_month}} 
                                                     </th>
 
@@ -51,11 +50,10 @@ require_once('../../server/authen.php');
                                                             <!-- | {{vc.ref}} | {{vc.status}}  -->
     
                                                         </td>
-                                                        <td class="text-end" style="width: 50px;">
-                                                            
-                                                        </td>
-                                                        <td class="text-end col " style="width: 120px;">
-                                                            <button class="btn btn-warning btn-sm me-2" @click="print(vc.id)">เอกสารแนบท้าย</button>
+                                                        
+                                                        <td class="text-end col " style="width: 200px;">
+                                                            <button class="btn btn-warning btn-sm m-2" @click="print(vc.id)">เอกสารแนบท้าย</button>
+                                                            <button class="btn btn-success btn-sm me-2" @click="view(vc.id)">ตรวจสอบ/ยืนยัน</button>
                                                         </td>
                                                 </tr>
                                             </tbody>
@@ -70,6 +68,72 @@ require_once('../../server/authen.php');
                     </div>
                  
                 </section>
+
+                <!-- Modal venUser Form -->
+                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#view" ref="show_modal" hidden >
+                        view
+                </button>
+                <!-- Modal venUser Form -->
+                <div class="modal fade" id="view" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel" >view</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ref="close_modal"></button>
+                            
+                            </div>
+                            <div class="modal-body">
+                            <table class="table table-bordered ">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>วัน เดือน ปี</th>
+                                        <th>เวลา</th>
+                                        <th>รายชื่อผู้พิพากษา</th>
+                                        <th>รายชื่อเจ้าหน้าที่</th>
+                                        <th>หมายเหตุ</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-sm">
+                                    
+                                    <tr v-for="d,i in datas.respJSON">
+                                        <td>{{date_thai_dt(d.ven_date)}}</td>
+                                        <td>
+                                            <!-- {{d.ven_time}} -->
+                                            <li v-for="dvt in d.ven_time">
+                                                {{dvt == '08:30' ? '8.30 - 16.30 น.' : '16.30 - 8.30 น.'}}
+                                            </li>
+                                        </td>
+                                        <td>
+                                            <li v-for="dunj in d.u_namej">
+                                                {{dunj}}
+                                            </li>
+                                        </td>
+                                        <td> 
+                                            <li v-for="dun in d.u_name">
+                                                {{dun}}
+                                            </li>
+                                        </td>
+                                        <td>
+                                            <li v-for="dur in d.cmt">
+                                                {{dur}}
+                                            </li>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table> 
+
+                                <!-- {{datas}} -->
+                                
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success " :disabled='isLoading'>
+                                    {{isLoading ? 'Londing..': 'ยืนยัน'}}</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
             </div>

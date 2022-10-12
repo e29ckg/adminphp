@@ -32,7 +32,7 @@ require_once('../../server/authen.php');
                             <div class="col-12 text-end mb-2">
                                 <button class="btn btn-success btn-sm" @click="ven_com_add()">เพิ่มคำสั่ง</button>
                             </div>
-                            <div class="col col-12">                                
+                            <div class="col col-12" v-if="ven_coms_g">                                
                                 <div class="card" v-for='cvg in ven_coms_g'>
                                     <div class="card-body" >
                                         

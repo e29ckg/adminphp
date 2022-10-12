@@ -35,7 +35,6 @@ require_once('../../server/authen.php');
                                             <thead>
                                                 <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">username</th>
                                                 <th scope="col">ชื่อ-สกุล</th>
                                                 <th scope="col">สถานะ</th>
                                                 <th scope="col">act</th>
@@ -44,10 +43,13 @@ require_once('../../server/authen.php');
                                             <tbody>
                                                 <tr v-for="d,index in datas">
                                                     <th scope="row">{{index+1}}</th>
-                                                    <th >{{d.username}} <br>
-                                                        <span class="text-primary text-sm">{{d.status == 10 ? '(ปกติ)' : '(ระงับการใช้งาน)'}}</span>                                                        
-                                                    </th>
-                                                    <td>{{d.name}} <br> {{d.dep}}</td>
+                                                    
+                                                    <td>
+                                                        <p><b><i class="bi bi-person-circle"></i> {{d.name}}</b>({{d.username}}) 
+                                                            <span :class="'badge text-sm ' + (d.status == 10 ? 'bg-primary' : 'bg-danger')">{{d.status == 10 ? '(ปกติ)' : '(ระงับการใช้งาน)'}}</span>
+                                                            <br><i class="bi bi-person-badge"></i> <span class="text-sm">{{d.dep}}</span> 
+                                                        </p>
+                                                    </td>
                                                     <td>
                                                         <div class="form-check form-switch" v-if="d.status == 10" >
                                                             <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" @click="user_status(d.uid,1)" checked >
