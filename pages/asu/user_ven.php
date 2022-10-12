@@ -36,8 +36,9 @@ require_once('../../server/authen.php');
                                 <ul class="list-group list-group-flush"  >
                                     <div v-for="vu,vui in ven_users">
                                         <li class="list-group-item" v-if="vu.ven_name == vn.name && vns.name == vu.uvn">
-                                            {{vn.DN == 'กลางวัน' ? '☀️' : '🌙'}}{{vu.u_name + ' '}}  
+                                            {{vn.DN == 'กลางวัน' ? '☀️' : '🌙'}}{{vu.order + ' ' +vu.u_name + ' '}}  
                                             <!-- {{vu.id}}  -->
+                                            <button @click="vu_up(vu.id)" class="btn btn-warning btn-sm me-1">แก้ไข</button>
                                             <button @click="vu_del(vu.id)" class="btn btn-danger btn-sm">ลบ</button>
                                         </li>
                                     </div>

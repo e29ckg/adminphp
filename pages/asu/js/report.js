@@ -8,6 +8,7 @@ Vue.createApp({
       datas: '',    
       ven_coms:'',
       ven_coms_g:'',
+      vc:'',
 
     isLoading : false,
   }
@@ -80,7 +81,8 @@ Vue.createApp({
           .then(response => {
               if (response.data.status) {
                 this.alert('success',response.data.message,1000)
-                this.datas = response.data; 
+                this.datas = response.data.respJSON; 
+                this.vc = response.data.vc; 
                 this.$refs.show_modal.click()
               }else{
                 this.alert('warning',response.data.message,0)
@@ -94,20 +96,36 @@ Vue.createApp({
           })
     },
 
-    conf(){
-      this.isLoading = true;
-      axios.post('../../server/asu/report/report.php',{d:this.datas})    
-          .then(response => {
-              if (response.data.status) { 
-                this.$refs.close_modal.click()
-              }
-          })
-          .catch(function (error) {
-              console.log(error);
-          })
-          .finally(() => {
-            this.isLoading = false;
-          })
+    con_f(){
+      console.log('test')
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You is this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, is it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.isLoading = true;
+          axios.post('../../server/asu/report/conf.php',{vc:this.vc})    
+              .then(response => {
+                  if (response.data.status) { 
+                    this.alert('success',response.data.message,1000)
+                    this.$refs.close_modal.click()
+                  }else{
+                    this.alert('warning',response.data.message,0)
+                  }
+              })
+              .catch(function (error) {
+                  console.log(error);
+              })
+              .finally(() => {
+                this.isLoading = false;
+              })
+                  }
+    })
     }, 
 
     getYM(dat){

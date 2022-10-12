@@ -7,21 +7,24 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 header("Content-Type: application/json; charset=utf-8");
 
 include "../connect.php";
+include "../function.php";
 
 // $data = json_decode(file_get_contents("php://input"));
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+/**
+ *           
+ */
 $datas = array();
-
 
     // The request is using the POST method
     try{
-        $sql = "SELECT id, ven_date, ven_time, u_name
-        FROM ven    
-        WHERE status = 1 
-        ORDER BY ven_date DESC, ven_time ASC
-        LIMIT 200";
+        $sql = "SELECT u.username, u.status, p.*
+                FROM profile as p 
+                INNER JOIN `user` as u ON u.id = p.user_id
+                WHERE  u.status <> 10
+                ORDER BY p.st ASC";
         $query = $conn->prepare($sql);
         // $query->bindParam(':kkey',$data->kkey, PDO::PARAM_STR);
         $query->execute();
@@ -29,12 +32,12 @@ $datas = array();
 
         if($query->rowCount() > 0){                        //count($result)  for odbc
             foreach($result as $rs){
-                               
                 array_push($datas,array(
-                    'id'    => $rs->id,
-                    'title' => $rs->u_name,
-                    'start' => $rs->ven_date.' '.$rs->ven_time,
-                    // 'backgroundColor'   => $bcolor,
+                    'uid' => $rs->user_id,
+                    'username' => $rs->username,
+                    'name'  => $rs->fname.$rs->name.' '.$rs->sname,
+                    'dep'   => $rs->dep,
+                    'status'   => $rs->status,
                 ));
             }
             http_response_code(200);
@@ -43,7 +46,7 @@ $datas = array();
         }
      
         http_response_code(200);
-        echo json_encode(array('status' => true, 'massege' => 'ไม่พบข้อมูล ', 'respJSON' => $datas));
+        echo json_encode(array('false' => true, 'massege' => 'ไม่พบข้อมูล '));
     
     }catch(PDOException $e){
         echo "Faild to connect to database" . $e->getMessage();
@@ -51,5 +54,3 @@ $datas = array();
         echo json_encode(array('status' => false, 'massege' => 'เกิดข้อผิดพลาด..' . $e->getMessage()));
     }
 }
-
-

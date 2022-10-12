@@ -66,26 +66,35 @@ $datas = array();
                 $OLD_UNAME = '';
                 foreach($result as $rs){
                     if($rs->ven_date == $r){
-                        $vt_s = substr($rs->ven_time, 0, -3);
-                        if($OLD_VT != $vt_s){
-                            array_push($vt,$vt_s);
-                            $OLD_VT = $vt_s;
-                        }
+                        // if(count($rs->ven_com_id) > 0){
 
-                        if($OLD_UNAME != $rs->u_name){
-                            $st_ul      = strlen($rs->u_role);
-                            $st_urlo    = $rs->u_role;
-                            if($st_ul > 30){
-                                $st_urlo = substr($st_urlo, 0, 30);
+                            foreach(json_decode($rs->ven_com_id) as $v){
+                                if($vcid == $v){
+        
+                                    $vt_s = substr($rs->ven_time, 0, -3);
+                                    if($OLD_VT != $vt_s){
+                                        array_push($vt,$vt_s);
+                                        $OLD_VT = $vt_s;
+                                    }
+            
+                                    if($OLD_UNAME != $rs->u_name){
+                                        $st_ul      = strlen($rs->u_role);
+                                        $st_urlo    = $rs->u_role;
+                                        if($st_ul > 30){
+                                            $st_urlo = substr($st_urlo, 0, 30);
+                                        }
+                                        if($st_urlo == 'ผู้พิพากษา'){
+                                            array_push($u_namej,$rs->u_name );
+                                        }else{
+                                            array_push($u_name,$rs->u_name);
+                                            array_push($cmt,$rs->u_role);
+                                        }
+                                        $OLD_UNAME = $rs->u_name;
+                                    }
+                                }
+    
                             }
-                            if($st_urlo == 'ผู้พิพากษา'){
-                                array_push($u_namej,$rs->u_name );
-                            }else{
-                                array_push($u_name,$rs->u_name);
-                                array_push($cmt,$rs->u_role);
-                            }
-                            $OLD_UNAME = $rs->u_name;
-                        }
+                        // }
 
                     }
                 }

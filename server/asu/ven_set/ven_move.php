@@ -20,7 +20,7 @@ $datas = array();
     // The request is using the POST method
     try{
 
-        $sql = "SELECT * FROM ven WHERE id = $id LIMIT 1 ";
+        $sql = "SELECT * FROM ven WHERE id = $id";
         $query = $conn->prepare($sql);
         $query->execute();
         $res_v = $query->fetch(PDO::FETCH_OBJ);
@@ -38,7 +38,6 @@ $datas = array();
             echo json_encode(array('status' => false, 'message' => 'วันนี้มีเวรอยู่แล้ว', 'respJSON' => $res_VU->user_id));
             exit;
         }
-
         if($DN =='กลางคืน'){
             $ven_date_u1 = date("Y-m-d", strtotime('+1 day', strtotime($ven_date)));
             $sql = "SELECT * FROM ven WHERE user_id = $user_id AND ven_date = '$ven_date_u1' AND DN='กลางวัน' LIMIT 1";
@@ -64,12 +63,42 @@ $datas = array();
                 echo json_encode(array('status' => false, 'message' => 'วันที่('.$ven_date_u1.')มีเวรกลางคืน', 'respJSON' => $res));
                 exit;
             }
-        }  
+        } 
+                
+
+        /** หาเวลา ven_time  เรียงลำดับ */
+        $DN == 'กลางวัน' ? $ven_time = '08:30:' : $ven_time = '16:30:';
+        $sql = "SELECT price, vn.srt AS vn_srt, vns.srt AS vns_srt
+                    FROM ven_name AS vn
+                    INNER JOIN ven_name_sub AS vns ON vns.ven_name_id = vn.id
+                    WHERE vn.name = '$res_v->ven_name' AND vns.`name` = '$res_v->u_role'";  
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $res_vn = $query->fetch(PDO::FETCH_OBJ); 
+
+        if($res_vn){
+            $price    = $res_vn->price ;
+            // $ven_time .= (string)$res_vn->vn_srt ;
+            $ven_time .= (string)$res_vn->vns_srt;
+            
+            $sql = "SELECT id FROM ven WHERE u_role = '$res_v->u_role' AND ven_date = '$res_v->ven_date' AND DN = '$DN' ORDER BY ven_time ASC";
+            $query = $conn->prepare($sql);
+            $query->execute();
+            $res_vcnt = $query->fetchAll(PDO::FETCH_OBJ);
+            // $s = '00';
+            $s = (string)count($res_vcnt) ;
+            $ven_time .= substr($s, -1); 
+
+        }else{
+            $ven_time .= '00';
+        }
+        /**end หาเวลา ven_time */
 
 
-        $sql = "UPDATE ven SET ven_date =:ven_date WHERE id = :id";        
+        $sql = "UPDATE ven SET ven_date =:ven_date, ven_time =:ven_time WHERE id = :id";        
         $query = $conn->prepare($sql);
         $query->bindParam(':ven_date',$ven_date, PDO::PARAM_STR);
+        $query->bindParam(':ven_time',$ven_time, PDO::PARAM_STR);
         $query->bindParam(':id',$id, PDO::PARAM_INT);
         $res = $query->execute();
 

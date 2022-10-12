@@ -74,15 +74,18 @@ require_once('../../server/authen.php');
                         view
                 </button>
                 <!-- Modal venUser Form -->
-                <div class="modal fade" id="view" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
+                <div class="modal fade" id="view"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="staticBackdropLabel" >view</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ref="close_modal"></button>
                             
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body ">
+                                <p class="text-center">
+                                    เลขคำสั่งที่ {{vc.ven_com_num}} | ลงวันที่ {{vc.ven_com_date}} | {{vc.ven_com_name}} ({{vc.ven_name}})
+                                </p>
                             <table class="table table-bordered ">
                                 <thead>
                                     <tr class="text-center">
@@ -95,7 +98,8 @@ require_once('../../server/authen.php');
                                 </thead>
                                 <tbody class="text-sm">
                                     
-                                    <tr v-for="d,i in datas.respJSON">
+
+                                    <tr v-for="d,i in datas">
                                         <td>{{date_thai_dt(d.ven_date)}}</td>
                                         <td>
                                             <!-- {{d.ven_time}} -->
@@ -122,12 +126,12 @@ require_once('../../server/authen.php');
                                 </tbody>
                             </table> 
 
-                                <!-- {{datas}} -->
+                                
                                 
                                 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-success " :disabled='isLoading'>
+                                <button type="button" class="btn btn-success " :disabled='isLoading' @click="con_f()">
                                     {{isLoading ? 'Londing..': 'ยืนยัน'}}</button>
 
                             </div>

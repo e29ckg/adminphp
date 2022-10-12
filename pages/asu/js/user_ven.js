@@ -178,6 +178,27 @@ Vue.createApp({
         this.alert('warning',message,0)
       }
     },
+    vu_up(id){
+      this.isLoading = true;
+        axios.post('../../server/asu/get_ven_user.php',{id:id})
+        .then(response => {
+            if (response.data.status) {            
+              this.vu_form_act = 'update'
+              this.vu_form = response.data.respJSON;
+              this.$refs.show_vu_form.click()
+
+              // this.alert('success',response.data.message,1000)
+            }else{
+              this.alert('warning',response.data.message,1000)
+            } 
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        })
+    },
     vu_del(id){
       // Swal.fire({
       //   title: 'Are you sure?',

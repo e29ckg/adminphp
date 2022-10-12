@@ -125,8 +125,8 @@
 <body>
 <div id="venSet">
   <div id='external-events2'>
-  {{ven_month}} |{{ven_name_index}} {{ven_name}} | {{ven_name_sub}} | {{DN}} | 
-  {{price}} | {{ven_time}} | 
+  {{ven_month}} | {{ven_name}} | {{ven_name_sub}} | {{DN}} | 
+  {{price}} 
   <!-- {{ven_coms}} {{ven_com_id}} -->
   </div>
   <div id='external-events'>
@@ -168,7 +168,7 @@
     Launch static backdrop modal
 </button>
   <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal fade" id="staticBackdrop"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div class="modal-header">
@@ -194,17 +194,19 @@
                   <td>{{data_event.ven_date}} เวลา {{data_event.ven_time}} น.</td>
                 </tr>
                 <tr>
-                  <th scope="row">เวร</th>
+                  <th scope="row">เบิกเงินในคำสั่ง</th>
                   <td>
-                    {{data_event.ven_name}} <br>
-                    {{data_event.ven_com_num_all}}
-
+                    <select class="form-select" aria-label="Default select example" v-model="data_event.ven_com_idb" v-if="ven_coms" @change.prevent="ven_save2()">
+                        <option v-for="vc in ven_coms" :value="vc.id" >{{' คำสั่งที่ ' + vc.ven_com_num + ' เวร ' +vc.ven_com_name}}</option>
+                    </select>
+                    <!-- {{ven_coms}} -->
                   </td>
                 </tr>
                 <tr>
                   <th scope="row">คำสั่ง</th>
                   <td>
-                    {{data_event.u_role}} | {{data_event.DN}} | {{data_event.ven_com_name}} | {{data_event.price}}</td>
+                    {{data_event.u_role}} | {{data_event.DN}} | {{data_event.ven_com_name}} | {{data_event.price}}
+                  </td>
                 </tr>
                 <tr v-for="vc,i in ven_coms">
                   <td></td>

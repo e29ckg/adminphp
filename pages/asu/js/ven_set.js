@@ -227,13 +227,13 @@ Vue.createApp({
       axios.post('../../server/asu/ven_set/ven_insert.php',{
                           uid         : uid,
                           ven_date    : dateStr,
-                          ven_time    : this.ven_time,
-                          DN          : this.DN,
-                          ven_month   : this.ven_month,
-                          ven_com_id  : this.ven_com_id,
-                          ven_name    : this.ven_name,
-                          ven_com_num : this.ven_com_num,
                           u_role      : this.u_role,
+                          ven_month   : this.ven_month,
+                          DN          : this.DN,
+                          ven_name    : this.ven_name,
+                          // ven_time    : this.ven_time,
+                          // ven_com_id  : this.ven_com_id,
+                          ven_com_num : this.ven_com_num,
                           price       : this.price,
                           act         : 'insert'
                         })
@@ -317,9 +317,30 @@ Vue.createApp({
         if (response.data.status) {
           this.get_vens()
           this.cal_render()
+          this.cal_click(this.data_event.id)
           this.alert('success',response.data.message,1000)
           // this.$refs['close_modal'].click()
-        } 
+        } else{
+          this.alert('warning',response.data.message,0)
+        }
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+  },
+  ven_save2(){
+    axios.post('../../server/asu/ven_set/ven_up_vcid2.php',{data_event:this.data_event})
+    .then(response => {
+        
+        if (response.data.status) {
+          this.get_vens()
+          this.cal_render()
+          this.cal_click(this.data_event.id)
+          this.alert('success',response.data.message,1000)
+          // this.$refs['close_modal'].click()
+        } else{
+          this.alert('warning',response.data.message,0)
+        }
     })
     .catch(function (error) {
         console.log(error);
@@ -426,11 +447,12 @@ Vue.createApp({
 
   alert(icon,message,timer=0){
     swal.fire({
-    icon: icon,
-    title: message,
-    showConfirmButton: true,
-    timer: timer
-  });
+      position: 'top-end',
+      icon: icon,
+      title: message,
+      showConfirmButton: false,
+      timer: timer
+    });
   },
   
   reset_search(){

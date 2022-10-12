@@ -37,12 +37,15 @@ $datas = array();
             exit;
         } 
         $date_time = Date("Y-m-d h:i:s");
+        $st == 10 ? $str = 1 : $str = 99 ;
+
         $sql = "UPDATE profile 
-                SET status = :status, updated_at = :updated_at
+                SET status = :status, updated_at = :updated_at, st=:st
                 WHERE user_id = :user_id";
         $query = $conn->prepare($sql);
         $query->bindParam(':status',$st, PDO::PARAM_STR);
         $query->bindParam(':updated_at',$date_time, PDO::PARAM_STR);       
+        $query->bindParam(':st',$str, PDO::PARAM_INT);       
         $query->bindParam(':user_id',$user_id, PDO::PARAM_INT);       
         $query->execute();   
 

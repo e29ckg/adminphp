@@ -57,6 +57,9 @@
                         <li class="submenu-item <?php echo isActive('users') ?>">
                             <a href="../users/">จัดการสมาชิก</a>
                         </li>
+                        <li class="submenu-item <?php echo isActive('index_d') ?>">
+                            <a href="../users/index_d.php">สมาชิกทีถูกระงับ</a>
+                        </li>
                         
                         
                     </ul>
