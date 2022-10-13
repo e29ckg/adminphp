@@ -21,14 +21,8 @@
     script {
         display: none;
     }
-    @font-face {
-            font-family: Sarabun;
-            src: url(../assets/fonts/Sarabun/Sarabun-Regular.ttf);
-            /* font-weight: bold; */
-        }
-
-    /* body{
+    body{
       font-family: 'Mitr', sans-serif;
-	} */
+	}
 </style>
      
