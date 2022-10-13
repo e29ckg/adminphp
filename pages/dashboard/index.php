@@ -12,7 +12,7 @@ require_once('../../server/authen.php');
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
     
 </head>
-<body>
+<body class="theme-dark">
     <div id="app">
         <?php require_once('../includes/_sidebar.php') ?>
         <div id="main">
@@ -23,11 +23,12 @@ require_once('../../server/authen.php');
             </header>
 
             <div class="page-heading">
-                <h3>หน้าแรก</h3>
+                <h3>หน้าแรก </h3>
             </div> 
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper" id="dashboard">
+                    {{ssid}}
                     <div class="container-xxl flex-grow-1 container-p-y" >                        
                         <div class="row">
                             <div class="col-12 ">
@@ -47,24 +48,22 @@ require_once('../../server/authen.php');
   
                     <!-- Modal -->
                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-xl">
+                        <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="reset_ven_com()" ref="close_modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form @submit="save_ven_com()">
-                                        
-                                    
-                                    
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
-                                            <button type="submit" class="btn btn-primary" >save</button>
-                                        </div>
-                                    </form>
+                                    <ul class="list-group" v-if="my_v">
+                                        <li class="list-group-item list-group-item-secondary" v-for="m in my_v">
+                                           {{m.id}} | {{m.u_role}} | {{m.ven_com_name}} | {{m.DN}} | {{m.ven_date}} {{m.ven_time}}
+                                        </li>
+                                    </ul>
+
 
                                     {{data_event}}
+                                    {{my_v ? my_v.length :''}}
                                 </div>
                             </div>
                         </div>

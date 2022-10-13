@@ -29,9 +29,9 @@ require_once('../../server/authen.php');
   <body>
     <div id="appReports" v-cloak>
         <div class="text-center">
-            <h3>แนบท้ายคำสั่งที่ {{datas.vc.ven_com_num}} ลงวันที่ {{date_thai(datas.vc.ven_com_date)}}</h3>
-            <h3>ประจำเดือน {{date_thai_my(datas.vc.ven_month)}}</h3>
-
+            <h4>แนบท้ายคำสั่งที่ {{datas.vc.ven_com_num}} ลงวันที่ {{date_thai(datas.vc.ven_com_date)}}</h4>
+            <h5>ประจำเดือน {{date_thai_my(datas.vc.ven_month)}}</h5>
+            <!-- {{datas.vc}} -->
         </div>
         <table class="table table-bordered d-print-inline d-print-table ">
             <thead>
@@ -47,25 +47,18 @@ require_once('../../server/authen.php');
                 <tr v-for="d in datas.respJSON">
                     <td>{{date_thai_dt(d.ven_date)}}</td>
                     <td>
-                        <!-- {{d.ven_time}} -->
-                        <li v-for="dvt in d.ven_time">
+                        <li class="list-group-item" v-for="dvt in d.ven_time">
                             {{dvt == '08:30' ? '8.30 - 16.30 น.' : '16.30 - 8.30 น.'}}
                         </li>
                     </td>
                     <td>
-                        <li v-for="dunj in d.u_namej">
-                            {{dunj}}
-                        </li>
+                        <li class="list-group-item" v-for="dunj in d.u_namej"> {{dunj}}</li>
                     </td>
                     <td> 
-                        <li v-for="dun in d.u_name">
-                            {{dun}}
-                        </li>
+                        <li class="list-group-item" v-for="dun in d.u_name">{{dun}}</li>
                     </td>
                     <td>
-                        <li v-for="dur in d.cmt">
-                            {{dur}}
-                        </li>
+                       <li class="list-group-item" v-for="dur in d.cmt">{{dur}}</li>
                     </td>
                 </tr>
             </tbody>

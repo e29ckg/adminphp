@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // header('Location: ../../pages/index.php');    
         
         http_response_code(200);
-        $response = array('status'=>true,'message' => 'success');
+        $response = array('status'=>true,'message' => 'success', 'ss_uid'=>$_SESSION['AD_ID']);
         echo json_encode($response);
         exit;
 

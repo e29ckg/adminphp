@@ -14,7 +14,7 @@ include "../../function.php";
 
 $data = json_decode(file_get_contents("php://input"));
 
-
+$sms_err = array();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if($_SESSION['AD_ROLE'] != 9){
@@ -34,14 +34,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $datas = array();
     // The request is using the POST method
     try{
+
+        // $sql = "SELECT ven WHERE ven_name = '$data->ven_name' AND  ven_month = '$data->ven_month'";
+        // $query = $conn->prepare($sql);       
+        // $query->execute(); 
+        // $result = $query->fetchAll(PDO::FETCH_OBJ);
+        // foreach($result as $r){
+        //     if($r->ven_com_idb ==''){
+        //         array_push($sms_err,'คำสั่งเบิก เวร'.$r->ven_name.' วันที่ '.$r->ven_date);
+        //     }
+        // }
+        // if($sms_err){
+        //     http_response_code(200);
+        //     echo json_encode(array('status' => true, 'message' => $sms_err));
+        //     exit;
+        // }
+
+
         $ven_name = $data->ven_name;
         $ven_com_date = $data->ven_com_date;
-        $sql = "UPDATE ven SET status = 1 WHERE ven_name = '$data->ven_name' AND  ven_month = '$data->ven_month'";
+        // $sql = "UPDATE ven SET status = 1 WHERE ven_name = '$data->ven_name' AND  ven_month = '$data->ven_month'";
+        $sql = "UPDATE ven SET status = 1 WHERE ven_month = '$data->ven_month'";
         $query = $conn->prepare($sql);       
         $query->execute();   
 
         http_response_code(200);
-        echo json_encode(array('status' => true, 'message' => 'สำเร็จ '.$data->ven_month));
+        echo json_encode(array('status' => true, 'message' => 'สำเร็จ '));
         exit;
        
     }catch(PDOException $e){

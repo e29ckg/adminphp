@@ -50,14 +50,15 @@ Vue.createApp({
     u_role      : '',
     price       : '',
 
-    label_message : '<--กรุณาเลือกคำสั่ง',
+    ssid :'',
+    my_v :'',
     isLoading : false,
   }
   },
   mounted(){
     this.url_base = window.location.protocol + '//' + window.location.host;
     this.url_base_app = window.location.protocol + '//' + window.location.host + '/venset/';
-    // const d = 
+    this.ssid = localStorage.getItem("ss_uid")
     this.ven_month = new Date();
     this.get_vens()
     this.cal_render()
@@ -79,8 +80,8 @@ Vue.createApp({
         height      : 1200,
         locale      : 'th',
         firstDay    : 1,
-        allDayContent      : true,
-        // displayEventTime: false, 
+        allDayContent : true,
+        displayEventTime: false, 
         events      : this.datas,
         eventClick: (info)=> {
             console.log(info.event.id +' '+info.event.title)
@@ -92,20 +93,25 @@ Vue.createApp({
       calendar.render();
     },
     cal_click(id){
-      axios.post('../../server/dashboard/get_ven.php',{id:id})
-          .then(response => {
-            // console.log(response.data);
-            if (response.data.status) {
-              this.data_event = response.data.respJSON
-              this.$refs['show_modal'].click()  
-            }else{               
-              this.alert('warning',response.data.message ,0)  
-            }
-        })
-        .catch(function (error) {        
-        console.log(error);  
-      });
-      this.$refs.show_modal.click()
+      if(this.ssid != ''){
+        axios.post('../../server/dashboard/get_ven.php',{id:id,uid:this.ssid})
+            .then(response => {
+              // console.log(response.data);
+              if (response.data.status) {
+                this.data_event = response.data.respJSON
+                this.my_v = response.data.my_v
+                this.$refs['show_modal'].click()  
+              }else{               
+                this.alert('warning',response.data.message ,0)  
+              }
+          })
+          .catch(function (error) {        
+          console.log(error);  
+        });
+        this.$refs.show_modal.click()
+      }else{
+        this.alert('warning','กรุณา Login..' ,0) 
+      }
     },
     get_vens(){
       axios.get('../../server/dashboard/get_vens.php')
@@ -118,6 +124,15 @@ Vue.createApp({
       })
       .catch(function (error) {
           console.log(error);
+      });
+    },
+    alert(icon,message,timer=0){
+      swal.fire({
+        position: 'top-end',
+        icon: icon,
+        title: message,
+        showConfirmButton: false,
+        timer: timer
       });
     },
   },

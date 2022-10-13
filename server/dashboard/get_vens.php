@@ -17,7 +17,7 @@ $datas = array();
 
     // The request is using the POST method
     try{
-        $sql = "SELECT id, ven_date, ven_time, u_name
+        $sql = "SELECT id, ven_date, ven_time, u_name, DN
         FROM ven    
         WHERE status = 1 
         ORDER BY ven_date DESC, ven_time ASC
@@ -29,12 +29,12 @@ $datas = array();
 
         if($query->rowCount() > 0){                        //count($result)  for odbc
             foreach($result as $rs){
-                               
+                $rs->DN == 'กลางวัน' ? $d = '☀️' : $d = '🌙';
                 array_push($datas,array(
                     'id'    => $rs->id,
-                    'title' => $rs->u_name,
+                    'title' => $d.' '.$rs->u_name,
                     'start' => $rs->ven_date.' '.$rs->ven_time,
-                    // 'backgroundColor'   => $bcolor,
+                    'backgroundColor' => 'blue',
                 ));
             }
             http_response_code(200);

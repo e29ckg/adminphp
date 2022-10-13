@@ -84,7 +84,7 @@ require_once('../../server/authen.php');
                             </div>
                             <div class="modal-body ">
                                 <p class="text-center">
-                                    เลขคำสั่งที่ {{vc.ven_com_num}} | ลงวันที่ {{vc.ven_com_date}} | {{vc.ven_com_name}} ({{vc.ven_name}})
+                                    เลขคำสั่งที่ {{vc.ven_com_num}} | ลงวันที่ {{vc.ven_com_date}} | {{vc.ven_com_name}} 
                                 </p>
                             <table class="table table-bordered ">
                                 <thead>
@@ -103,24 +103,30 @@ require_once('../../server/authen.php');
                                         <td>{{date_thai_dt(d.ven_date)}}</td>
                                         <td>
                                             <!-- {{d.ven_time}} -->
-                                            <li v-for="dvt in d.ven_time">
+
+                                            <li class="list-group-item h-100" v-for="dvt in d.ven_time">
                                                 {{dvt == '08:30' ? '8.30 - 16.30 น.' : '16.30 - 8.30 น.'}}
                                             </li>
                                         </td>
                                         <td>
-                                            <li v-for="dunj in d.u_namej">
-                                                {{dunj}}
-                                            </li>
+                                                <li class="list-group-item mt-0" v-for="dunj in d.u_namej">
+                                                    {{dunj}}
+                                                </li>
+
                                         </td>
                                         <td> 
-                                            <li v-for="dun in d.u_name">
+                                            <li class="list-group-item" v-for="dun in d.u_name">
                                                 {{dun}}
                                             </li>
                                         </td>
                                         <td>
-                                            <li v-for="dur in d.cmt">
+                                                <li class="list-group-item" v-for="dur in d.cmt">
+                                                    {{dur}} 
+                                                </li>
+                                            
+                                            <!-- <li v-for="dur in d.cmt">
                                                 {{dur}}
-                                            </li>
+                                            </li> -->
                                         </td>
                                     </tr>
                                 </tbody>

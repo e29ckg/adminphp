@@ -166,7 +166,7 @@
       }
     },
     mounted(){     
-      
+      localStorage.removeItem("ss_uid")      
     },
     watch: {
       
@@ -187,6 +187,7 @@
         })
         .then(response => {
           if (response.data.status) {
+            localStorage.setItem("ss_uid",response.data.ss_uid);
             Swal.fire({
               // position: 'top-end',
               icon: 'success',
