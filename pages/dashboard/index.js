@@ -52,6 +52,10 @@ Vue.createApp({
 
     ssid :'',
     my_v :'',
+    d_now:'1255',
+    my_v_show : 'false',
+    ch_v1:'',
+    ch_v2:'',
     isLoading : false,
   }
   },
@@ -84,8 +88,8 @@ Vue.createApp({
         displayEventTime: false, 
         events      : this.datas,
         eventClick: (info)=> {
-            console.log(info.event.id +' '+info.event.title)
-            console.log(info.event.extendedProps)
+            // console.log(info.event.id +' '+info.event.title)
+            // console.log(info.event.extendedProps)
             this.cal_click(info.event.id)
         },
                        
@@ -100,6 +104,7 @@ Vue.createApp({
               if (response.data.status) {
                 this.data_event = response.data.respJSON
                 this.my_v = response.data.my_v
+                this.d_now = response.data.d_now
                 this.$refs['show_modal'].click()  
               }else{               
                 this.alert('warning',response.data.message ,0)  
@@ -126,6 +131,16 @@ Vue.createApp({
           console.log(error);
       });
     },
+
+    change_a(my_v_index){
+      console.log('my:'+my_v_index)
+      console.log('you:')
+      this.$refs.show_modal_b.click()
+      this.ch_v1 = this.my_v[my_v_index]
+      this.ch_v2 = this.data_event
+
+    },
+
     alert(icon,message,timer=0){
       swal.fire({
         position: 'top-end',

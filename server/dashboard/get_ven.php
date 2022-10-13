@@ -21,8 +21,10 @@ $datas = array();
 
     // The request is using the POST method
     try{
-        $sql = "SELECT v.*
+        $sql = "SELECT v.*,p.name,p.img 
         FROM ven as v 
+        INNER JOIN profile as p
+        ON v.user_id = p.user_id
         WHERE v.id = $id  
         ORDER BY v.ven_date DESC";
         $query = $conn->prepare($sql);
@@ -30,7 +32,7 @@ $datas = array();
         $query->execute();
         $result = $query->fetch(PDO::FETCH_OBJ);
         
-        $sql = "SELECT v.* FROM ven as v 
+        $sql = "SELECT v.*FROM ven as v                 
                 WHERE v.user_id = :user_id AND ven_month=:ven_month  AND ven_com_num_all = :ven_com_num_all 
                 AND DN=:DN  AND u_role=:u_role AND ven_date >= :ven_date AND v.status =1
                 ORDER BY ven_date ASC";
@@ -46,7 +48,7 @@ $datas = array();
         
 
 
-        if($query->rowCount() > 0){                        //count($result)  for odbc
+        // if($query->rowCount() > 0){                        //count($result)  for odbc
             // foreach($result as $rs){
             //     array_push($datas,array(
             //         'id'    => $rs->id,
@@ -57,15 +59,16 @@ $datas = array();
             http_response_code(200);
             echo json_encode(array(
                 'status' => true, 
-                'message' => 'สำเร็จ'.count($res_vfu) ,
+                'message' => 'สำเร็จ',
                 'respJSON' => $result ,
                 'my_v' => $res_vfu,
+                'd_now' => $date_now
                 ));
             exit;
-        }
+        // }
      
-        http_response_code(200);
-        echo json_encode(array('status' => true, 'message' => 'ไม่พบข้อมูล ', 'respJSON' => $result));
+        // http_response_code(200);
+        // echo json_encode(array('status' => true, 'message' => 'ไม่พบข้อมูล ', 'respJSON' => $result));
     
     }catch(PDOException $e){
         echo "Faild to connect to database" . $e->getMessage();
