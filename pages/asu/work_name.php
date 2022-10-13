@@ -157,9 +157,9 @@ require_once('../../server/authen.php');
                         </div>
                     </div>
                 </div>
-
             </div>
 
+            <?php require_once('../includes/_footer.php') ?>
         </div>
     </div>
     <?php require_once('../includes/_footer.php') ?>

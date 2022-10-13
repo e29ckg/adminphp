@@ -103,7 +103,7 @@
                 <!-- <button type="button" class="btn btn-primary btn-lg"
                   style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button> -->
                   <div class="mb-3">
-                    <button class="btn btn-primary d-grid w-100 mute" type="submit" name="authen" 
+                    <button class="btn btn-primary d-grid w-100 mute" type="submit" name="authen" :disabled="isLoading"
                             style="padding-left: 2.5rem; padding-right: 2.5rem;">
                             {{ !isLoading ? 'Sign in':'Loading...'}}
                     </button>

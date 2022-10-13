@@ -28,7 +28,7 @@ require_once('../../server/authen.php');
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper" id="dashboard">
-                    {{ssid}}
+                    <!-- {{ssid}} -->
                     <div class="container-xxl flex-grow-1 container-p-y" >                        
                         <div class="row">
                             <div class="col-12 ">
@@ -57,7 +57,7 @@ require_once('../../server/authen.php');
                                 <div class="modal-body">
                                     <ul class="list-group" v-if="my_v">
                                         <li class="list-group-item list-group-item-secondary" v-for="m in my_v">
-                                           {{m.id}} | {{m.u_role}} | {{m.ven_com_name}} | {{m.DN}} | {{m.ven_date}} {{m.ven_time}}
+                                           {{m.id}} | {{m.u_name}}| {{m.u_role}} | {{m.ven_com_name}} | {{m.DN}} | {{m.ven_date}} {{m.ven_time}}
                                         </li>
                                     </ul>
 
