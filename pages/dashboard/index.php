@@ -10,7 +10,12 @@ require_once('../../server/authen.php');
     
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
-    
+  <style>
+    .modalCenter{
+        top:10% !important;
+        tramsform:translateY(-25%) !important;
+    }
+  </style>  
 </head>
 <body class="theme-dark">
     <div id="app">
@@ -48,22 +53,117 @@ require_once('../../server/authen.php');
   
                     <!-- Modal -->
                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
+                        <div class="modal-dialog modal-md">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                    <h5 class="modal-title" id="staticBackdropLabel">{{data_event.ven_date}} {{data_event.id}}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="reset_ven_com()" ref="close_modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <ul class="list-group" v-if="my_v">
-                                        <li class="list-group-item list-group-item-secondary" v-for="m in my_v">
-                                           {{m.id}} | {{m.u_name}}| {{m.u_role}} | {{m.ven_com_name}} | {{m.DN}} | {{m.ven_date}} {{m.ven_time}}
+
+                                    <div class="card mb-3" style="max-width: 540px;">
+                                        <div class="row g-0">
+                                            <div class="col-md-4">
+                                                <img :src="'../../assets/images/profiles/nopic.png'" class="img-fluid rounded-start" alt="data_event.img">
+                                                <!-- <img :src="'../../assets/images/profiles/'+data_event.img" class="img-fluid rounded-start" alt="data_event.img"> -->
+                                            </div>
+                                            <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h4 class="card-title">{{data_event.u_name}}</h4>
+                                                <h6><span class="badge bg-secondary">{{data_event.u_role}} </span></h6>
+                                                <p class="card-text">
+                                                    {{data_event.DN}} {{data_event.ven_com_name}} <br>
+                                                    {{data_event.ven_com_num_all ? 'คำสั่งที่ '+data_event.ven_com_num_all: ''}} 
+                                                    <span class="badge bg-info text-dark">{{data_event.price ? data_event.price : ''}}</span>
+                                                    
+                                                </p>
+                                                <!-- <button type="button" class="btn btn-primary" :disabled="!(my_v.length > 0) || (d_now > data_event.ven_date)" @click="my_v_show = true">
+                                                    ขอเปลี่ยน
+                                                </button> -->
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <ul class="list-group mt-3" v-if="my_v.length > 0" >
+                                        <li class="list-group-item active" aria-current="true">เวรที่สามาถเปลี่ยนได้</li>  
+                                        <li class="list-group-item list-group-item-secondary" v-for="m,mi in my_v" @click="change_a(mi)">                                           
+                                        {{m.ven_date}} {{m.id}} | {{m.u_name}}| {{m.u_role}} | {{m.ven_com_name}} | {{m.DN}} | {{m.ven_time}}
                                         </li>
                                     </ul>
 
 
-                                    {{data_event}}
-                                    {{my_v ? my_v.length :''}}
+                                    <!-- {{d_now}} -->
+                                    <!-- {{data_event}} -->
+                                    <!-- {{my_v ? my_v.length :''}} -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalB" ref="show_modal_b" hidden>
+                        Launch static backdrop modalB
+                    </button>
+  
+                    <!-- Modal -->
+                    <div class="modal fade" id="modalB" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modalCenter">
+                            <div class="modal-content">
+                                <div class="modal-header bg-warning">
+                                    <h5 class="modal-title" id="staticBackdropLabel">  </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ref="close_modal_b"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="card">
+                                                <img :src="'../../assets/images/profiles/nopic.png'" class="img-fluid rounded-start" alt="data_event.img">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ch_v1.u_name}}</h5>
+                                                    <p class="card-text">
+                                                        {{ch_v1.ven_com_num_all}}<br>
+                                                        {{ch_v1.ven_name}}<br>
+                                                        {{ch_v1.ven_date}}<br>
+                                                        {{ch_v1.ven_time}}<br>
+                                                        {{ch_v1.u_role}}
+                                                        {{ch_v1.DN}}
+                                                        {{ch_v1.price}}
+                                                        <!-- {{ch_v1}} -->
+                                                    </p>
+                                                   
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                        <div class="col-2 text-center">
+                                            <div class="mt-5">
+                                            <<<  >>>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="card">
+                                                <img :src="'../../assets/images/profiles/nopic.png'" class="img-fluid rounded-start" alt="data_event.img">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ch_v2.u_name}}</h5>
+                                                    <p class="card-text">
+                                                    {{ch_v1.ven_com_num_all}}<br>
+                                                        {{ch_v1.ven_name}}<br>
+                                                        {{ch_v1.ven_date}}<br>
+                                                        {{ch_v1.ven_time}}<br>
+                                                        {{ch_v1.u_role}}
+                                                        {{ch_v1.DN}}
+                                                        {{ch_v1.price}}
+                                                    </p>
+                                                    
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                           <button class="btn btn-primary">ยืนยันการเปลี่ยน</button> 
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
