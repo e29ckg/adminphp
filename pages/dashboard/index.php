@@ -56,7 +56,7 @@ require_once('../../server/authen.php');
                         <div class="modal-dialog modal-md">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">{{data_event.ven_date}} {{data_event.id}}</h5>
+                                    <h5 class="modal-title" id="staticBackdropLabel"> {{data_event.id}}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="reset_ven_com()" ref="close_modal"></button>
                                 </div>
                                 <div class="modal-body">
@@ -72,6 +72,7 @@ require_once('../../server/authen.php');
                                                 <h4 class="card-title">{{data_event.u_name}}</h4>
                                                 <h6><span class="badge bg-secondary">{{data_event.u_role}} </span></h6>
                                                 <p class="card-text">
+                                                    {{date_thai(data_event.ven_date)}} ({{data_event.ven_time}})<br>
                                                     {{data_event.DN}} {{data_event.ven_com_name}} <br>
                                                     {{data_event.ven_com_num_all ? 'คำสั่งที่ '+data_event.ven_com_num_all: ''}} 
                                                     <span class="badge bg-info text-dark">{{data_event.price ? data_event.price : ''}}</span>
@@ -85,7 +86,7 @@ require_once('../../server/authen.php');
                                         </div>
                                     </div>
 
-                                    <ul class="list-group mt-3" v-if="my_v.length > 0" >
+                                    <ul class="list-group mt-3" v-if="my_v.length > 0 && !(data_event.user_id == ssid) && (data_event.ven_date >= d_now)" >
                                         <li class="list-group-item active" aria-current="true">เวรที่สามาถเปลี่ยนได้</li>  
                                         <li class="list-group-item list-group-item-secondary" v-for="m,mi in my_v" @click="change_a(mi)">                                           
                                         {{m.ven_date}} {{m.id}} | {{m.u_name}}| {{m.u_role}} | {{m.ven_com_name}} | {{m.DN}} | {{m.ven_time}}
@@ -122,12 +123,11 @@ require_once('../../server/authen.php');
                                                 <div class="card-body">
                                                     <h5 class="card-title">{{ch_v1.u_name}}</h5>
                                                     <p class="card-text">
+                                                        {{date_thai(ch_v1.ven_date)}} ({{ch_v1.ven_time}})<br>
+                                                        {{ch_v1.DN}}<br>
                                                         {{ch_v1.ven_com_num_all}}<br>
                                                         {{ch_v1.ven_name}}<br>
-                                                        {{ch_v1.ven_date}}<br>
-                                                        {{ch_v1.ven_time}}<br>
                                                         {{ch_v1.u_role}}
-                                                        {{ch_v1.DN}}
                                                         {{ch_v1.price}}
                                                         <!-- {{ch_v1}} -->
                                                     </p>
@@ -146,13 +146,13 @@ require_once('../../server/authen.php');
                                                 <div class="card-body">
                                                     <h5 class="card-title">{{ch_v2.u_name}}</h5>
                                                     <p class="card-text">
+                                                        {{date_thai(ch_v2.ven_date)}} ({{ch_v2.ven_time}})<br>
+                                                        {{ch_v2.DN}}<br>
+                                                        
                                                     {{ch_v1.ven_com_num_all}}<br>
-                                                        {{ch_v1.ven_name}}<br>
-                                                        {{ch_v1.ven_date}}<br>
-                                                        {{ch_v1.ven_time}}<br>
-                                                        {{ch_v1.u_role}}
-                                                        {{ch_v1.DN}}
-                                                        {{ch_v1.price}}
+                                                    {{ch_v2.ven_name}}<br>
+                                                        {{ch_v2.u_role}}
+                                                        {{ch_v2.price}}
                                                     </p>
                                                     
                                                 </div>
