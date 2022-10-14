@@ -52,7 +52,7 @@ Vue.createApp({
 
     ssid :'',
     my_v :'',
-    d_now:'1255',
+    d_now:'',
     my_v_show : 'false',
     ch_v1:'',
     ch_v2:'',
@@ -92,7 +92,8 @@ Vue.createApp({
             // console.log(info.event.extendedProps)
             this.cal_click(info.event.id)
         },
-                       
+               
+        
       })
       calendar.render();
     },
@@ -140,6 +141,14 @@ Vue.createApp({
       this.ch_v2 = this.data_event
 
     },
+    date_thai(day){
+      var monthNamesThai = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤษจิกายน","ธันวาคม"];
+      var dayNames = ["วันอาทิตย์ที่","วันจันทร์ที่","วันอังคารที่","วันพุทธที่","วันพฤหัสบดีที่","วันศุกร์ที่","วันเสาร์ที่"];
+      var monthNamesEng = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      var dayNamesEng = ['Sunday','Monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+      var d = new Date(day);
+      return d.getDate() + ' ' + monthNamesThai[d.getMonth()] + "  " + (d.getFullYear() + 543)
+    }, 
 
     alert(icon,message,timer=0){
       swal.fire({
