@@ -19,7 +19,7 @@ $datas = array();
     try{
         $sql = "SELECT id, ven_date, ven_time, u_name, DN
         FROM ven    
-        WHERE status = 1 
+        WHERE status = 1 OR status = 2
         ORDER BY ven_date DESC, ven_time ASC
         LIMIT 200";
         $query = $conn->prepare($sql);

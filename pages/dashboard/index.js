@@ -114,7 +114,7 @@ Vue.createApp({
           .catch(function (error) {        
           console.log(error);  
         });
-        this.$refs.show_modal.click()
+        // this.$refs.show_modal.click()
       }else{
         this.alert('warning','กรุณา Login..' ,0) 
       }
@@ -141,6 +141,27 @@ Vue.createApp({
       this.ch_v2 = this.data_event
 
     },
+    change_save(){
+      this.isLoading = true;
+      axios.post('../../server/dashboard/change_save.php',{ch_v1:this.ch_v1, ch_v2:this.ch_v2})
+      .then(response => {
+          console.log(response.data);
+          if (response.data.status) {
+              // this.datas = response.data.respJSON;
+              this.alert('success',response.data.message,1000) 
+          } else{
+            this.alert('warning',response.data.message,0) 
+          }
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+      .finally(() => {
+        this.isLoading = false;
+      })
+      
+    },
+
     date_thai(day){
       var monthNamesThai = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤษจิกายน","ธันวาคม"];
       var dayNames = ["วันอาทิตย์ที่","วันจันทร์ที่","วันอังคารที่","วันพุทธที่","วันพฤหัสบดีที่","วันศุกร์ที่","วันเสาร์ที่"];

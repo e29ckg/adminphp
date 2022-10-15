@@ -161,7 +161,9 @@ require_once('../../server/authen.php');
                                         </div>
                                     </div>
                                     <div class="row">
-                                           <button class="btn btn-primary">ยืนยันการเปลี่ยน</button> 
+                                        <button class="btn btn-primary" @click="change_save()" :disabled="isLoading">
+                                            {{isLoading ? 'Loading..':'ยืนยันการเปลี่ยน'}}
+                                        </button> 
                                     </div>
 
                                 </div>
