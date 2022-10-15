@@ -3,7 +3,7 @@
 session_start();
 error_reporting(E_ALL);
 // error_reporting(0);
-date_default_timezone_set("Asia/Bangkok");
+// date_default_timezone_set("Asia/Bangkok");
 
 $servername = "localhost";
 $username = "root";

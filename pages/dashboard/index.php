@@ -82,12 +82,17 @@ require_once('../../server/authen.php');
                                                     ขอเปลี่ยน
                                                 </button> -->
                                             </div>
-                                            </div>
                                         </div>
                                     </div>
+                                    <ul class="list-group mt-3" >
+                                        <li class="list-group-item list-group-item-secondary" v-for="v,vi in vh">                                           
+                                            {{v.ven_date}} {{v.id}} | {{v.u_name}}| {{v.u_role}} | {{v.ven_com_name}} | {{v.DN}} | {{v.ven_time}}
+                                        </li>
+                                    </ul>
+                                </div>
 
                                     <ul class="list-group mt-3" v-if="my_v.length > 0 && !(data_event.user_id == ssid) && (data_event.ven_date >= d_now)" >
-                                        <li class="list-group-item active" aria-current="true">เวรที่สามาถเปลี่ยนได้</li>  
+                                        <li class="list-group-item active" aria-current="true">เวรที่สามารถเปลี่ยนได้</li>  
                                         <li class="list-group-item list-group-item-secondary" v-for="m,mi in my_v" @click="change_a(mi)">                                           
                                         {{m.ven_date}} {{m.id}} | {{m.u_name}}| {{m.u_role}} | {{m.ven_com_name}} | {{m.DN}} | {{m.ven_time}}
                                         </li>

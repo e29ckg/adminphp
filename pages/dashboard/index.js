@@ -52,10 +52,12 @@ Vue.createApp({
 
     ssid :'',
     my_v :'',
+    vh :[],
     d_now:'',
     my_v_show : 'false',
     ch_v1:'',
     ch_v2:'',
+
     isLoading : false,
   }
   },
@@ -105,6 +107,7 @@ Vue.createApp({
               if (response.data.status) {
                 this.data_event = response.data.respJSON
                 this.my_v = response.data.my_v
+                this.vh = response.data.vh
                 this.d_now = response.data.d_now
                 this.$refs['show_modal'].click()  
               }else{               

@@ -31,7 +31,23 @@ $datas = array();
         // $query->bindParam(':kkey',$data->kkey, PDO::PARAM_STR);
         $query->execute();
         $result = $query->fetch(PDO::FETCH_OBJ);
-        
+
+        /** ประวัติการเปลี่ยน */
+        $sql = "SELECT v.*FROM ven as v                 
+                WHERE ven_month=:ven_month  AND ven_com_num_all = :ven_com_num_all 
+                AND DN=:DN  AND u_role=:u_role AND ven_date = :ven_date 
+                ORDER BY update_at DESC";
+        $query = $conn->prepare($sql);
+        $query->bindParam(':ven_month',$result->ven_month, PDO::PARAM_STR);
+        $query->bindParam(':ven_com_num_all',$result->ven_com_num_all, PDO::PARAM_STR);
+        $query->bindParam(':DN',$result->DN, PDO::PARAM_STR);
+        $query->bindParam(':u_role',$result->u_role, PDO::PARAM_STR);
+        $query->bindParam(':ven_date',$result->ven_date, PDO::PARAM_STR);
+        $query->execute();
+        $res_vh = $query->fetchAll(PDO::FETCH_OBJ);
+
+
+        /** เวรที่สามารถเปลี่ยนได้ */
         $sql = "SELECT v.*FROM ven as v                 
                 WHERE v.user_id = :user_id AND ven_month=:ven_month  AND ven_com_num_all = :ven_com_num_all 
                 AND DN=:DN  AND u_role=:u_role AND ven_date >= :ven_date AND v.status =1
@@ -62,6 +78,7 @@ $datas = array();
                 'message' => 'สำเร็จ',
                 'respJSON' => $result ,
                 'my_v' => $res_vfu,
+                'vh' => $res_vh,
                 'd_now' => $date_now
                 ));
             exit;

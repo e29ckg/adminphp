@@ -159,6 +159,7 @@
   
   <div id='calendar-container'>
      <div id='calendar' ref="calendar"></div>
+     
   </div>
   <!-- {{datas}} -->
   <!-- {{profiles}} -->
@@ -238,6 +239,7 @@
 
           </div>
         </div>
+
       <!-- {{data_event}} -->
     </div>
   </div>

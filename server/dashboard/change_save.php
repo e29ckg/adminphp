@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $idv2   = $idv1 + 1;
         $ref    =  generateRandomString();
         $status             = 2 ;
-        $create_at          = Date("Y-m-d h:i:s");
+        $create_at          = Date("Y-m-d H:i:s");
         
         $sql    = "SELECT * FROM ven WHERE id = :id AND ven.status=1";
         $query  = $conn->prepare($sql);
@@ -73,36 +73,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }   
         
-        /**  สร้างเวรใบที่1 */
+        
+        /**  สร้างเวรใบ1 */
         $sql = "INSERT INTO ven(id, ven_date, ven_time, DN, ven_month, ven_com_id, ven_com_idb, user_id, u_name, u_role, ven_name, ven_com_name, ven_com_num_all, ref1, ref2, price, `status`, update_at, create_at) 
                     VALUE(:id, :ven_date, :ven_time, :DN, :ven_month, :ven_com_id, :ven_com_idb, :user_id, :u_name, :u_role, :ven_name, :ven_com_name, :ven_com_num_all, :ref1, :ref2, :price, :status, :update_at, :create_at);";        
         $query = $conn->prepare($sql);
         $query->bindParam(':id',$idv1, PDO::PARAM_INT);
-        $query->bindParam(':ven_time',$rsv1->ven_time, PDO::PARAM_STR);
-        $query->bindParam(':ven_date',$rsv2->ven_date, PDO::PARAM_STR);
-        $query->bindParam(':DN',$rsv2->DN, PDO::PARAM_STR);
-        $query->bindParam(':ven_month',$rsv2->ven_month, PDO::PARAM_STR);
-        $query->bindParam(':ven_com_id',$rsv2->ven_com_id, PDO::PARAM_STR);
-        $query->bindParam(':ven_com_idb',$rsv2->ven_com_idb, PDO::PARAM_STR);
-        $query->bindParam(':user_id',$rsv1->user_id, PDO::PARAM_INT);
-        $query->bindParam(':u_name',$rsv1->u_name, PDO::PARAM_STR);
-        $query->bindParam(':u_role',$rsv1->u_role, PDO::PARAM_STR);
-        $query->bindParam(':ven_name',$rsv2->ven_name, PDO::PARAM_STR);
-        $query->bindParam(':ven_com_name',$rsv2->ven_com_name, PDO::PARAM_STR);
-        $query->bindParam(':ven_com_num_all',$rsv2->ven_com_num_all, PDO::PARAM_STR);
-        $query->bindParam(':ref1',$ref , PDO::PARAM_STR);
-        $query->bindParam(':ref2',$rsv2->ref2 , PDO::PARAM_STR);
-        $query->bindParam(':price',$rsv2->price , PDO::PARAM_STR);
-        $query->bindParam(':status',$status , PDO::PARAM_INT);
-        $query->bindParam(':update_at',$create_at , PDO::PARAM_STR);
-        $query->bindParam(':create_at',$create_at , PDO::PARAM_STR);
-        $query->execute();
-
-        /**  สร้างเวรใบ2 */
-        $sql = "INSERT INTO ven(id, ven_date, ven_time, DN, ven_month, ven_com_id, ven_com_idb, user_id, u_name, u_role, ven_name, ven_com_name, ven_com_num_all, ref1, ref2, price, `status`, update_at, create_at) 
-                    VALUE(:id, :ven_date, :ven_time, :DN, :ven_month, :ven_com_id, :ven_com_idb, :user_id, :u_name, :u_role, :ven_name, :ven_com_name, :ven_com_num_all, :ref1, :ref2, :price, :status, :update_at, :create_at);";        
-        $query = $conn->prepare($sql);
-        $query->bindParam(':id',$idv2, PDO::PARAM_INT);
         $query->bindParam(':ven_date',$rsv1->ven_date, PDO::PARAM_STR);
         $query->bindParam(':ven_time',$rsv1->ven_time, PDO::PARAM_STR);
         $query->bindParam(':DN',$rsv1->DN, PDO::PARAM_STR);
@@ -118,6 +94,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query->bindParam(':ref1',$ref , PDO::PARAM_STR);
         $query->bindParam(':ref2',$rsv1->ref1 , PDO::PARAM_STR);
         $query->bindParam(':price',$rsv1->price , PDO::PARAM_STR);
+        $query->bindParam(':status',$status , PDO::PARAM_INT);
+        $query->bindParam(':update_at',$create_at , PDO::PARAM_STR);
+        $query->bindParam(':create_at',$create_at , PDO::PARAM_STR);
+        $query->execute();
+
+        /**  สร้างเวรใบที่2 */
+        $sql = "INSERT INTO ven(id, ven_date, ven_time, DN, ven_month, ven_com_id, ven_com_idb, user_id, u_name, u_role, ven_name, ven_com_name, ven_com_num_all, ref1, ref2, price, `status`, update_at, create_at) 
+                    VALUE(:id, :ven_date, :ven_time, :DN, :ven_month, :ven_com_id, :ven_com_idb, :user_id, :u_name, :u_role, :ven_name, :ven_com_name, :ven_com_num_all, :ref1, :ref2, :price, :status, :update_at, :create_at);";        
+        $query = $conn->prepare($sql);
+        $query->bindParam(':id',$idv2, PDO::PARAM_INT);
+        $query->bindParam(':ven_time',$rsv1->ven_time, PDO::PARAM_STR);
+        $query->bindParam(':ven_date',$rsv2->ven_date, PDO::PARAM_STR);
+        $query->bindParam(':DN',$rsv2->DN, PDO::PARAM_STR);
+        $query->bindParam(':ven_month',$rsv2->ven_month, PDO::PARAM_STR);
+        $query->bindParam(':ven_com_id',$rsv2->ven_com_id, PDO::PARAM_STR);
+        $query->bindParam(':ven_com_idb',$rsv2->ven_com_idb, PDO::PARAM_STR);
+        $query->bindParam(':user_id',$rsv1->user_id, PDO::PARAM_INT);
+        $query->bindParam(':u_name',$rsv1->u_name, PDO::PARAM_STR);
+        $query->bindParam(':u_role',$rsv1->u_role, PDO::PARAM_STR);
+        $query->bindParam(':ven_name',$rsv2->ven_name, PDO::PARAM_STR);
+        $query->bindParam(':ven_com_name',$rsv2->ven_com_name, PDO::PARAM_STR);
+        $query->bindParam(':ven_com_num_all',$rsv2->ven_com_num_all, PDO::PARAM_STR);
+        $query->bindParam(':ref1',$ref , PDO::PARAM_STR);
+        $query->bindParam(':ref2',$rsv2->ref2 , PDO::PARAM_STR);
+        $query->bindParam(':price',$rsv2->price , PDO::PARAM_STR);
         $query->bindParam(':status',$status , PDO::PARAM_INT);
         $query->bindParam(':update_at',$create_at , PDO::PARAM_STR);
         $query->bindParam(':create_at',$create_at , PDO::PARAM_STR);
