@@ -8,8 +8,10 @@ require_once('../../server/authen.php');
 <head>
     <?php require_once('../includes/_header.php') ?>
     
-    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    <!-- <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script> -->
+    <link rel="stylesheet" href="../../assets/fullcalendar/main.min.css">
+    <script src="../../assets/fullcalendar/main.min.js"></script>
   <style>
     .modalCenter{
         top:10% !important;
@@ -86,17 +88,22 @@ require_once('../../server/authen.php');
                                     </div>
                                     <ul class="list-group mt-3" >
                                         <li class="list-group-item list-group-item-secondary" v-for="v,vi in vh">                                           
-                                            {{v.ven_date}} {{v.id}} | {{v.u_name}}| {{v.u_role}} | {{v.ven_com_name}} | {{v.DN}} | {{v.ven_time}}
+                                            {{v.id}} | {{v.u_name}} {{v.status}} 
+                                            <button v-if="v.user_id == ssid && v.status == 2" @click="cancle_change()"> 
+                                                ยกเลิกการเปลี่ยน 
+                                                {{v.status}}
+                                            </button>
+                                            <!-- {{vh}} -->
                                         </li>
                                     </ul>
-                                </div>
-
                                     <ul class="list-group mt-3" v-if="my_v.length > 0 && !(data_event.user_id == ssid) && (data_event.ven_date >= d_now)" >
                                         <li class="list-group-item active" aria-current="true">เวรที่สามารถเปลี่ยนได้</li>  
                                         <li class="list-group-item list-group-item-secondary" v-for="m,mi in my_v" @click="change_a(mi)">                                           
                                         {{m.ven_date}} {{m.id}} | {{m.u_name}}| {{m.u_role}} | {{m.ven_com_name}} | {{m.DN}} | {{m.ven_time}}
                                         </li>
                                     </ul>
+                                </div>
+
 
 
                                     <!-- {{d_now}} -->

@@ -17,14 +17,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap" rel="stylesheet"> -->
 <?php require_once('../includes/_header.php') ?>
 
-<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
-
+<!-- <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script> -->
 <!-- <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script> -->
-
-
 <!-- <script src='./dist/js/demo-to-codepen.js'></script> -->
-
+<link rel="stylesheet" href="../../assets/fullcalendar/main.min.css">
+<script src="../../assets/fullcalendar/main.min.js"></script>
 
   <script>
 

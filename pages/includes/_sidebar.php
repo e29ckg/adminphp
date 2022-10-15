@@ -21,6 +21,12 @@
                         <span>หน้าแรก</span>
                     </a>
                 </li>
+                <li class="sidebar-item <?php echo isActive('history') ?>">
+                    <a href="../history/" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>ประวัติการเปลี่ยน</span>
+                    </a>
+                </li>
 
                 <li class="sidebar-item  has-sub <?php echo isActive('asu') ?>">
                     <a href="#" class='sidebar-link'>

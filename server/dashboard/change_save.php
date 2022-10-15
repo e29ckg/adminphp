@@ -71,7 +71,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             http_response_code(200);
             echo json_encode(array('status' => false, 'message' => 'ใบเวรนี้ '.$ch_v2->id.' ไม่สามารถเปลี่ยนได้'));
             exit;
-        }   
+        } 
+        
+        if($rsv1->ven_com_num_all != $rsv1->ven_com_num_all){
+            http_response_code(200);
+            echo json_encode(array('status' => false, 'message' => 'คำสั่งไม่ตรงกัน'));
+            exit;
+        }
         
         
         /**  สร้างเวรใบ1 */
@@ -126,13 +132,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         /**สร้างใบเปลี่ยนเวร */
 
-        $sql = "INSERT INTO ven_change(id, ven_month, ven_com_id, ven_id1, ven_id2, ven_id1_old, ven_id2_old,  user_id1, user_id2, ref1, `status`, create_at) 
-        VALUE(:id, :ven_month, :ven_com_id, :ven_id1, :ven_id2, :ven_id1_old, :ven_id2_old, :user_id1, :user_id2, :ref1, :status, :create_at);";        
+        $sql = "INSERT INTO ven_change(id, ven_date1, ven_date2, ven_month, ven_com_id, ven_com_num_all, DN, u_role, ven_id1, ven_id2, ven_id1_old, ven_id2_old,  user_id1, user_id2, ref1, `status`, create_at) 
+                VALUE(:id, :ven_date1, :ven_date2, :ven_month, :ven_com_id,:ven_com_num_all, :DN, :u_role, :ven_id1, :ven_id2, :ven_id1_old, :ven_id2_old, :user_id1, :user_id2, :ref1, :status, :create_at);";        
         
         $query = $conn->prepare($sql);
         $query->bindParam(':id',$idv1, PDO::PARAM_INT);
+        $query->bindParam(':ven_date1',$rsv1->ven_date, PDO::PARAM_STR);
+        $query->bindParam(':ven_date2',$rsv2->ven_date, PDO::PARAM_STR);
         $query->bindParam(':ven_month',$rsv1->ven_month, PDO::PARAM_STR);
         $query->bindParam(':ven_com_id',$rsv1->ven_com_id, PDO::PARAM_STR);
+        $query->bindParam(':ven_com_num_all',$rsv1->ven_com_num_all, PDO::PARAM_STR);
+        $query->bindParam(':DN',$rsv1->DN, PDO::PARAM_STR);
+        $query->bindParam(':u_role',$rsv1->u_role, PDO::PARAM_STR);
         $query->bindParam(':ven_id1',$idv1, PDO::PARAM_INT);
         $query->bindParam(':ven_id2',$idv2, PDO::PARAM_INT);
         $query->bindParam(':ven_id1_old',$rsv1->id, PDO::PARAM_INT);
