@@ -49,6 +49,9 @@
                         <li class="submenu-item <?php echo isActiveFile('report') ?>">
                             <a href="../asu/report.php">รายงาน</a>
                         </li>                        
+                        <li class="submenu-item <?php echo isActiveFile('ven_approve') ?>">
+                            <a href="../asu/ven_approve.php">อนุมัตืใบเปลี่ยนเวร</a>
+                        </li>                        
                         
                     </ul>
                 </li>

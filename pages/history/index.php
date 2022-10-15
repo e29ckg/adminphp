@@ -30,24 +30,28 @@ require_once('../../server/authen.php');
             </div> 
 
                 <!-- Content wrapper -->
-                <div class="content-wrapper" id="dashboard">
+                <div class="content-wrapper" id="index" v-clock>
                     <!-- {{ssid}} -->
-                    <div class="container-xxl flex-grow-1 container-p-y" v-if="datas">                        
+                    <div class="container-xxl flex-grow-1 container-p-y" v-if="datas">  
+                        <!-- {{datas}}                       -->
                         <div class="row" v-for="d in datas">
 
                             <div class="col-12 ">
                                 <div class="card">
                                     <div class="card-body">
+                                        <h4>{{d.id}} : {{d.status}}</h4>
                                     <div class="row">
                                         <div class="col-5">
                                             <div class="card">
-                                                <img :src="'../../assets/images/profiles/nopic.png'" class="img-fluid rounded-start" alt="data_event.img" >
+                                                <img :src="'../../assets/images/profiles/nopic.png'" class="img-thumbnail rounded-start" alt="data_event.img" height="100" >
                                                 <div class="card-body">
-                                                    <h5 class="card-title">  h1</h5>
+                                                    <h5 class="card-title">{{d.user1}}</h5>
                                                     <p class="card-text">
-                                                       test1
+                                                        {{d.ven_date1}} |  {{d.ven_com_num_all}} | {{d.ven_month}} | {{d.DN}} | {{d.u_role}}
+                                                        
+                                                        
                                                     </p>
-                                                   
+                                                    {{d.img1}} 
                                                 </div>
                                             </div>                                            
                                         </div>
@@ -58,13 +62,13 @@ require_once('../../server/authen.php');
                                         </div>
                                         <div class="col-5">
                                             <div class="card">
-                                                <img :src="'../../assets/images/profiles/nopic.png'" class="img-fluid rounded-start" alt="data_event.img">
+                                                <img :src="'../../assets/images/profiles/nopic.png'" class="img-thumbnail rounded-start" alt="data_event.img" height="100">
                                                 <div class="card-body">
-                                                    <h5 class="card-title">h2</h5>
+                                                    <h5 class="card-title">{{d.user2}}</h5>
                                                     <p class="card-text">
-                                                      test2
+                                                    {{d.ven_date2}} | {{d.ven_com_num_all}} | {{d.ven_month}} | {{d.DN}} | {{d.u_role}}
                                                     </p>
-                                                    
+                                                    {{d.img2}}
                                                 </div>
                                             </div>
 
@@ -73,6 +77,7 @@ require_once('../../server/authen.php');
                                     <div class="row">
                                         <div class="col text-center">
                                             <button>print</button>
+                                            <button class="btn btn-danger" @click="ch_cancle(d.id)">ยกเลิก</button>
                                         </div>
                                     </div>
                                     </div>

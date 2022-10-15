@@ -58,8 +58,8 @@ require_once('../../server/authen.php');
                         <div class="modal-dialog modal-md">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel"> {{data_event.id}}</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="reset_ven_com()" ref="close_modal"></button>
+                                    <h5 class="modal-title" id="staticBackdropLabel"> {{data_event.id}} : {{data_event.status}}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ref="close_modal"></button>
                                 </div>
                                 <div class="modal-body">
 
@@ -89,10 +89,7 @@ require_once('../../server/authen.php');
                                     <ul class="list-group mt-3" >
                                         <li class="list-group-item list-group-item-secondary" v-for="v,vi in vh">                                           
                                             {{v.id}} | {{v.u_name}} {{v.status}} 
-                                            <button v-if="v.user_id == ssid && v.status == 2" @click="cancle_change()"> 
-                                                ยกเลิกการเปลี่ยน 
-                                                {{v.status}}
-                                            </button>
+                                            
                                             <!-- {{vh}} -->
                                         </li>
                                     </ul>

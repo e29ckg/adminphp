@@ -17,10 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // The request is using the POST method
     try{
-        $sql = "SELECT vc.*, p.*
+        $sql = "SELECT vc.id , ven_month, ven_date1, ven_date2,ven_com_num_all,DN,u_role,user_id1,user_id2,vc.status
                 FROM ven_change as vc  
-                INNER JOIN profile as p
-                ON p.user_id = vc.user_id1 OR p.user_id = vc.user_id2
                 WHERE vc.user_id2 = :user_id2 OR vc.user_id1 = :user_id1 
 				ORDER BY vc.create_at DESC				
                 LIMIT 100";
@@ -31,27 +29,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result = $query->fetchAll(PDO::FETCH_OBJ);
 
         if($query->rowCount() > 0){                        //count($result)  for odbc
-            // foreach($result as $rs){
-            //     $rs->DN == 'กลางวัน' ? $d = '☀️' : $d = '🌙';
-            //     array_push($datas,array(
-            //         'id'    => $rs->id,
-            //         'title' => $d.' '.$rs->u_name,
-            //         'start' => $rs->ven_date.' '.$rs->ven_time,
-            //         'backgroundColor' => 'blue',
-            //     ));
-            // }
+            foreach($result as $rs){
+                // $rs->DN == 'กลางวัน' ? $d = '☀️' : $d = '🌙';
+                $sql = "SELECT id , fname, profile.name, sname, img
+                        FROM profile   
+                        WHERE user_id = :user_id ";
+                $query = $conn->prepare($sql);
+                $query->bindParam(':user_id',$rs->user_id1, PDO::PARAM_INT);
+                $query->execute();
+                $user1 = $query->fetch(PDO::FETCH_OBJ);
+
+                $sql = "SELECT id , fname, profile.name, sname, img
+                        FROM profile   
+                        WHERE user_id = :user_id ";
+                $query = $conn->prepare($sql);
+                $query->bindParam(':user_id',$rs->user_id2, PDO::PARAM_INT);
+                $query->execute();
+                $user2 = $query->fetch(PDO::FETCH_OBJ);
+
+                array_push($datas,array(
+                    'id'    => $rs->id,
+                    'ven_month' => $rs->ven_month,
+                    'ven_date1' => $rs->ven_date1,
+                    'ven_date2' => $rs->ven_date2,
+                    'ven_com_num_all' => $rs->ven_com_num_all,
+                    'DN' => $rs->DN,
+                    'u_role' => $rs->u_role,
+                    'user1' => $user1->fname.$user1->name.' '.$user1->sname,
+                    'img1' => $user1->img,
+                    'user2' => $user2->fname.$user2->name.' '.$user2->sname,
+                    'img2' => $user2->img,
+                    'status' => $rs->status,
+                ));
+            }
             http_response_code(200);
-            echo json_encode(array('status' => true, 'massege' => 'สำเร็จ', 'respJSON' => $result));
+            echo json_encode(array('status' => true, 'message' => 'สำเร็จ', 'respJSON' => $datas));
             exit;
         }
      
         http_response_code(200);
-        echo json_encode(array('status' => true, 'massege' => 'ไม่พบข้อมูล '));
+        echo json_encode(array('status' => true, 'message' => 'ไม่พบข้อมูล '));
     
     }catch(PDOException $e){
         echo "Faild to connect to database" . $e->getMessage();
         http_response_code(400);
-        echo json_encode(array('status' => false, 'massege' => 'เกิดข้อผิดพลาด..' . $e->getMessage()));
+        echo json_encode(array('status' => false, 'message' => 'เกิดข้อผิดพลาด..' . $e->getMessage()));
     }
 }
 

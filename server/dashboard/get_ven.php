@@ -62,7 +62,6 @@ $datas = array();
         $res_vh = $query->fetchAll(PDO::FETCH_OBJ);
 
 
-
         /** เวรที่สามารถเปลี่ยนได้ */
         $sql = "SELECT v.*FROM ven as v                 
                 WHERE v.user_id = :user_id AND ven_month=:ven_month  AND ven_com_num_all = :ven_com_num_all 

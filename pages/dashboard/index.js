@@ -148,10 +148,12 @@ Vue.createApp({
       this.isLoading = true;
       axios.post('../../server/dashboard/change_save.php',{ch_v1:this.ch_v1, ch_v2:this.ch_v2})
       .then(response => {
-          console.log(response.data);
+          // console.log(response.data);
           if (response.data.status) {
-              // this.datas = response.data.respJSON;
-              this.alert('success',response.data.message,1000) 
+            this.get_vens()
+            this.$refs.close_modal.click()
+            this.$refs.close_modal_b.click()
+            this.alert('success',response.data.message,1000) 
           } else{
             this.alert('warning',response.data.message,0) 
           }

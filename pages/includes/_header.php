@@ -28,7 +28,7 @@
 
         * {
             font-family : Mitr;
-            font-size   : small;
+            /* font-size   : small; */
             /* font-family : Sarabun; */
         }
 </style>

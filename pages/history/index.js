@@ -50,6 +50,27 @@ Vue.createApp({
         })
       }
     },
+    ch_cancle(id){
+      console.log(id)
+      this.isLoading = true;
+        axios.post('../../server/history/change_cancle.php',{id:id})
+        .then(response => {
+            // console.log(response.data.respJSON);
+            if (response.data.status) {
+              this.get_ven_ch();
+              this.alert("success",response.data.message,timer=1000)
+
+            } else{
+              this.alert("wanger",response.data.message,timer=0)
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        })
+    },
 
     
     
@@ -76,4 +97,4 @@ Vue.createApp({
   
         
 
-}).mount('#dashboard')
+}).mount('#index')

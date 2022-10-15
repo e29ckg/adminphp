@@ -137,8 +137,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $query = $conn->prepare($sql);
         $query->bindParam(':id',$idv1, PDO::PARAM_INT);
-        $query->bindParam(':ven_date1',$rsv1->ven_date, PDO::PARAM_STR);
-        $query->bindParam(':ven_date2',$rsv2->ven_date, PDO::PARAM_STR);
+        $query->bindParam(':ven_date1',$rsv2->ven_date, PDO::PARAM_STR);
+        $query->bindParam(':ven_date2',$rsv1->ven_date, PDO::PARAM_STR);
         $query->bindParam(':ven_month',$rsv1->ven_month, PDO::PARAM_STR);
         $query->bindParam(':ven_com_id',$rsv1->ven_com_id, PDO::PARAM_STR);
         $query->bindParam(':ven_com_num_all',$rsv1->ven_com_num_all, PDO::PARAM_STR);

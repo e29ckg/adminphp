@@ -41,16 +41,16 @@ $datas = array();
                 ));
             }
             http_response_code(200);
-            echo json_encode(array('status' => true, 'massege' => 'สำเร็จ', 'respJSON' => $datas));
+            echo json_encode(array('status' => true, 'message' => 'สำเร็จ', 'respJSON' => $datas));
             exit;
         }
      
         http_response_code(200);
-        echo json_encode(array('false' => true, 'massege' => 'ไม่พบข้อมูล '));
+        echo json_encode(array('false' => true, 'message' => 'ไม่พบข้อมูล '));
     
     }catch(PDOException $e){
         echo "Faild to connect to database" . $e->getMessage();
         http_response_code(400);
-        echo json_encode(array('status' => false, 'massege' => 'เกิดข้อผิดพลาด..' . $e->getMessage()));
+        echo json_encode(array('status' => false, 'message' => 'เกิดข้อผิดพลาด..' . $e->getMessage()));
     }
 }
