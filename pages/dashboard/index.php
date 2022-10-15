@@ -96,6 +96,12 @@ require_once('../../server/authen.php');
                                             <!-- {{vh}} -->
                                         </li>
                                     </ul>
+                                    <ul class="list-group mt-3" v-if="data_event.user_id == ssid && (data_event.ven_date >= d_now) && (data_event.status == 1)" >
+                                        <li class="list-group-item active" aria-current="true">ยกให้</li>  
+                                        <!-- <li class="list-group-item list-group-item-secondary" v-for="m,mi in my_v" @click="change_a(mi)">                                           
+                                        
+                                        </li> -->
+                                    </ul>
                                     <ul class="list-group mt-3" v-if="my_v.length > 0 && !(data_event.user_id == ssid) && (data_event.ven_date >= d_now)" >
                                         <li class="list-group-item active" aria-current="true">เวรที่สามารถเปลี่ยนได้</li>  
                                         <li class="list-group-item list-group-item-secondary" v-for="m,mi in my_v" @click="change_a(mi)">                                           
@@ -159,10 +165,9 @@ require_once('../../server/authen.php');
                                                     <h5 class="card-title">{{ch_v2.u_name}}</h5>
                                                     <p class="card-text">
                                                         {{date_thai(ch_v2.ven_date)}} ({{ch_v2.ven_time}})<br>
-                                                        {{ch_v2.DN}}<br>
-                                                        
-                                                    {{ch_v1.ven_com_num_all}}<br>
-                                                    {{ch_v2.ven_name}}<br>
+                                                        {{ch_v2.DN}}<br>                                                        
+                                                        {{ch_v1.ven_com_num_all}}<br>
+                                                        {{ch_v2.ven_name}}<br>
                                                         {{ch_v2.u_role}}
                                                         {{ch_v2.price}}
                                                     </p>
