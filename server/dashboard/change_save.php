@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query->bindParam(':ven_com_name',$rsv2->ven_com_name, PDO::PARAM_STR);
         $query->bindParam(':ven_com_num_all',$rsv2->ven_com_num_all, PDO::PARAM_STR);
         $query->bindParam(':ref1',$ref , PDO::PARAM_STR);
-        $query->bindParam(':ref2',$rsv2->ref2 , PDO::PARAM_STR);
+        $query->bindParam(':ref2',$rsv2->ref1 , PDO::PARAM_STR);
         $query->bindParam(':price',$rsv2->price , PDO::PARAM_STR);
         $query->bindParam(':status',$status , PDO::PARAM_INT);
         $query->bindParam(':update_at',$create_at , PDO::PARAM_STR);
@@ -134,9 +134,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $sql = "INSERT INTO ven_change(id, ven_date1, ven_date2, ven_month, ven_com_id, ven_com_num_all, DN, u_role, ven_id1, ven_id2, ven_id1_old, ven_id2_old,  user_id1, user_id2, ref1, `status`, create_at) 
                 VALUE(:id, :ven_date1, :ven_date2, :ven_month, :ven_com_id,:ven_com_num_all, :DN, :u_role, :ven_id1, :ven_id2, :ven_id1_old, :ven_id2_old, :user_id1, :user_id2, :ref1, :status, :create_at);";        
-        
+        $chid = 'CH'.$idv1;
         $query = $conn->prepare($sql);
-        $query->bindParam(':id',$idv1, PDO::PARAM_INT);
+        $query->bindParam(':id',$chid, PDO::PARAM_INT);
         $query->bindParam(':ven_date1',$rsv2->ven_date, PDO::PARAM_STR);
         $query->bindParam(':ven_date2',$rsv1->ven_date, PDO::PARAM_STR);
         $query->bindParam(':ven_month',$rsv1->ven_month, PDO::PARAM_STR);

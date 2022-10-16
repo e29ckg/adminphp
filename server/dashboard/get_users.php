@@ -8,38 +8,37 @@ header("Content-Type: application/json; charset=utf-8");
 
 include "../connect.php";
 
-// $data = json_decode(file_get_contents("php://input"));
+$data = json_decode(file_get_contents("php://input"));
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $datas = array();
 
 
     // The request is using the POST method
     try{
-        $sql = "SELECT id, ven_date, ven_time, u_name, DN, ven.status
-        FROM ven    
-        WHERE status = 1 OR status = 2
-        ORDER BY ven_date DESC, ven_time ASC
-        LIMIT 200";
+        $sql = "SELECT id, user_id, u_name
+        FROM ven_user    
+        WHERE ven_name = :ven_name AND uvn = :uvn";
         $query = $conn->prepare($sql);
-        // $query->bindParam(':kkey',$data->kkey, PDO::PARAM_STR);
+        $query->bindParam(':ven_name',$data->ven_name, PDO::PARAM_STR);
+        $query->bindParam(':uvn',$data->uvn, PDO::PARAM_STR);
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_OBJ);
 
         if($query->rowCount() > 0){                        //count($result)  for odbc
-            foreach($result as $rs){
-                $rs->DN == 'กลางวัน' ? $d = '☀️' : $d = '🌙';
-                $rs->status == 1 ? $bgcolor ='blue' : $bgcolor = 'red';
-                array_push($datas,array(
-                    'id'    => $rs->id,
-                    'title' => $d.' '.$rs->u_name,
-                    'start' => $rs->ven_date.' '.$rs->ven_time,
-                    'backgroundColor' => $bgcolor,
-                ));
-            }
+            // foreach($result as $rs){
+            //     $rs->DN == 'กลางวัน' ? $d = '☀️' : $d = '🌙';
+            //     $rs->status == 1 ? $bgcolor ='blue' : $bgcolor = 'red';
+            //     array_push($datas,array(
+            //         'id'    => $rs->id,
+            //         'title' => $d.' '.$rs->u_name,
+            //         'start' => $rs->ven_date.' '.$rs->ven_time,
+            //         'backgroundColor' => $bgcolor,
+            //     ));
+            // }
             http_response_code(200);
-            echo json_encode(array('status' => true, 'massege' => 'สำเร็จ', 'respJSON' => $datas));
+            echo json_encode(array('status' => true, 'massege' => 'สำเร็จ', 'respJSON' => $result));
             exit;
         }
      

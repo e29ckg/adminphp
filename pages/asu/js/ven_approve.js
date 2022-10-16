@@ -2,19 +2,9 @@ Vue.createApp({
   data() {
     return {
       q:'2254',
-      ven_coms_g :'',
-      ven_coms :'',
-      vc_form  :{
-        ven_com_num :'',
-        ven_com_date :'',
-        ven_month :'',
-        ven_com_name :'',
-        ven_name : ''
-      },
-      vc_form_act :'insert',
-      sel_ven_month :[],
-      ven_names :'',
-
+      ven_app_g :'',
+      ven_app :'',
+      
       isLoading : false,
     }
   },
@@ -22,65 +12,30 @@ Vue.createApp({
     this.url_base = window.location.protocol + '//' + window.location.host;
     this.url_base_app = window.location.protocol + '//' + window.location.host + '/adminphp/';
     // const d = 
-    this.get_ven_coms()
-    this.get_ven_month()
-    this.get_ven_names()
-    // this.get_ven_users()
-    // this.get_users()
+    this.get_ven_ch()
   },
   watch: {
     
   },
   methods: {
-    // this.$refs.show_vc_form.click()
-    // this.$refs.close_vc.click()
-    ven_com_add(){
-      // console.log('ven_com_Add')
-      
-      this.vc_form_act = 'insert'
-      this.$refs.show_vc_form.click()
+    get_ven_ch(){
+      this.isLoading = true
+      axios.get('../../server/asu/ven_approve/get_ven_ch.php')
+      .then(response => {
+          if (response.data.status) {
+              this.ven_app_g = response.data.respJSON_G;
+              this.ven_app = response.data.respJSON;
+          } 
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+      .finally(() => {
+        this.isLoading = false;
+      })
     },
-    ven_com_del(){
-      console.log('ven_com_del')
-    },
-    clear_vc_form(){
-      console.log('clear_vc_form')
-      this.vc_form  = {ven_com_num :'', ven_com_date :'', ven_month :'', ven_com_name:'', ven_name:''}
-    },
-    vc_save(){
-      if(this.vc_form.ven_com_num != '' && this.vc_form.ven_com_date != '' && this.vc_form.ven_month != '' && this.vc_form.ven_name != ''){
-        this.isLoading = true
-        axios.post('../../server/asu/ven_com_act.php',{vc:this.vc_form, act:this.vc_form_act})
-        .then(response => {
-            if (response.data.status) {
-              this.$refs.close_vc.click()
-              this.get_ven_coms()
-              this.alert('success',response.data.message,1500)
-            }else{
-              this.alert('warning',response.data.message,0)
-            }
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-        .finally(() => {
-          this.isLoading = false;
-        })
-      }else{
-        const message = []
-        if(this.vc_form.ven_com_num == ''){message.push('เลขคำสั่ง')}
-        if(this.vc_form.ven_com_date == ''){message.push('ลงวันที่')}
-        if(this.vc_form.ven_month == ''){message.push('เวรเดือน')}
-        if(this.vc_form.ven_name == ''){message.push('ชื่อเวร')}
-        this.alert('warning',message,0)
-      }
-    },
-    ven_com_up(id){
-      this.vc_form_act = 'update'
-      this.get_ven_com(id)
-      this.$refs.show_vc_form.click()
-    },
-    ven_com_del(id){
+
+    ven_ch_app(id){
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -92,11 +47,10 @@ Vue.createApp({
       }).then((result) => {
         if (result.isConfirmed) {
           this.isLoading = true;
-          axios.post('../../server/asu/ven_com_act.php',{id:id, act:'delete'})
+          axios.post('../../server/asu/ven_approve/ven_ch_acc.php',{id:id})
             .then(response => {
                 if (response.data.status) { 
-                  this.$refs.close_vc.click()
-                  this.get_ven_coms()
+                  this.get_ven_ch()
                   this.alert('success',response.data.message,1500)
                 }else{
                   this.alert('warning',response.data.message,0)
@@ -108,15 +62,25 @@ Vue.createApp({
             .finally(() => {
               this.isLoading = false;
             })
-        }
+          }
       })
     },
-    vc_status(id,st){
-      this.isLoading = true;
-      axios.post('../../server/asu/ven_com_act.php',{id:id, act:'status', st:st})
+    ven_ch_cancle(id){
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, is it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.isLoading = true;
+          axios.post('../../server/asu/ven_approve/ven_ch_cancle.php',{id:id})
             .then(response => {
                 if (response.data.status) { 
-                  this.get_ven_coms()
+                  this.get_ven_ch()
                   this.alert('success',response.data.message,1500)
                 }else{
                   this.alert('warning',response.data.message,0)
@@ -128,7 +92,9 @@ Vue.createApp({
             .finally(() => {
               this.isLoading = false;
             })
-    },  
+          }
+      })
+    },
 
 
     get_ven_coms(){
@@ -148,21 +114,7 @@ Vue.createApp({
         this.isLoading = false;
       })
     },
-    get_ven_names(){
-      this.isLoading = true
-      axios.post('../../server/asu/get_ven_names.php')
-      .then(response => {
-          if (response.data.status) {
-              this.ven_names = response.data.respJSON;
-          } 
-      })
-      .catch(function (error) {
-          console.log(error);
-      })
-      .finally(() => {
-        this.isLoading = false;
-      })
-    },
+   
     get_ven_com(id){
       this.isLoading = true
       axios.post('../../server/asu/get_ven_com.php',{id:id})

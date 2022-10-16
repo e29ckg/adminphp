@@ -93,16 +93,16 @@ require_once('../../server/authen.php');
                                             <!-- {{vh}} -->
                                         </li>
                                     </ul>
-                                    <ul class="list-group mt-3" v-if="data_event.user_id == ssid && (data_event.ven_date >= d_now) && (data_event.status == 1)" >
-                                        <li class="list-group-item active" aria-current="true">ยกให้</li>  
-                                        <!-- <li class="list-group-item list-group-item-secondary" v-for="m,mi in my_v" @click="change_a(mi)">                                           
-                                        
-                                        </li> -->
-                                    </ul>
+                                    <div class="list-group mt-3" v-if="data_event.user_id == ssid && (data_event.ven_date >= d_now) && (data_event.status == 1)" >
+                                        <button class="btn btn-warning" @click="change_b()">ยกให้</button>  
+                                    </div>
                                     <ul class="list-group mt-3" v-if="my_v.length > 0 && !(data_event.user_id == ssid) && (data_event.ven_date >= d_now)" >
                                         <li class="list-group-item active" aria-current="true">เวรที่สามารถเปลี่ยนได้</li>  
                                         <li class="list-group-item list-group-item-secondary" v-for="m,mi in my_v" @click="change_a(mi)">                                           
-                                        {{m.ven_date}} {{m.id}} | {{m.u_name}}| {{m.u_role}} | {{m.ven_com_name}} | {{m.DN}} | {{m.ven_time}}
+                                            {{m.ven_date}} {{m.id}} | {{m.u_name}}| {{m.u_role}} | {{m.ven_com_name}} | {{m.DN}} | {{m.ven_time}}
+                                            <div class="list-group mt-3" v-if="data_event.user_id == ssid && (data_event.ven_date >= d_now) && (data_event.status == 1)" >
+                                                <button class="btn btn-warning" @click="change_b(mi)">ยกให้</button>  
+                                            </div>
                                         </li>
                                     </ul>
                                 </div>
@@ -130,6 +130,7 @@ require_once('../../server/authen.php');
                                     <h5 class="modal-title" id="staticBackdropLabel">  </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ref="close_modal_b"></button>
                                 </div>
+                                {{my_v}}
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-5">
@@ -144,7 +145,7 @@ require_once('../../server/authen.php');
                                                         {{ch_v1.ven_name}}<br>
                                                         {{ch_v1.u_role}}
                                                         {{ch_v1.price}}
-                                                        <!-- {{ch_v1}} -->
+                                                        {{ch_v1}}
                                                     </p>
                                                    
                                                 </div>
@@ -158,7 +159,7 @@ require_once('../../server/authen.php');
                                         <div class="col-5">
                                             <div class="card">
                                                 <img :src="'../../assets/images/profiles/nopic.png'" class="img-fluid rounded-start" alt="data_event.img">
-                                                <div class="card-body">
+                                                <div class="card-body" v-if="ch_v2">
                                                     <h5 class="card-title">{{ch_v2.u_name}}</h5>
                                                     <p class="card-text">
                                                         {{date_thai(ch_v2.ven_date)}} ({{ch_v2.ven_time}})<br>
@@ -169,6 +170,14 @@ require_once('../../server/authen.php');
                                                         {{ch_v2.price}}
                                                     </p>
                                                     
+                                                </div>
+                                                <div class="card-body" v-if="act== 'b'">
+                                                    <h5 class="card-title">{{ch_v2.u_name}}</h5>
+                                                    <p class="card-text">
+                                                    <select name="user2" id="usr2" v-modal="user_id2">
+                                                        <option value="volvo" v-for="u in users">{{u.u_name}}</option>
+                                                    </select>
+                                                    </p>                                                    
                                                 </div>
                                             </div>
 

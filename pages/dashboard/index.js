@@ -51,12 +51,15 @@ Vue.createApp({
     price       : '',
 
     ssid :'',
-    my_v :'',
+    my_v :[],
     vh :[],
     d_now:'',
     my_v_show : 'false',
     ch_v1:'',
     ch_v2:'',
+    users:[],
+    user_id2:[],
+    act:'a',
 
     isLoading : false,
   }
@@ -137,8 +140,7 @@ Vue.createApp({
     },
 
     change_a(my_v_index){
-      console.log('my:'+my_v_index)
-      console.log('you:')
+      this.act = 'a'
       this.$refs.show_modal_b.click()
       this.ch_v1 = this.my_v[my_v_index]
       this.ch_v2 = this.data_event
@@ -157,6 +159,57 @@ Vue.createApp({
           } else{
             this.alert('warning',response.data.message,0) 
           }
+          this.act = 'a'
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+      .finally(() => {
+        this.isLoading = false;
+      })
+      
+    },
+    get_users(ven_name,uvn){
+      this.isLoading = true;
+      axios.post('../../server/dashboard/get_users.php',{ven_name:ven_name, uvn:uvn})
+      .then(response => {
+          // console.log(response.data);
+          if (response.data.status) {
+            this.users =response.data.respJSON
+            // this.alert('success',response.data.message,1000) 
+          } else{
+            // this.alert('warning',response.data.message,0) 
+          }
+          
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+      .finally(() => {
+        this.isLoading = false;
+      })      
+
+    },
+    change_b(){
+      this.act = 'b'
+      this.ch_v1 = this.my_v[0]
+      this.get_users(this.ch_v1.ven_name, this.ch_v1.u_role)
+      this.$refs.show_modal_b.click()
+    },
+    change_save_b(user_id2){
+      this.isLoading = true;
+      axios.post('../../server/dashboard/change_save.php',{ch_v1:this.ch_v1, user_id2:user_id2})
+      .then(response => {
+          // console.log(response.data);
+          if (response.data.status) {
+            this.get_vens()
+            this.$refs.close_modal.click()
+            this.$refs.close_modal_b.click()
+            this.alert('success',response.data.message,1000) 
+          } else{
+            this.alert('warning',response.data.message,0) 
+          }
+          this.act = 'a'
       })
       .catch(function (error) {
           console.log(error);

@@ -30,9 +30,10 @@ require_once('../../server/authen.php');
             </div> 
 
                 <!-- Content wrapper -->
-                <div class="content-wrapper" id="index" v-clock>
+                <div class="content-wrapper" id="index" v-cloak>
                     <!-- {{ssid}} -->
-                    <div class="container-xxl flex-grow-1 container-p-y" v-if="datas">  
+                    {{!datas ? 'NO-DATA':''}}
+                    <div class="container-xxl flex-grow-1 container-p-y" v-if="datas" >  
                         <!-- {{datas}}                       -->
                         <div class="row" v-for="d in datas">
 
@@ -76,8 +77,8 @@ require_once('../../server/authen.php');
                                     </div>
                                     <div class="row">
                                         <div class="col text-center">
-                                            <button>print</button>
-                                            <button class="btn btn-danger" @click="ch_cancle(d.id)">ยกเลิก</button>
+                                            <button class="btn btn-primary me-2">print</button>
+                                            <button class="btn btn-danger" v-if="d.status == 2" @click="ch_cancle(d.id)">ยกเลิก</button>
                                         </div>
                                     </div>
                                     </div>

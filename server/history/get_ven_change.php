@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try{
         $sql = "SELECT vc.id , ven_month, ven_date1, ven_date2,ven_com_num_all,DN,u_role,user_id1,user_id2,vc.status
                 FROM ven_change as vc  
-                WHERE vc.user_id2 = :user_id2 OR vc.user_id1 = :user_id1 
+                WHERE (vc.user_id2 = :user_id2 OR vc.user_id1 = :user_id1) AND (vc.status=1 OR vc.status=2)
 				ORDER BY vc.create_at DESC				
                 LIMIT 100";
         $query = $conn->prepare($sql);
