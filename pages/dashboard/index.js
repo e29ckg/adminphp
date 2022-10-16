@@ -58,7 +58,7 @@ Vue.createApp({
     ch_v1:'',
     ch_v2:'',
     users:[],
-    user_id2:[],
+    u_id2:'',
     act:'a',
 
     isLoading : false,
@@ -190,11 +190,11 @@ Vue.createApp({
       })      
 
     },
-    change_b(){
+    change_cb(){
       this.act = 'b'
       this.ch_v1 = this.my_v[0]
       this.get_users(this.ch_v1.ven_name, this.ch_v1.u_role)
-      this.$refs.show_modal_b.click()
+      this.$refs.s_modal_cb.click()
     },
     change_save_b(user_id2){
       this.isLoading = true;
