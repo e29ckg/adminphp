@@ -45,7 +45,7 @@ Vue.createApp({
       this.isLoading = true
       axios.get('../../server/asu/report/reportK.php')
       .then(response => {
-          console.log(response.data.respJSON);
+          // console.log(response.data.respJSON);
           if (response.data.status) {
               this.datas = response.data.respJSON;
           } 
@@ -80,7 +80,7 @@ Vue.createApp({
       axios.post('../../server/asu/report/report.php',{vcid:vcid})    
           .then(response => {
               if (response.data.status) {
-                this.alert('success',response.data.message,1000)
+                // this.alert('success',response.data.message,1000)
                 this.datas = response.data.respJSON; 
                 this.vc = response.data.vc; 
                 this.$refs.show_modal.click()
@@ -97,7 +97,7 @@ Vue.createApp({
     },
 
     con_f(){
-      console.log('test')
+      // console.log('test')
       Swal.fire({
         title: 'Are you sure?',
         text: "You is this!",

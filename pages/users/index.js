@@ -1,7 +1,7 @@
 Vue.createApp({
   data() {
     return {
-      q:'2254',
+      q:'',
       url_base:'',
       url_base_app:'',
       url_base_now:'',
@@ -39,7 +39,9 @@ Vue.createApp({
     this.get_sel_group()
   },
   watch: {
-    
+    q(){
+      this.ch_search_user()
+    }
   },
   methods: {
     get_users(){
@@ -256,10 +258,27 @@ Vue.createApp({
                   this.isLoading = false;
                 })   
       }
-
-         
-    
-    }
+    },
+    ch_search_user(){
+      console.log(this.q)
+      if(this.q.length > 0){
+        this.isLoading = true;
+        axios.post('../../server/users/user_search.php',{q:this.q})
+          .then(response => {
+              if (response.data.status){
+                this.datas = response.data.respJSON;                    
+              }
+          })
+          .catch(function (error) {
+              console.log(error);
+          })
+          .finally(() => {
+            this.isLoading = false;
+          })
+      }else{
+        this.get_users()
+      }
+    },
   },
   
         

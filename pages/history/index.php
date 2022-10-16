@@ -11,7 +11,7 @@ require_once('../../server/authen.php');
   <style>
     .modalCenter{
         top:10% !important;
-        tramsform:translateY(-25%) !important;
+        /* tramsform:translateY(-25%) !important; */
     }
   </style>  
 </head>
@@ -76,9 +76,12 @@ require_once('../../server/authen.php');
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col text-center">
-                                            <button class="btn btn-primary me-2">print</button>
-                                            <button class="btn btn-danger" v-if="d.status == 2" @click="ch_cancle(d.id)">ยกเลิก</button>
+                                        <div class="col text-center" v-if="d.status == 2">
+                                            <button class="btn btn-primary me-2" @click="print(d.id)">Download ใบเปลี่ยนเวร</button>
+                                            <button class="btn btn-danger"  @click="ch_cancle(d.id)">ยกเลิก</button>
+                                        </div>
+                                        <div class="col text-center" v-else>
+                                            สถานะ อนุมัติแล้ว
                                         </div>
                                     </div>
                                     </div>

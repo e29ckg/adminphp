@@ -24,7 +24,7 @@ $datas = array();
         $query->execute();
         $res_g = $query->fetchAll(PDO::FETCH_OBJ);
         
-        $sql = "SELECT * FROM ven_change WHERE status=1 OR status=2 ORDER BY ven_month DESC LIMIT 100";
+        $sql = "SELECT * FROM ven_change WHERE status=1 OR status=2 ORDER BY id DESC LIMIT 100";
         $query = $conn->prepare($sql);
         // $query->bindParam(':kkey',$data->kkey, PDO::PARAM_STR);
         $query->execute();

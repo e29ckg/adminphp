@@ -25,7 +25,7 @@ $datas = array();
         FROM ven as v 
         INNER JOIN profile as p
         ON v.user_id = p.user_id
-        WHERE v.id = $id
+        WHERE v.id = $id 
         ORDER BY v.ven_date DESC";
         $query = $conn->prepare($sql);
         // $query->bindParam(':kkey',$data->kkey, PDO::PARAM_STR);
@@ -50,7 +50,7 @@ $datas = array();
         $sql = "SELECT v.*
         FROM ven as v 
         WHERE ven_date=:ven_date AND ven_month=:ven_month AND ven_com_num_all = :ven_com_num_all 
-        AND DN=:DN AND u_role=:u_role  AND (v.status = 1 OR v.status = 2)
+        AND DN=:DN AND u_role=:u_role  AND (v.status = 1 OR v.status = 2 OR v.status = 4 )
         ORDER BY v.id DESC";
         $query = $conn->prepare($sql);
         $query->bindParam(':ven_date',$result->ven_date, PDO::PARAM_STR);

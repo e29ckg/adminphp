@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $query->bindParam(':id',$result->ven_id1_old, PDO::PARAM_INT);
         $query->execute();
         
+        $st = 1;
         $sql = "UPDATE ven SET ven.status = :status WHERE id = :id";
         $query = $conn->prepare($sql);
         $query->bindParam(':status',$st, PDO::PARAM_INT);

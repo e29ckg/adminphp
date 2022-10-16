@@ -51,25 +51,57 @@ Vue.createApp({
       }
     },
     ch_cancle(id){
-      console.log(id)
-      this.isLoading = true;
-        axios.post('../../server/history/change_cancle.php',{id:id})
-        .then(response => {
-            // console.log(response.data.respJSON);
-            if (response.data.status) {
-              this.get_ven_ch();
-              this.alert("success",response.data.message,timer=1000)
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, is it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.isLoading = true;
+          axios.post('../../server/history/change_cancle.php',{id:id})
+          .then(response => {
+              // console.log(response.data.respJSON);
+              if (response.data.status) {
+                this.get_ven_ch();
+                this.alert("success",response.data.message,timer=1000)
 
-            } else{
-              this.alert("wanger",response.data.message,timer=0)
-            }
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-        .finally(() => {
-          this.isLoading = false;
-        })
+              } else{
+                this.alert("wanger",response.data.message,timer=0)
+              }
+          })
+          .catch(function (error) {
+              console.log(error);
+          })
+          .finally(() => {
+            this.isLoading = false;
+          })
+        }
+      })
+      
+    },
+
+    print(id){
+      this.isLoading = true;
+      axios.post('../../server/history/print.php',{id:id})
+      .then(response => {
+          if (response.data.status) {
+            this.alert("success",response.data.message,timer=1000)
+            window.open('../../uploads/ven.docx','_blank')
+          } else{
+            this.alert("wanger",response.data.message,timer=0)
+          }
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+      .finally(() => {
+        this.isLoading = false;
+      })
+
     },
 
     
@@ -86,7 +118,6 @@ Vue.createApp({
 
     alert(icon,message,timer=0){
       swal.fire({
-        position: 'top-end',
         icon: icon,
         title: message,
         showConfirmButton: false,

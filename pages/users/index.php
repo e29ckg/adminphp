@@ -29,7 +29,19 @@ require_once('../../server/authen.php');
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                            <button class="btn btn-success btn-md" @click="user_form_insert_show()">เพิ่ม</button>
+    
+                                            <div class="row ">
+                                                <div class="col-md-10 mx-auto">
+                                                    <div class="input-group">
+                                                        <input class="form-control border rounded-pill" type="search" value="search" v-model="q" placeholder="ค้นหา" id="example-search-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div>
+                                                <button class="btn btn-success btn-md" @click="user_form_insert_show()">เพิ่ม</button>
+
+                                            </div>
                                         </div>
                                         <table class="table table-striped">
                                             <thead>

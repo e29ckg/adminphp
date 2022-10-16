@@ -53,8 +53,8 @@ require_once('../../server/authen.php');
                                                         </td>
                                                        
                                                         <td class="text-end col " style="width: 150px;">
-                                                            <button class="btn btn-warning btn-sm me-2" @click="ven_ch_app(va.id)">อนุมัติ</button>
-                                                            <button class="btn btn-danger btn-sm" @click="ven_ch_cancle(va.id)">ยกเลิก</button>
+                                                            <button class="btn btn-warning btn-sm me-2" @click="ven_ch_app(va.id)" v-if="va.status != 1">อนุมัติ</button>
+                                                            <button class="btn btn-danger btn-sm" @click="ven_ch_cancle(va.id)" v-else>ยกเลิก</button>
                                                         </td>
                                                 </tr>
                                             </tbody>

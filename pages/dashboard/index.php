@@ -15,7 +15,7 @@ require_once('../../server/authen.php');
   <style>
     .modalCenter{
         top:10% !important;
-        tramsform:translateY(-25%) !important;
+        /* tramsform:translateY(-25%) !important; */
     }
   </style>  
 </head>
@@ -72,7 +72,10 @@ require_once('../../server/authen.php');
                                             <div class="col-md-8">
                                             <div class="card-body">
                                                 <h4 class="card-title">{{data_event.u_name}}</h4>
-                                                <h6><span class="badge bg-secondary">{{data_event.u_role}} </span></h6>
+                                                <h6>
+                                                    <span class="badge bg-secondary me-2">{{data_event.u_role}} </span>
+                                                    <span class="badge bg-warning" v-if="data_event.status ==2">รออนุมัติ</span>
+                                                </h6>
                                                 <p class="card-text">
                                                     {{date_thai(data_event.ven_date)}} ({{data_event.ven_time}})<br>
                                                     {{data_event.DN}} {{data_event.ven_com_name}} <br>
@@ -94,10 +97,10 @@ require_once('../../server/authen.php');
                                         </li>
                                     </ul>
                                     <div class="list-group mt-3" v-if="data_event.user_id == ssid && (data_event.ven_date >= d_now) && (data_event.status == 1)" >
-                                        <button class="btn btn-warning" @click="ch_b = true">ยกให้</button>  
+                                        <button class="btn btn-warning" @click="ch_b == true ? ch_b = flase : ch_b = true">ยกให้</button>  
                                     </div>
                                     <div class="list-group mt-3" v-if="my_v.length > 0 && !(data_event.user_id == ssid) && (data_event.ven_date >= d_now)" >
-                                        <button class="btn btn-primary" @click="ch_a = true">ขอเปลี่ยน</button>  
+                                        <button class="btn btn-primary" @click="ch_a == true ? ch_a = false : ch_a = true ">ขอเปลี่ยน</button>  
                                     </div>
                                     <ul class="list-group mt-3" v-if="ch_a" >
                                         <li class="list-group-item active" aria-current="true">เวรที่สามารถเปลี่ยนได้</li>  
@@ -108,9 +111,12 @@ require_once('../../server/authen.php');
                                     </ul>
                                     <ul class="list-group mt-3" v-if="ch_b">
                                         <li class="list-group-item active" aria-current="true">ยกให้</li>  
-                                        <li class="list-group-item list-group-item-secondary" v-for="u in users">                                           
-                                            {{u.u_name}}
-                                        </li>
+                                        <div  v-for="u in users" >
+                                            <li class="list-group-item list-group-item-secondary" v-if="u.user_id != ssid">                                           
+                                                <span  @click="change_b(u.user_id,u.u_name)"> {{u.u_name}} {{u.user_id +' '+ ' '+ssid}} </span>
+                                            </li>
+
+                                        </div>
 
                                     </ul>
                                 </div>
@@ -131,14 +137,14 @@ require_once('../../server/authen.php');
                     </button>
   
                     <!-- Modal -->
-                    <div class="modal fade" id="modalB" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal fade" id="modalB" data-bs-keyboard="false" data-bs-backdrop="static"  tabindex="-2" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg modalCenter">
                             <div class="modal-content">
                                 <div class="modal-header bg-warning">
                                     <h5 class="modal-title" id="staticBackdropLabel">  </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ref="close_modal_b"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="close_m_b" ref="close_modal_b"></button>
                                 </div>
-                                {{my_v}}
+                                <!-- {{my_v}} -->
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-5">
@@ -153,7 +159,7 @@ require_once('../../server/authen.php');
                                                         {{ch_v1.ven_name}}<br>
                                                         {{ch_v1.u_role}}
                                                         {{ch_v1.price}}
-                                                        {{ch_v1}}
+                                                        <!-- {{ch_v1}} -->
                                                     </p>
                                                    
                                                 </div>
@@ -167,7 +173,7 @@ require_once('../../server/authen.php');
                                         <div class="col-5">
                                             <div class="card">
                                                 <img :src="'../../assets/images/profiles/nopic.png'" class="img-fluid rounded-start" alt="data_event.img">
-                                                <div class="card-body" v-if="ch_v2">
+                                                <div class="card-body" v-if="act=='a'">
                                                     <h5 class="card-title">{{ch_v2.u_name}}</h5>
                                                     <p class="card-text">
                                                         {{date_thai(ch_v2.ven_date)}} ({{ch_v2.ven_time}})<br>
@@ -178,14 +184,29 @@ require_once('../../server/authen.php');
                                                         {{ch_v2.price}}
                                                     </p>                                                    
                                                 </div>
+                                                <div class="card-body" v-if="act=='b'">
+                                                    <h5 class="card-title">{{u_name2}}</h5>
+                                                    <p class="card-text">
+                                                        {{date_thai(ch_v1.ven_date)}} ({{ch_v1.ven_time}})<br>
+                                                        {{ch_v1.DN}}<br>
+                                                        {{ch_v1.ven_com_num_all}}<br>
+                                                        {{ch_v1.ven_name}}<br>
+                                                        {{ch_v1.u_role}}
+                                                        {{ch_v1.price}}
+                                                        <!-- {{ch_v1}} -->
+                                                    </p>                                                    
+                                                </div>
                                                 
                                             </div>
 
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <button class="btn btn-primary" @click="change_save()" :disabled="isLoading">
+                                        <button class="btn btn-primary" @click="change_save()" :disabled="isLoading" v-if="act=='a'">
                                             {{isLoading ? 'Loading..':'ยืนยันการเปลี่ยน'}}
+                                        </button> 
+                                        <button class="btn btn-warning" @click="change_save_bb()" :disabled="isLoading" v-if="act=='b'">
+                                            {{isLoading ? 'Loading..':'ยืนยันการยก'}}
                                         </button> 
                                     </div>
 

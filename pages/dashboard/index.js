@@ -59,6 +59,7 @@ Vue.createApp({
     ch_v2:'',
     users:[],
     u_id2:'',
+    u_name2:'',
     act:'a',
     ch_a:false,
     ch_b:false,
@@ -149,10 +150,14 @@ Vue.createApp({
       this.ch_v2 = this.data_event
 
     },
-    change_b(uid){
+    change_b(uid,u_name){
+      console.log(uid)
+      console.log(u_name)
       this.act = 'b'
+      this.ch_v1 = this.data_event
+      this.user_id2 = uid
+      this.u_name2 = u_name
       this.$refs.show_modal_b.click()
-      this.ch_v2 = this.data_event
     },
     change_save(){
       this.isLoading = true;
@@ -164,10 +169,34 @@ Vue.createApp({
             this.$refs.close_modal.click()
             this.$refs.close_modal_b.click()
             this.alert('success',response.data.message,1000) 
+            window.open('../history/index.php','_self')
           } else{
             this.alert('warning',response.data.message,0) 
           }
           this.act = 'a'
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+      .finally(() => {
+        this.isLoading = false;
+      })      
+    },
+    change_save_bb(){
+      this.isLoading = true;
+      axios.post('../../server/dashboard/change_save_b.php',{ch_v1:this.ch_v1, user_id2:this.user_id2, u_name2:this.u_name2})
+      .then(response => {
+          // console.log(response.data);
+          if (response.data.status) {
+            this.get_vens()
+            this.$refs.close_modal.click()
+            this.$refs.close_modal_b.click()
+            this.alert('success',response.data.message,1000) 
+            window.open('../history/index.php','_blank')
+          } else{
+            this.alert('warning',response.data.message,0) 
+          }
+          // this.act = 'a'
       })
       .catch(function (error) {
           console.log(error);
@@ -226,6 +255,9 @@ Vue.createApp({
       this.ch_a =false
       this.ch_b =false
     },
+    close_m_b(){
+      this.$refs.close_modal.click()
+    },
 
     date_thai(day){
       var monthNamesThai = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤษจิกายน","ธันวาคม"];
@@ -238,7 +270,6 @@ Vue.createApp({
 
     alert(icon,message,timer=0){
       swal.fire({
-        position: 'top-end',
         icon: icon,
         title: message,
         showConfirmButton: false,

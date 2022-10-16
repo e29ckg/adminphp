@@ -200,16 +200,16 @@ Vue.createApp({
         })
     },
     vu_del(id){
-      // Swal.fire({
-      //   title: 'Are you sure?',
-      //   text: "You won't be able to revert this!",
-      //   icon: 'warning',
-      //   showCancelButton: true,
-      //   confirmButtonColor: '#3085d6',
-      //   cancelButtonColor: '#d33',
-      //   confirmButtonText: 'Yes, delete it!'
-      // }).then((result) => {
-      //   if (result.isConfirmed) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
           axios.post('../../server/asu/user_ven_act.php',{id:id, act:'delete'})
             .then(response => {
                 if (response.data.status) {  
@@ -228,8 +228,8 @@ Vue.createApp({
             .finally(() => {
               this.isLoading = false;
             })
-        // }
-      // })
+        }
+      })
     },
     alert(icon,message,timer=0){
       swal.fire({
