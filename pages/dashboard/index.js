@@ -60,6 +60,8 @@ Vue.createApp({
     users:[],
     u_id2:'',
     act:'a',
+    ch_a:false,
+    ch_b:false,
 
     isLoading : false,
   }
@@ -112,6 +114,7 @@ Vue.createApp({
                 this.my_v = response.data.my_v
                 this.vh = response.data.vh
                 this.d_now = response.data.d_now
+                this.get_users(this.data_event.ven_name,this.data_event.u_role)
                 this.$refs['show_modal'].click()  
               }else{               
                 this.alert('warning',response.data.message ,0)  
@@ -145,6 +148,11 @@ Vue.createApp({
       this.ch_v1 = this.my_v[my_v_index]
       this.ch_v2 = this.data_event
 
+    },
+    change_b(uid){
+      this.act = 'b'
+      this.$refs.show_modal_b.click()
+      this.ch_v2 = this.data_event
     },
     change_save(){
       this.isLoading = true;
@@ -190,12 +198,7 @@ Vue.createApp({
       })      
 
     },
-    change_cb(){
-      this.act = 'b'
-      this.ch_v1 = this.my_v[0]
-      this.get_users(this.ch_v1.ven_name, this.ch_v1.u_role)
-      this.$refs.s_modal_cb.click()
-    },
+   
     change_save_b(user_id2){
       this.isLoading = true;
       axios.post('../../server/dashboard/change_save.php',{ch_v1:this.ch_v1, user_id2:user_id2})
@@ -218,6 +221,10 @@ Vue.createApp({
         this.isLoading = false;
       })
       
+    },
+    close_m(){
+      this.ch_a =false
+      this.ch_b =false
     },
 
     date_thai(day){
