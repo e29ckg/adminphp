@@ -6,7 +6,7 @@ Vue.createApp({
       url_base_app:'',
       url_base_now:'',
       datas: [],    
-      line_form:'',
+      form:'',
       act : 'insert',
 
     isLoading : false,
@@ -16,17 +16,17 @@ Vue.createApp({
     this.url_base = window.location.protocol + '//' + window.location.host;
     this.url_base_app = window.location.protocol + '//' + window.location.host + '/adminphp/';
     // const d = 
-    this.get_lines()  
+    this.get_groups()  
   },
   watch: {
     q(){
-      this.ch_search_line()
+      this.ch_search_group()
     }
   },
   methods: {
-    get_lines(){
+    get_groups(){
       this.isLoading = true
-      axios.post('../../server/users/line/get_lines.php')
+      axios.post('../../server/users/group/get_groups.php')
       .then(response => {
           
           if (response.data.status) {
@@ -40,12 +40,13 @@ Vue.createApp({
         this.isLoading = false;
       })
     },
-    get_line(id){
+
+    get_group(id){
       this.isLoading = true
-      axios.post('../../server/users/line/get_line.php',{id:id})
+      axios.post('../../server/users/group/get_group.php',{id:id})
       .then(response => {          
           if (response.data.status) {
-              this.line_form = response.data.respJSON;
+              this.form = response.data.respJSON;
           } 
       })
       .catch(function (error) {
@@ -57,29 +58,29 @@ Vue.createApp({
       
     },   
 
-    line_update(id){
-      this.get_line(id)
-      this.$refs.show_modal_line_form.click()
+    group_update(id){
+      this.get_group(id)
+      this.$refs.show_modal_form.click()
       this.act = 'update'
               
     },
     
-    line_insert(){
-      this.line_form = {name : '', token : ''}
-      this.$refs.show_modal_line_form.click()
-      this.user_form.act = 'insert'
+    group_insert(){
+      this.form = {name : ''}
+      this.$refs.show_modal_form.click()
+      this.act = 'insert'
     },
 
 
-    line_save(){
+    group_save(){
       this.isLoading = true;
-      axios.post('../../server/users/line/line_save.php',{line:this.line_form, act:this.act})
+      axios.post('../../server/users/group/group_save.php',{form:this.form, act:this.act})
         .then(response => {
             
             if (response.data.status) {
               this.alert('success',response.data.message,1000)
-              this.$refs.close_modal_line_form.click()
-              this.get_lines()
+              this.$refs.close_modal_form.click()
+              this.get_groups()
             }else{
               this.alert('warning',response.data.message,0)
             } 
@@ -92,8 +93,8 @@ Vue.createApp({
         })
     },
 
-    close_modal_line_form(){
-      this.line_form = {name : '', token : ''}
+    close_modal_form(){
+      this.form = {name : ''}
       this.act = 'insert'
     },
    
@@ -107,28 +108,9 @@ Vue.createApp({
       });
     },    
     
-    line_status(id,st){        
-      this.isLoading = true;
-      axios.post('../../server/users/line/line_save.php',{id:id, st:st, act:'set_st'})
-          .then(response => {
-              
-              if (response.data.status) {
-                this.alert('success',response.data.message,1000)
-                  this.get_lines()
-              }else{
-                this.alert('error',response.data.message,timer=0)
-              }
-          })
-          .catch(function (error) {
-              console.log(error);
-          })
-          .finally(() => {
-            this.isLoading = false;
-          })  
-      
-    },
+    
 
-    line_del(id){        
+    group_del(id){        
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -140,11 +122,11 @@ Vue.createApp({
       }).then((result) => {
         if (result.isConfirmed) {
           this.isLoading = true;
-          axios.post('../../server/users/line/line_save.php',{id:id, act:'del'})
+          axios.post('../../server/users/group/group_save.php',{id:id, act:'del'})
             .then(response => {                
                 if (response.data.status) {
                   this.alert('success',response.data.message,1000)
-                    this.get_lines()
+                    this.get_groups()
                 }else{
                   this.alert('error',response.data.message,timer=0)
                 }
@@ -159,11 +141,11 @@ Vue.createApp({
       })      
     },
 
-    ch_search_line(){
+    ch_search_group(){
       console.log(this.q)
       if(this.q.length > 0){
         this.isLoading = true;
-        axios.post('../../server/users/line/line_search.php',{q:this.q})
+        axios.post('../../server/users/group/group_search.php',{q:this.q})
           .then(response => {
               if (response.data.status){
                 this.datas = response.data.respJSON;                    
@@ -178,11 +160,11 @@ Vue.createApp({
             this.isLoading = false;
           })
       }else{
-        this.get_lines()
+        this.get_groups()
       }
     },
   },
   
         
 
-}).mount('#usersLine')
+}).mount('#usersGroup')

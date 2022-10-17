@@ -69,6 +69,15 @@
                         <li class="submenu-item <?php echo isActive('line') ?>">
                             <a href="../users/line.php">ตั่งค่า Line</a>
                         </li>
+                        <li class="submenu-item <?php echo isActive('fname') ?>">
+                            <a href="../users/fname.php">คำนำหน้าชื่อ</a>
+                        </li>
+                        <li class="submenu-item <?php echo isActive('dep') ?>">
+                            <a href="../users/dep.php">ตำแหน่ง</a>
+                        </li>
+                        <li class="submenu-item <?php echo isActive('group') ?>">
+                            <a href="../users/group.php">กลุ่มงาน</a>
+                        </li>
                         
                         
                     </ul>
