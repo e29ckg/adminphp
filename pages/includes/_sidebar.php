@@ -66,16 +66,16 @@
                         <li class="submenu-item <?php echo isActive('users') ?>">
                             <a href="../users/">จัดการสมาชิก</a>
                         </li>
-                        <li class="submenu-item <?php echo isActive('line') ?>">
+                        <li class="submenu-item <?php echo isActiveFile('line') ?>">
                             <a href="../users/line.php">ตั่งค่า Line</a>
                         </li>
-                        <li class="submenu-item <?php echo isActive('fname') ?>">
+                        <li class="submenu-item <?php echo isActiveFile('fname') ?>">
                             <a href="../users/fname.php">คำนำหน้าชื่อ</a>
                         </li>
-                        <li class="submenu-item <?php echo isActive('dep') ?>">
+                        <li class="submenu-item <?php echo isActiveFile('dep') ?>">
                             <a href="../users/dep.php">ตำแหน่ง</a>
                         </li>
-                        <li class="submenu-item <?php echo isActive('group') ?>">
+                        <li class="submenu-item <?php echo isActiveFile('group') ?>">
                             <a href="../users/group.php">กลุ่มงาน</a>
                         </li>
                         

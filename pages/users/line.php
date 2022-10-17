@@ -22,6 +22,12 @@ require_once('../../server/authen.php');
                 <h3>จัดการ LINE TOKEN</h3>
             </div>
             <div class="page-content" id="usersLine" v-cloak>
+                <div class="row">
+                    <div class="col text-center">
+                        http://127.0.0.1/adminphp/server/service/line/sendline.php
+
+                    </div>
+                </div>
                 <section class="row">
                     <div class="col-12 col-lg-12">
                         <div class="row">
@@ -125,8 +131,8 @@ require_once('../../server/authen.php');
                                     
                                     
                                 
-                                {{line_form}}
-                                {{act}}
+                                <!-- {{line_form}} -->
+                                <!-- {{act}} -->
                             </div>
                             <div class="modal-footer">
                             <div class="row">
