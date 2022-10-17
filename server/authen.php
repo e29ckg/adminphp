@@ -29,12 +29,21 @@ if( !isset($_SESSION['AD_ID'] ) ){
 }
 
 /** หน้าที่ admin เข้าไม่ได้ */
-$menuAdmin = array("account/index", "account/form-create", "account/form-edit");
+$menuAdmin = array("asu/index", "asu/work_name", "asu/user_ven", "asu/ven_com", "asu/ven_set","asu/report","asu/ven_approve","users/index");
 
-if($_SESSION['AD_ROLE'] == 'admin'){
+if($_SESSION['AD_ROLE'] == '1'){
     if(in_array(pathCurrent(), $menuAdmin)){
         header('Location: ../dashboard');
     }
 }
+
+/** หน้าที่ admin เข้าไม่ได้ */
+// $menuAdmin = array("account/index", "account/form-create", "account/form-edit");
+
+// if($_SESSION['AD_ROLE'] == 'admin'){
+//     if(in_array(pathCurrent(), $menuAdmin)){
+//         header('Location: ../dashboard');
+//     }
+// }
 
 ?>

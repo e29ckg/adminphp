@@ -48,7 +48,10 @@ require_once('../../server/authen.php');
                                                 <tr v-if="va.ven_month == vag.ven_month">
                                                         <td >  
                                                             <!-- เลขคำสั่งที่ {{va.ven_Ch_num}} | ลงวันที่ {{va.ven_Ch_date}} | {{va.ven_Ch_name}} ({{va.ven_name}}) -->
-                                                            | {{va.id}} | {{va.status}} | {{va.user_id1}} | {{va.user_id2}} 
+                                                            | {{va.id}} | {{va.name1}} <<>> {{va.name2}} <br> 
+                                                            {{va.create_at}} | {{va.status}} | {{va.st}} <br>
+                                                            {{va.ven_date1}} <<>> {{va.ven_date2}}
+                                                            <!-- {{va}} -->
     
                                                         </td>
                                                        

@@ -1,4 +1,8 @@
+<?php 
 
+require_once('../../server/authen.php'); 
+
+?>
 <!DOCTYPE html>
 <html>
 <head>

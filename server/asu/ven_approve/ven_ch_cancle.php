@@ -26,6 +26,9 @@ $datas = array();
         $query->bindParam(':id',$id, PDO::PARAM_STR);
         $query->execute();
         $result = $query->fetch(PDO::FETCH_OBJ);
+       
+
+      
 
         if($query->rowCount() > 0){                        //count($result)  for odbc
 

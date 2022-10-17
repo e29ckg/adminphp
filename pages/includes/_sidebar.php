@@ -27,7 +27,7 @@
                         <span>ประวัติการเปลี่ยน</span>
                     </a>
                 </li>
-
+                <?php if($_SESSION['AD_ROLE'] == '9'){ ?>
                 <li class="sidebar-item  has-sub <?php echo isActive('asu') ?>">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-stack"></i>
@@ -35,7 +35,7 @@
                     </a>
                     <ul class="submenu <?php echo isActive('asu') ?>">                        
                         <li class="submenu-item <?php echo isActiveFile('ven_approve') ?>">
-                            <a href="../asu/ven_approve.php">อนุมัตืใบเปลี่ยนเวร</a>
+                            <a href="../asu/ven_approve.php">อนุมัติใบเปลี่ยนเวร</a>
                         </li>                        
                         <li class="submenu-item <?php echo isActiveFile('report') ?>">
                             <a href="../asu/report.php">รายงานการจัดเวร</a>
@@ -66,14 +66,14 @@
                         <li class="submenu-item <?php echo isActive('users') ?>">
                             <a href="../users/">จัดการสมาชิก</a>
                         </li>
-                        <!-- <li class="submenu-item <?php echo isActive('index_d') ?>">
-                            <a href="../users/index_d.php">สมาชิกทีถูกระงับ</a>
-                        </li> -->
+                        <li class="submenu-item <?php echo isActive('line') ?>">
+                            <a href="../users/line.php">ตั่งค่า Line</a>
+                        </li>
                         
                         
                     </ul>
                 </li>
-
+                <?php } ?>
                 <!-- <li class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-stack"></i>

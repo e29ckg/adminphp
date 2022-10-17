@@ -24,23 +24,43 @@ $datas = array();
         $query->execute();
         $res_g = $query->fetchAll(PDO::FETCH_OBJ);
         
-        $sql = "SELECT * FROM ven_change WHERE status=1 OR status=2 ORDER BY id DESC LIMIT 100";
+        $sql = "SELECT vc.*
+                FROM ven_change AS vc
+                WHERE status=1 OR status=2 
+                ORDER BY id DESC LIMIT 100";
         $query = $conn->prepare($sql);
         // $query->bindParam(':kkey',$data->kkey, PDO::PARAM_STR);
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_OBJ);
 
         if($query->rowCount() > 0){                        //count($result)  for odbc
-            // foreach($result as $rs){
-            //     array_push($datas,array(
-            //         'id'    => $rs->id,
-            //         'name'  => $rs->name,
-            //         'DN'  => $rs->DN,
-            //         'srt'  => $rs->srt
-            //     ));
-            // }
+            foreach($result as $rs){
+                $sql = "SELECT fname, name, sname FROM profile WHERE user_id='$rs->user_id1'";
+                $query = $conn->prepare($sql);
+                $query->execute();
+                $profile1 = $query->fetch(PDO::FETCH_OBJ);
+
+                $sql = "SELECT fname, name, sname FROM profile WHERE user_id='$rs->user_id2'";
+                $query = $conn->prepare($sql);
+                $query->execute();
+                $profile2 = $query->fetch(PDO::FETCH_OBJ);
+                
+                array_push($datas,array(
+                    'id'    => $rs->id,
+                    'ven_month'  => $rs->ven_month,
+                    'ven_date1'  => $rs->ven_date1,
+                    'ven_date2'  => $rs->ven_date2,
+                    'user_id1'  => $rs->user_id1,
+                    'user_id2'  => $rs->user_id2,
+                    'name1' => $profile1->fname.$profile1->name.' '.$profile1->sname,
+                    'name2' => $profile2->fname.$profile2->name.' '.$profile2->sname,
+                    'DN'  => $rs->DN,
+                    'create_at'  => $rs->create_at,
+                    'status'  => $rs->status
+                ));
+            }
             http_response_code(200);
-            echo json_encode(array('status' => true, 'message' => 'สำเร็จ', 'respJSON' => $result ,'respJSON_G' => $res_g ));
+            echo json_encode(array('status' => true, 'message' => 'สำเร็จ', 'respJSON' => $datas ,'respJSON_G' => $res_g ));
             exit;
         }
      
