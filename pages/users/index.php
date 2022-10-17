@@ -57,7 +57,8 @@ require_once('../../server/authen.php');
                                                     <th scope="row">{{index+1}}</th>
                                                     
                                                     <td>
-                                                        <p><b><i class="bi bi-person-circle"></i> {{d.name}}</b>({{d.username}}) 
+                                                        <p @click="view(d.uid)">
+                                                            <b><i class="bi bi-person-circle"></i> {{d.name}}</b>({{d.username}}) 
                                                             <span :class="'badge text-sm ' + (d.status == 10 ? 'bg-primary' : 'bg-danger')">{{d.status == 10 ? '(ปกติ)' : '(ระงับการใช้งาน)'}}</span>
                                                             <br><i class="bi bi-person-badge"></i> <span class="text-sm">{{d.dep}}</span> 
                                                         </p>
@@ -73,8 +74,9 @@ require_once('../../server/authen.php');
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <button class="btn btn-primary btn-sm me-2 mb-1" @click="view(d.uid)">view</button>    
+                                                        <!-- <button class="btn btn-primary btn-sm me-2 mb-1" @click="view(d.uid)">view</button>     -->
                                                         <button class="btn btn-warning btn-sm me-2 mb-1" @click="user_update(d.uid)">แก้ไข</button>    
+                                                        <button class="btn btn-primary btn-sm me-2 mb-1" @click="user_update_role(d.uid)">แก้ไขสิทธ์</button>    
                                                     </td>
                                                 </tr>                                                
                                             </tbody>
@@ -93,7 +95,7 @@ require_once('../../server/authen.php');
                 </button>
 
                 <!-- Modal view -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -158,17 +160,17 @@ require_once('../../server/authen.php');
                                 <form @submit.prevent="user_insert">
                                     <div class="row">
                                         <div class="col mb-3">
-                                            <label for="username" class="form-label" >username</label>
-                                            <input type="text" class="form-control" id="username" aria-describedby="emailHelp" v-model="user_form.username">
+                                            <label for="username1" class="form-label" >username</label>
+                                            <input type="text" class="form-control" id="username1" aria-describedby="emailHelp" v-model="user_form.username">
                                             <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                                         </div>
                                         <div class="col mb-3">
                                             <label for="exampleInputPassword1" class="form-label">Password</label>
-                                            <input type="password" class="form-control" id="exampleInputPassword1" v-model="user_form.password">
+                                            <input type="password" class="form-control" id="example1" v-model="user_form.password">
                                         </div>
                                         <div class="col mb-3">
                                             <label for="exampleInputPassword2" class="form-label">RePassword</label>
-                                            <input type="password" class="form-control" id="exampleInputPassword2" v-model="user_form.repassword">
+                                            <input type="password" class="form-control" id="example2" v-model="user_form.repassword">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -297,6 +299,55 @@ require_once('../../server/authen.php');
                                             <input type="text" class="form-control" id="bank_comment_uff" v-model="user_form.bank_comment">
                                         </div>                                           
                                     </div>
+                                    <div class="row">
+                                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                                    </div>
+                                </form>
+                                <!-- {{user_form}} -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Button trigger modal user update form-->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#user_update_role_form" ref="show_modal_user_u_r_form" hidden>
+                    Launch static backdrop modal
+                </button>
+
+                <!-- Modal view -->
+                <div class="modal fade" id="user_update_role_form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">User</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ref="close_modal_user_u_r_form"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form @submit.prevent="user_update_role_save">
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="username" class="form-label" >username</label>
+                                            <input type="text" class="form-control" id="username" aria-describedby="emailHelp" v-model="user_role_form.username">
+                                            <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                                        </div>
+                                        <div class="col mb-3">
+                                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="exampleInputPassword1" v-model="user_role_form.password">
+                                        </div>
+                                        <div class="col mb-3">
+                                            <label for="exampleInputPassword2" class="form-label">RePassword</label>
+                                            <input type="password" class="form-control" id="exampleInputPassword2" v-model="user_role_form.repassword">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <select class="form-select" aria-label="Default select example" v-model="user_role_form.role">
+                                                <option value="1">MEMBER</option>
+                                                <option value="9">ADMIN</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
                                     <div class="row">
                                         <button type="submit" class="btn btn-primary">บันทึก</button>
                                     </div>

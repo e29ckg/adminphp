@@ -186,7 +186,7 @@ Vue.createApp({
       this.isLoading = true;
       axios.post('../../server/dashboard/change_save_b.php',{ch_v1:this.ch_v1, user_id2:this.user_id2, u_name2:this.u_name2})
       .then(response => {
-          // console.log(response.data);
+          console.log(response.data);
           if (response.data.status) {
             this.get_vens()
             this.$refs.close_modal.click()
@@ -210,7 +210,7 @@ Vue.createApp({
       this.isLoading = true;
       axios.post('../../server/dashboard/get_users.php',{ven_name:ven_name, uvn:uvn})
       .then(response => {
-          // console.log(response.data);
+          console.log(response.data);
           if (response.data.status) {
             this.users =response.data.respJSON
             // this.alert('success',response.data.message,1000) 
@@ -228,29 +228,7 @@ Vue.createApp({
 
     },
    
-    change_save_b(user_id2){
-      this.isLoading = true;
-      axios.post('../../server/dashboard/change_save.php',{ch_v1:this.ch_v1, user_id2:user_id2})
-      .then(response => {
-          // console.log(response.data);
-          if (response.data.status) {
-            this.get_vens()
-            this.$refs.close_modal.click()
-            this.$refs.close_modal_b.click()
-            this.alert('success',response.data.message,1000) 
-          } else{
-            this.alert('warning',response.data.message,0) 
-          }
-          this.act = 'a'
-      })
-      .catch(function (error) {
-          console.log(error);
-      })
-      .finally(() => {
-        this.isLoading = false;
-      })
-      
-    },
+    
     close_m(){
       this.ch_a =false
       this.ch_b =false

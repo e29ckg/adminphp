@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query->bindParam(':ven_id1',$idv1, PDO::PARAM_INT);
         $query->bindParam(':ven_id2',$idv2, PDO::PARAM_INT);
         $query->bindParam(':ven_id1_old',$rsv1->id, PDO::PARAM_INT);
-        $query->bindParam(':ven_id2_old',$rsv2->id, PDO::PARAM_INT);
+        $query->bindParam(':ven_id2_old',$idv2, PDO::PARAM_INT);
         $query->bindParam(':user_id1',$rsv1->user_id, PDO::PARAM_INT);
         $query->bindParam(':user_id2',$user_id2, PDO::PARAM_INT);
         $query->bindParam(':ref1',$ref, PDO::PARAM_STR);

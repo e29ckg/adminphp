@@ -21,7 +21,7 @@ $datas = array();
         $sql = "SELECT u.username, u.status, p.*
                 FROM profile as p 
                 INNER JOIN `user` as u ON u.id = p.user_id
-                WHERE p.name LIKE '%$q%'
+                WHERE p.name LIKE '%$q%' OR p.sname LIKE '%$q%'
                 ORDER BY p.name ASC";
         $query = $conn->prepare($sql);
         // $query->bindParam(':kkey',$data->kkey, PDO::PARAM_STR);

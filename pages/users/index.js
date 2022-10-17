@@ -21,9 +21,12 @@ Vue.createApp({
         bank_comment : '',
         act : 'insert',
       },
+      user_role_form:{'username':'',password:'',repassword:'',role:''},
+
       sel_fname : [],
       sel_dep : [],
       sel_workgroup : [],
+
     
 
     isLoading : false,
@@ -208,6 +211,52 @@ Vue.createApp({
       .finally(() => {
         this.isLoading = false;
       })      
+    },
+    user_update_role(uid){
+      this.isLoading = true
+      axios.post('../../server/users/user_role.php',{uid:uid})
+      .then(response => {          
+          if (response.data.status) {
+              this.user_role_form = response.data.respJSON;
+              this.user_role_form.password = '';
+              this.$refs.show_modal_user_u_r_form.click()
+          } 
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+      .finally(() => {
+        this.isLoading = false;
+      }) 
+    },
+    user_update_role_save(){
+      if(this.user_role_form.password!=''){
+        if(this.user_role_form.password != this.user_role_form.repassword){
+          return this.alert("warning",'password ไม่ตรงกัน',timer=0)
+        }
+      }
+      this.isLoading = true
+      axios.post('../../server/users/user_update_role_save.php',{user:this.user_role_form})
+      .then(response => {
+          
+          if (response.data.status) {
+              this.get_users()
+              this.$refs.close_modal_user_u_r_form.click()
+              let icon = 'success'
+              let message = response.data.message
+              this.alert(icon,message,timer=1500)
+          }else{
+            let icon = 'error'
+              let message = response.data.message
+              this.alert(icon,message,timer=0)
+          }
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+      .finally(() => {
+        this.isLoading = false;
+      })  
     },
     user_status(id,st){
       if(st == 1){
