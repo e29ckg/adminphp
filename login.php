@@ -60,8 +60,8 @@
           </div>
           <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
             <form  @submit.prevent="login()">         
-              <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start mb-5">
-                <p class="lead fw-normal mb-0 me-3">เข้าสู่ระบบ</p>
+              <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start mb-5 ">
+                <p class="lead fw-normal  mb-0 me-3">เข้าสู่ระบบ การอยู่เวรนอกเวลาราชการ</p>
               </div>
               <!-- <div class="divider d-flex align-items-center my-4">                
                 <p class="text-center fw-bold mx-3 mb-0"></p>
@@ -109,8 +109,8 @@
                     </button>
                     <!-- <button class="btn btn-primary d-grid w-100 mute" type="submit" name="authen" disabled v-else>Loading...</button> -->
                   </div>
-                <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!"
-                    class="link-danger">Register</a></p>
+                <!-- <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!"
+                    class="link-danger">Register</a></p> -->
               </div>
 
             </form>

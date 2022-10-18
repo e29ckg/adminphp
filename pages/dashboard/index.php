@@ -91,7 +91,7 @@ require_once('../../server/authen.php');
                                     </div>
                                     <ul class="list-group mt-3" >
                                         <li class="list-group-item list-group-item-secondary" v-for="v,vi in vh">                                           
-                                            {{v.id}} | {{v.u_name}} {{v.status}} 
+                                            {{v.id}} | {{v.u_name}} <span class="badge bg-warning" v-if="data_event.status ==2">รออนุมัติ</span> 
                                             
                                             <!-- {{vh}} -->
                                         </li>
@@ -113,7 +113,8 @@ require_once('../../server/authen.php');
                                         <li class="list-group-item active" aria-current="true">ยกให้</li>  
                                         <div  v-for="u in users" >
                                             <li class="list-group-item list-group-item-secondary" v-if="u.user_id != ssid"  @click="change_b(u.user_id,u.u_name)">                                           
-                                                <span > {{u.u_name}} {{u.user_id +' '+ ' '+ssid}} </span>
+                                                <span > {{u.u_name}}  </span>
+                                                <!-- {{u.user_id +' '+ ' '+ssid}} -->
                                             </li>
 
                                         </div>
