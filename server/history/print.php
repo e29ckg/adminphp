@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $res->DN == 'กลางวัน' ? $time = '08.30 – 16.30' : $time = '16.30 – 08.30 ';  
             $ven_date1       = DateThai_full($res->ven_date1).' ตั้งแต่เวลา '.$time.' นาฬิกา';   
             if($res->ven_id2 !=''){
-                $ven_date2       = ' และข้าพเจ้าจะมาปฎิบัติหน้าที่แทน '. $name1 .' ในวันที่ '.DateThai_full($res->ven_date2).' ตั้งแต่เวลา '.$time.' นาฬิกา'; 
+                $ven_date2       = ' และข้าพเจ้าจะมาปฎิบัติหน้าที่แทน '. $name2 .' ในวันที่ '.DateThai_full($res->ven_date2).' ตั้งแต่เวลา '.$time.' นาฬิกา'; 
             }else{
                 $ven_date2       = ' ในวันที่ '.DateThai_full($res->ven_date2).' ตั้งแต่เวลา '.$time.' นาฬิกา'; 
             }
