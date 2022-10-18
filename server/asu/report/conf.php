@@ -54,7 +54,7 @@ $datas = array();
         $ven_name = $data->ven_name;
         $ven_com_date = $data->ven_com_date;
         // $sql = "UPDATE ven SET status = 1 WHERE ven_name = '$data->ven_name' AND  ven_month = '$data->ven_month'";
-        $sql = "UPDATE ven SET status = 1 WHERE ven_month = '$data->ven_month'";
+        $sql = "UPDATE ven SET status = 1 WHERE status = 2 AND ven_month = '$data->ven_month'";
         $query = $conn->prepare($sql);       
         $query->execute();   
 

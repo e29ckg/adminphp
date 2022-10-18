@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
 
              /** เช็ควันเวลาที่อยู่เวรไม่ได้ */  
-            $sql_VU = "SELECT * FROM ven WHERE user_id = $user_id AND ven_date = '$ven_date' LIMIT 1 ";
+            $sql_VU = "SELECT * FROM ven WHERE user_id = $user_id AND ven_date = '$ven_date' AND status=1 AND status=2 LIMIT 1 ";
             $query_VU = $conn->prepare($sql_VU);
             $query_VU->execute();
             $res_VU = $query_VU->fetch(PDO::FETCH_OBJ);
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
              }
              if($DN =='กลางคืน'){
                  $ven_date_u1 = date("Y-m-d", strtotime('+1 day', strtotime($ven_date)));
-                 $sql = "SELECT * FROM ven WHERE user_id = $user_id AND ven_date = '$ven_date_u1' AND DN='กลางวัน' LIMIT 1";
+                 $sql = "SELECT * FROM ven WHERE user_id = $user_id AND ven_date = '$ven_date_u1' AND DN='กลางวัน' AND status=1 AND status=2 LIMIT 1";
                  $query = $conn->prepare($sql);
                  $query->execute();
                  $res = $query->fetch(PDO::FETCH_OBJ);
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
              }
              if($DN =='กลางวัน'){
                  $ven_date_u1 = date("Y-m-d", strtotime('-1 day', strtotime($ven_date)));
-                 $sql = "SELECT * FROM ven WHERE user_id = $user_id AND ven_date = '$ven_date_u1' AND DN='กลางคืน' LIMIT 1";
+                 $sql = "SELECT * FROM ven WHERE user_id = $user_id AND ven_date = '$ven_date_u1' AND DN='กลางคืน' AND status=1 AND status=2 LIMIT 1";
                  $query = $conn->prepare($sql);
                  $query->execute();
                  $res = $query->fetch(PDO::FETCH_OBJ);

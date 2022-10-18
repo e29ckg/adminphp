@@ -99,21 +99,21 @@ require_once('../../server/authen.php');
                                     <div class="list-group mt-3" v-if="data_event.user_id == ssid && (data_event.ven_date >= d_now) && (data_event.status == 1)" >
                                         <button class="btn btn-warning" @click="ch_b == true ? ch_b = flase : ch_b = true">ยกให้</button>  
                                     </div>
-                                    <div class="list-group mt-3" v-if="my_v.length > 0 && !(data_event.user_id == ssid) && (data_event.ven_date >= d_now)" >
+                                    <div class="list-group mt-3" v-if="my_v.length > 0 && !(data_event.user_id == ssid) && (data_event.ven_date >= d_now) && data_event.status == 1" >
                                         <button class="btn btn-primary" @click="ch_a == true ? ch_a = false : ch_a = true ">ขอเปลี่ยน</button>  
                                     </div>
                                     <ul class="list-group mt-3" v-if="ch_a" >
                                         <li class="list-group-item active" aria-current="true">เวรที่สามารถเปลี่ยนได้</li>  
                                         <li class="list-group-item list-group-item-secondary" v-for="m,mi in my_v" @click="change_a(mi)">                                           
-                                            {{m.ven_date}} {{m.id}} | {{m.u_name}}| {{m.u_role}} | {{m.ven_com_name}} | {{m.DN}} | {{m.ven_time}}
+                                            {{date_thai(m.ven_date)}}  | {{m.u_name}} | {{m.u_role}} <br> {{m.ven_com_name}} <br> {{m.DN}} | {{m.id}}
                                             
                                         </li>                                        
                                     </ul>
                                     <ul class="list-group mt-3" v-if="ch_b">
                                         <li class="list-group-item active" aria-current="true">ยกให้</li>  
                                         <div  v-for="u in users" >
-                                            <li class="list-group-item list-group-item-secondary" v-if="u.user_id != ssid">                                           
-                                                <span  @click="change_b(u.user_id,u.u_name)"> {{u.u_name}} {{u.user_id +' '+ ' '+ssid}} </span>
+                                            <li class="list-group-item list-group-item-secondary" v-if="u.user_id != ssid"  @click="change_b(u.user_id,u.u_name)">                                           
+                                                <span > {{u.u_name}} {{u.user_id +' '+ ' '+ssid}} </span>
                                             </li>
 
                                         </div>

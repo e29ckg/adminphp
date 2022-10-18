@@ -76,6 +76,8 @@ $datas = array();
         $query->bindParam(':ven_date',$date_now, PDO::PARAM_STR);
         $query->execute();
         $res_vfu = $query->fetchAll(PDO::FETCH_OBJ);
+
+        //หาเวรที่ไม่สามารถเปลี่ยนได้
         
 
 

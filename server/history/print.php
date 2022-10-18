@@ -22,63 +22,81 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // The request is using the POST method
     try{
-        $sql = "SELECT vc.id , ven_month, ven_date1, ven_date2,ven_com_num_all,DN,u_role,user_id1,user_id2,vc.status
+        $sql = "SELECT vc.id , vc.ven_month, vc.ven_date1, vc.ven_date2, v.ven_com_idb, v.ven_com_name, vc.ven_com_num_all, vc.DN, vc.u_role, vc.user_id1, vc.user_id2, vc.status, vc.create_at
                 FROM ven_change as vc  
+                INNER JOIN ven as v ON v.id = vc.ven_id1
                 WHERE vc.id = :id";
         $query = $conn->prepare($sql);
         $query->bindParam(':id',$id, PDO::PARAM_INT);
         $query->execute();
-        $result = $query->fetch(PDO::FETCH_OBJ);
+        $res = $query->fetch(PDO::FETCH_OBJ);
 
         if($query->rowCount() > 0){                        //count($result)  for odbc
-            foreach($result as $rs){
-                // $rs->DN == 'กลางวัน' ? $d = '☀️' : $d = '🌙';
-                // $sql = "SELECT id , fname, profile.name, sname, img
-                //         FROM profile   
-                //         WHERE user_id = :user_id ";
-                // $query = $conn->prepare($sql);
-                // $query->bindParam(':user_id',$rs->user_id1, PDO::PARAM_INT);
-                // $query->execute();
-                // $user1 = $query->fetch(PDO::FETCH_OBJ);
+            $doc_date           = DateThai_full($res->create_at);
+            $ven_com_num_all    = $res->ven_com_num_all;
+            $ven_com_date       = "";  
+            $ven_com_idb        = "";   
+            $ven_com_name       = $res->ven_com_name;   
+            $name1              = "";   
+            $name2              = "";   
+            $name_dep1          = "";   
+            $name_dep2          = ""; 
+            $ven_date1          = "";   
+            $ven_date2          = "";   
+          
+            
+            $sql = "SELECT vc.ven_com_date
+                    FROM ven_com as vc
+                    WHERE id = :id";
+            $query = $conn->prepare($sql);
+            $query->bindParam(':id',$res->ven_com_idb, PDO::PARAM_INT);
+            $query->execute();
+            $res_vc = $query->fetch(PDO::FETCH_OBJ);
+            $ven_com_date       = DateThai_full($res_vc->ven_com_date); 
 
-                // $sql = "SELECT id , fname, profile.name, sname, img
-                //         FROM profile   
-                //         WHERE user_id = :user_id ";
-                // $query = $conn->prepare($sql);
-                // $query->bindParam(':user_id',$rs->user_id2, PDO::PARAM_INT);
-                // $query->execute();
-                // $user2 = $query->fetch(PDO::FETCH_OBJ);
+            $sql = "SELECT p.fname, p.name, p.sname, p.dep
+                    FROM profile as p  
+                    WHERE user_id = :user_id";
+            $query = $conn->prepare($sql);
+            $query->bindParam(':user_id',$res->user_id1, PDO::PARAM_INT);
+            $query->execute();
+            $res_p = $query->fetch(PDO::FETCH_OBJ);
+            $name1      = $res_p->fname.$res_p->name.' '.$res_p->sname; 
+            $name_dep1  = $res_p->dep; 
+            
+            $sql = "SELECT p.fname, p.name, p.sname, p.dep
+                    FROM profile as p  
+                    WHERE user_id = :user_id";
+            $query = $conn->prepare($sql);
+            $query->bindParam(':user_id',$res->user_id2, PDO::PARAM_INT);
+            $query->execute();
+            $res_p = $query->fetch(PDO::FETCH_OBJ);
+            $name2       = $res_p->fname.$res_p->name.' '.$res_p->sname; 
+            $name_dep2   = $res_p->dep; 
 
-                // array_push($datas,array(
-                //     'id'    => $rs->id,
-                //     'ven_month' => $rs->ven_month,
-                //     'ven_date1' => $rs->ven_date1,
-                //     'ven_date2' => $rs->ven_date2,
-                //     'ven_com_num_all' => $rs->ven_com_num_all,
-                //     'DN' => $rs->DN,
-                //     'u_role' => $rs->u_role,
-                //     'user1' => $user1->fname.$user1->name.' '.$user1->sname,
-                //     'img1' => $user1->img,
-                //     'user2' => $user2->fname.$user2->name.' '.$user2->sname,
-                //     'img2' => $user2->img,
-                //     'status' => $rs->status,
-                // ));
+            $res->DN == 'กลางวัน' ? $time = '08.30 – 16.30' : $time = '16.30 – 08.30 ';  
+            $ven_date1       = DateThai_full($res->ven_date1).' ตั้งแต่เวลา '.$time.' นาฬิกา';   
+            $ven_date2       = 'ในวันที่ '.DateThai_full($res->ven_date2).' ตั้งแต่เวลา '.$time.' นาฬิกา'; 
 
 
-                /**สร้างเอกสาร docx */
-                $templateProcessor = new TemplateProcessor('ven_tm.docx');//เลือกไฟล์ template ที่เราสร้างไว้
-                $templateProcessor->setValue('doc_date', time());//อัดตัวแปร รายตัว
-                // $templateProcessor->setValue('month', $month);//อัดตัวแปร รายตัว
-                // $templateProcessor->setValue('price_d', $price_d);
-                // $templateProcessor->setValue('price_n', $price_n_1);
-                // $templateProcessor->setValue('count', $count);
-                // $templateProcessor->setValue('price_all', $price_all_thai);
-                // $templateProcessor->setValue('price_all_text', $price_all_text);
-                $templateProcessor->saveAs('../../uploads/ven.docx');//สั่งให้บันทึกข้อมูลลงไฟล์ใหม่
 
-            }
+            /**สร้างเอกสาร docx */
+            $templateProcessor = new TemplateProcessor('ven_tm.docx');//เลือกไฟล์ template ที่เราสร้างไว้
+            $templateProcessor->setValue('doc_date', $doc_date);//อัดตัวแปร รายตัว
+            $templateProcessor->setValue('ven_com_num_all', $ven_com_num_all);//อัดตัวแปร รายตัว
+            $templateProcessor->setValue('ven_com_date', $ven_com_date);
+            $templateProcessor->setValue('ven_com_name', $ven_com_name);
+            $templateProcessor->setValue('name1', $name1);
+            $templateProcessor->setValue('name2', $name2);
+            $templateProcessor->setValue('name_dep1', $name_dep1);
+            $templateProcessor->setValue('name_dep2', $name_dep2);
+            $templateProcessor->setValue('ven_date1', $ven_date1);
+            $templateProcessor->setValue('ven_date2', $ven_date2);
+            $templateProcessor->saveAs('../../uploads/ven.docx');//สั่งให้บันทึกข้อมูลลงไฟล์ใหม่
+
+           
             http_response_code(200);
-            echo json_encode(array('status' => true, 'message' => 'OK', 'respJSON' => $datas));
+            echo json_encode(array('status' => true, 'message' => 'OK', 'respJSON' => $res));
             exit;
         }
      
