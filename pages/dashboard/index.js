@@ -176,7 +176,8 @@ Vue.createApp({
           this.act = 'a'
       })
       .catch(function (error) {
-          console.log(error);
+        this.alert('warning',error,0)
+        console.log(error);
       })
       .finally(() => {
         this.isLoading = false;
