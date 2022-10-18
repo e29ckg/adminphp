@@ -91,7 +91,8 @@ require_once('../../server/authen.php');
                                     </div>
                                     <ul class="list-group mt-3" >
                                         <li class="list-group-item list-group-item-secondary" v-for="v,vi in vh">                                           
-                                            {{v.id}} | {{v.u_name}} <span class="badge bg-warning" v-if="data_event.status ==2">รออนุมัติ</span> 
+                                            {{v.id}} | {{v.u_name}} 
+                                            <!-- <span class="badge bg-warning" v-if="data_event.status == 2">รออนุมัติ {{data_event.status}}</span>  -->
                                             
                                             <!-- {{vh}} -->
                                         </li>
