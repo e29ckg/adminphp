@@ -62,7 +62,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode(array('status' => false, 'message' => 'ใบเวรนี้ '.$ch_v1->id.' ไม่สามารถเปลี่ยนได้'));
             exit;
         }
-              
+
+        /** เช็ควันเวลาที่อยู่เวรไม่ได้ */  
+        $sql_VU = "SELECT * FROM ven WHERE user_id = $user_id2 AND ven_date = '$rsv1->ven_date' AND (status=1 OR status=2) LIMIT 1 ";
+        $query_VU = $conn->prepare($sql_VU);
+        $query_VU->execute();
+        $res_VU = $query_VU->fetch(PDO::FETCH_OBJ);
+         if($res_VU){
+             http_response_code(200);
+             echo json_encode(array('status' => false, 'message' =>  $u_name2.' วันที่ '.DateThai($rsv1->ven_date).' มีเวรอยู่แล้ว'));
+             exit;
+         }
+
+         if($rsv1->DN =='กลางคืน'){
+            $ven_date_u1 = date("Y-m-d", strtotime('+1 day', strtotime($rsv1->ven_date)));
+            $sql = "SELECT * FROM ven WHERE user_id = $user_id2 AND ven_date = '$ven_date_u1' AND DN='กลางวัน' AND (status=1 OR status=2) LIMIT 1";
+            $query = $conn->prepare($sql);
+            $query->execute();
+            $res = $query->fetch(PDO::FETCH_OBJ);
+            if($res){
+                http_response_code(200);
+                echo json_encode(array('status' => false, 'message' => $u_name2.' วันที่ '.DateThai($ven_date_u1).' มีเวรกลางวัน', 'respJSON' => $res));
+                exit;
+            }
+        } 
+
+        if($rsv1->DN =='กลางวัน'){
+            $ven_date_u1 = date("Y-m-d", strtotime('-1 day', strtotime($rsv1->ven_date)));
+            $sql = "SELECT * FROM ven 
+                      WHERE user_id = $user_id2 AND ven_date = '$ven_date_u1' AND DN='กลางคืน' AND (status=1 OR status=2)  LIMIT 1";
+            $query = $conn->prepare($sql);
+            $query->execute();
+            $res = $query->fetch(PDO::FETCH_OBJ);
+            if($res){
+                http_response_code(200);
+                echo json_encode(array('status' => false, 'message' => $u_name2.' วันที่ '.DateThai($ven_date_u1).' มีเวรกลางคืน', 'respJSON' => $res));
+                exit;
+            }
+        }   
+         
         
         // /**  สร้างเวรใบ1 */
         $sql = "INSERT INTO ven(id, ven_date, ven_time, DN, ven_month, ven_com_id, ven_com_idb, user_id, u_name, u_role, ven_name, ven_com_name, ven_com_num_all, ref1, ref2, price, `status`, update_at, create_at) 

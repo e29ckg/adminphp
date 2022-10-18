@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // The request is using the POST method
     try{
-        $sql = "SELECT vc.id , vc.ven_month, vc.ven_date1, vc.ven_date2, v.ven_com_idb, v.ven_com_name, vc.ven_com_num_all, vc.DN, vc.u_role, vc.user_id1, vc.user_id2, vc.status, vc.create_at
+        $sql = "SELECT vc.id , vc.ven_month, vc.ven_date1, vc.ven_date2, v.ven_com_idb, v.ven_com_name, vc.ven_com_num_all, vc.DN, vc.u_role, vc.user_id1, vc.ven_id1, vc.ven_id2, vc.user_id2, vc.status, vc.create_at
                 FROM ven_change as vc  
                 INNER JOIN ven as v ON v.id = vc.ven_id1
                 WHERE vc.id = :id";
@@ -76,7 +76,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $res->DN == 'กลางวัน' ? $time = '08.30 – 16.30' : $time = '16.30 – 08.30 ';  
             $ven_date1       = DateThai_full($res->ven_date1).' ตั้งแต่เวลา '.$time.' นาฬิกา';   
-            $ven_date2       = 'ในวันที่ '.DateThai_full($res->ven_date2).' ตั้งแต่เวลา '.$time.' นาฬิกา'; 
+            if($res->ven_id2 !=''){
+                $ven_date2       = ' และข้าพเจ้าจะมาปฎิบัติหน้าที่แทน '. $name1 .' ในวันที่ '.DateThai_full($res->ven_date2).' ตั้งแต่เวลา '.$time.' นาฬิกา'; 
+            }else{
+                $ven_date2       = ' ในวันที่ '.DateThai_full($res->ven_date2).' ตั้งแต่เวลา '.$time.' นาฬิกา'; 
+            }
 
 
 
