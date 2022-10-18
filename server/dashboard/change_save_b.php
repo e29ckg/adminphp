@@ -194,6 +194,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $conn->commit();
 
+        //ส่ง line to ven_admin
+        $sql = "SELECT * FROM line WHERE name = 'ven_admin'";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $res = $query->fetch(PDO::FETCH_OBJ);
+        $sToken = $res->token;
+        $sMessage = 'มีการยกเวร '.$chid."\n";
+        $sMessage .= $rsv1->u_name.'<<>>'.$u_name2."\n";
+        $sMessage .= $rsv1->ven_date.'<<>>'.$rsv1->ven_date."\n";
+        $sMessage .= '('.$create_at.')';
+        $res_line = sendLine($sToken,$sMessage);
+
         http_response_code(200);
         echo json_encode(array('status' => true, 'message' => 'ok', 'responseJSON' =>'' ));
         exit;  
