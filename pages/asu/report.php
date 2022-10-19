@@ -38,7 +38,9 @@ require_once('../../server/authen.php');
                                             <thead>
                                                 <tr>
                                                     <th colspan="2" class="text-start">
-                                                    เวรเดือน {{cvg.ven_month}} 
+                                                        เวรเดือน {{cvg.ven_month}} 
+                                                        <button type="button" class="btn btn-danger" :disabled='isLoading' @click="con_f()">
+                                                            {{isLoading ? 'Londing..': 'เผยแพร่'}}</button>
                                                     </th>
 
                                                 </tr>
@@ -51,9 +53,9 @@ require_once('../../server/authen.php');
     
                                                         </td>
                                                         
-                                                        <td class="text-end col " style="width: 200px;">
-                                                            <button class="btn btn-warning btn-sm m-2" @click="print(vc.id)">เอกสารแนบท้าย</button>
-                                                            <button class="btn btn-success btn-sm me-2" @click="view(vc.id)">ตรวจสอบ/ยืนยัน</button>
+                                                        <td class="text-end col " style="width: 250px;">
+                                                            <button class="btn btn-warning btn-sm me-2" @click="view(vc.id)">view</button>
+                                                            <button class="btn btn-primary btn-sm m-2" @click="print(vc.id)">พิมพ์เอกสารแนบท้าย</button>
                                                         </td>
                                                 </tr>
                                             </tbody>
@@ -105,7 +107,7 @@ require_once('../../server/authen.php');
                                             <!-- {{d.ven_time}} -->
 
                                             <li class="list-group-item h-100" v-for="dvt in d.ven_time">
-                                                {{dvt == '08:30' ? '8.30 - 16.30 น.' : '16.30 - 8.30 น.'}}
+                                                {{dvt == '08:30' ? '08.30 - 16.30 น.' : '16.30 - 08.30 น.'}}
                                             </li>
                                         </td>
                                         <td>
@@ -137,8 +139,7 @@ require_once('../../server/authen.php');
                                 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-success " :disabled='isLoading' @click="con_f()">
-                                    {{isLoading ? 'Londing..': 'ยืนยัน'}}</button>
+                               
 
                             </div>
                         </div>
