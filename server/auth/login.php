@@ -38,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['AD_STATUS'] = $row->status;
         
         // header('Location: ../../pages/index.php');    
-        
         http_response_code(200);
         $response = array('status'=>true,'message' => 'success', 'ss_uid'=>$_SESSION['AD_ID']);
         echo json_encode($response);

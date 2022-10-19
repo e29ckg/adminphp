@@ -6,17 +6,23 @@ require_once('../../server/authen.php');
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />    
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
     <?php require_once('../includes/_header.php') ?>
     
-    <!-- <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script> -->
-    <link rel="stylesheet" href="../../assets/fullcalendar/main.min.css">
+    <link rel="stylesheet" href="../../assets/fullcalendar/main.css">
     <script src="../../assets/fullcalendar/main.min.js"></script>
   <style>
     .modalCenter{
         top:10% !important;
         /* tramsform:translateY(-25%) !important; */
     }
+    /* .list-group-item-secondary{ cursor: pointer; } */
+    .list-group-item-secondary:hover{ 
+        cursor: pointer; 
+        background: #FFEBCD;
+    }
+
   </style>  
 </head>
 <body class="theme-dark">
@@ -58,7 +64,9 @@ require_once('../../server/authen.php');
                         <div class="modal-dialog modal-md">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel"> {{data_event.id}} : {{data_event.status}}</h5>
+                                    <h5 class="modal-title" id="staticBackdropLabel"> {{data_event.id}} 
+                                        <span class="badge bg-warning" v-if="data_event.status ==2">รออนุมัติ</span>
+                                    </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="close_m" ref="close_modal"></button>
                                 </div>
                                 <div class="modal-body">
@@ -90,7 +98,7 @@ require_once('../../server/authen.php');
                                         </div>
                                     </div>
                                     <ul class="list-group mt-3" >
-                                        <li class="list-group-item list-group-item-secondary" v-for="v,vi in vh">                                           
+                                        <li class="list-group-item list-group-item-primary" v-for="v,vi in vh">                                           
                                             {{v.id}} | {{v.u_name}} 
                                             <!-- <span class="badge bg-warning" v-if="data_event.status == 2">รออนุมัติ {{data_event.status}}</span>  -->
                                             

@@ -14,7 +14,6 @@ Vue.createApp({
   },
   mounted(){
     this.url_base = window.location.protocol + '//' + window.location.host;
-    this.url_base_app = window.location.protocol + '//' + window.location.host + '/adminphp/';
     // const d = 
     this.get_lines()  
   },
@@ -181,7 +180,25 @@ Vue.createApp({
         this.get_lines()
       }
     },
+    sendline(){
+      axios.get('../../server/service/line/sendline.php')
+          .then(response => {
+            console.log(response.status)
+              if (response.status == 200){
+                this.alert('success',response.data.message,1000)          
+              }else{
+                this.alert('warning',response.data.message,1000) 
+              }
+          })
+          .catch(function (error) {
+              console.log(error);
+          })
+          .finally(() => {
+            this.isLoading = false;
+          })
+    }
   },
+
   
         
 

@@ -41,9 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			$rs->DN == 'กลางวัน' ? $sMessage .= "☀️ ": $sMessage .= "🌙 " ; 
 			$sMessage .= $rs->u_name."\n";
 		}
-	echo sendLine($sToken,$sMessage);
-
 	
+		http_response_code(200);
+		echo sendLine($sToken,$sMessage);
+
 	// $chOne = curl_init(); 
 	// curl_setopt( $chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify"); 
 	// curl_setopt( $chOne, CURLOPT_SSL_VERIFYHOST, 0); 

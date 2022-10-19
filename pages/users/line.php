@@ -23,9 +23,9 @@ require_once('../../server/authen.php');
             </div>
             <div class="page-content" id="usersLine" v-cloak>
                 <div class="row">
-                    <div class="col text-center">
-                       <a href="http://127.0.0.1/adminphp/server/service/line/sendline.php" target="_blank">http://127.0.0.1/adminphp/server/service/line/sendline.php</a> 
-
+                    <div class="col-12 text-center">
+                       <a :href="url_base+'/adminphp/server/service/line/sendline.php'" target="_blank">{{url_base}}/adminphp/server/service/line/sendline.php</a> 
+                        <button class="btn bth-success" @click="sendline">ส่ง line</button>
                     </div>
                 </div>
                 <section class="row">

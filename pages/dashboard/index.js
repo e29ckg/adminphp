@@ -1,7 +1,3 @@
-// const { info } = require("console");
-
-
-
 Vue.createApp({
   data() {
     return {
@@ -69,7 +65,6 @@ Vue.createApp({
   },
   mounted(){
     this.url_base = window.location.protocol + '//' + window.location.host;
-    this.url_base_app = window.location.protocol + '//' + window.location.host + '/venset/';
     this.ssid = localStorage.getItem("ss_uid")
     this.ven_month = new Date();
     this.get_vens()
@@ -92,9 +87,13 @@ Vue.createApp({
         height      : 1200,
         locale      : 'th',
         firstDay    : 1,
-        allDayContent : true,
+        // allDay      : true,
+        eventOrder  : true,
+        // allDayDefault : true,
+        // allDayContent : true,
         displayEventTime: false, 
         events      : this.datas,
+        eventColor  : '#378006',
         eventClick: (info)=> {
             // console.log(info.event.id +' '+info.event.title)
             // console.log(info.event.extendedProps)
