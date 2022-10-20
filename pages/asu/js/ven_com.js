@@ -139,6 +139,9 @@ Vue.createApp({
               this.ven_coms = response.data.respJSON;
               this.ven_coms_g = response.data.respJSON_G;
 
+          }else{
+            this.ven_coms   = []
+            this.ven_coms_g = []
           } 
       })
       .catch(function (error) {

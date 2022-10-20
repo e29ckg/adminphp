@@ -36,7 +36,7 @@ require_once('../../server/authen.php');
                                 <div class="card" v-for='cvg in ven_coms_g'>
                                     <div class="card-body" >
                                         
-                                        <table class="table">
+                                        <table class="table" v-if="ven_coms.length > 0">
                                             <thead>
                                                 <tr>
                                                     <th colspan="3" class="text-start">
@@ -111,11 +111,11 @@ require_once('../../server/authen.php');
                                         </div>                                        
                                     </div>
                                     <div class="row mb-3">
-                                        <div class="col ">
+                                        <!-- <div class="col ">
                                             <label for="ven_com_name" class="form-label">ชื่อเวรเต็ม</label>
                                             <input type="text" class="form-control" id="ven_com_name" v-model="vc_form.ven_com_name">
-                                        </div>
-                                        <div class="col-3 ">
+                                        </div> -->
+                                        <div class="col-12 ">
                                             <label for="ven_name" class="form-label">ชื่อเวร</label>
                                             <!-- <input type="text" class="form-control" id="ven_name" v-model="vc_form.ven_name"> -->
                                             <select class="form-select" aria-label="Default select example" v-model="vc_form.ven_name" >

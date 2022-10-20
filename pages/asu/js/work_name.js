@@ -16,7 +16,6 @@ Vue.createApp({
   },
   mounted(){
     this.url_base = window.location.protocol + '//' + window.location.host;
-    this.url_base_app = window.location.protocol + '//' + window.location.host + '/adminphp/';
     this.get_ven_names()
     this.get_ven_name_subs()
   },

@@ -50,7 +50,12 @@ require_once('../../server/authen.php');
                                             <tbody v-for="vns in ven_name_subs" >
                                                 <tr v-if="vn.id === vns.ven_name_id">
                                                     <th scope="row">{{vns.srt}}</th>
-                                                    <td :style="'background-color: '+vns.color+';'">{{vns.name}} ({{vns.price ? '💰'+vns.price : '' }}) {{vns.color ? vns.color : ''}} </td>
+                                                    <td :style="'background-color: '+vns.color+'; color:white;'" v-if="vns.color">
+                                                        {{vns.name}} ({{vns.price ? '💰'+vns.price : '' }}) {{vns.color ? vns.color : ''}} 
+                                                    </td>
+                                                    <td  v-else>
+                                                        {{vns.name}} ({{vns.price ? '💰'+vns.price : '' }}) {{vns.color ? vns.color : ''}} 
+                                                    </td>
                                                     <td class="text-center">
                                                         <button class="btn btn-danger btn-sm" @click="ven_name_s_del(vns.id)">ลบ</button>
                                                     </td>

@@ -81,12 +81,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }  
         if($act == 'delete'){
             $id     = $data->id;
-            $sql = "DELETE FROM ven_com WHERE id = $id";
-            $conn->exec($sql);
 
-            http_response_code(200);
-            echo json_encode(array('status' => true, 'message' => 'DEL ok'));
-            exit;                
+            $sql = "SELECT * FROM ven WHERE ven_com_idb=:id";
+            $query = $conn->prepare($sql);
+            $query->bindParam(':id',$id, PDO::PARAM_STR);
+            $query->execute();
+            $result = $query->fetchAll(PDO::FETCH_OBJ);
+
+            if($query->rowCount()){
+                http_response_code(200);
+                echo json_encode(array('status' => false, 'message' => 'ไม่สามารถลบได้'));
+                exit;   
+            }else{
+                $sql = "DELETE FROM ven_com WHERE id = $id";
+                $conn->exec($sql);
+                http_response_code(200);
+                echo json_encode(array('status' => true, 'message' => 'DEL ok'));
+                exit;                
+
+            }
+
         }  
         if($act == 'status'){
             $id     = $data->id;
