@@ -24,7 +24,7 @@ Vue.createApp({
   },
   methods: {
     get_ven_coms(){
-      this.isLoading = true
+      // this.isLoading = true
       axios.post('../../server/asu/get_ven_coms.php')
       .then(response => {
           if (response.data.status) {
@@ -42,7 +42,7 @@ Vue.createApp({
     },
 
     get_ven_all(){
-      this.isLoading = true
+      // this.isLoading = true
       axios.get('../../server/asu/report/reportK.php')
       .then(response => {
           // console.log(response.data.respJSON);
@@ -59,7 +59,7 @@ Vue.createApp({
     },
 
     print(vcid){
-      this.isLoading = true
+      // this.isLoading = true
       axios.post('../../server/asu/report/report.php',{vcid:vcid})    
           .then(response => {
               if (response.data.status) {
@@ -96,7 +96,7 @@ Vue.createApp({
           })
     },
 
-    con_f(){
+    con_f(ven_month){
       // console.log('test')
       Swal.fire({
         title: 'Are you sure?',
@@ -109,7 +109,7 @@ Vue.createApp({
       }).then((result) => {
         if (result.isConfirmed) {
           this.isLoading = true;
-          axios.post('../../server/asu/report/conf.php',{vc:this.vc})    
+          axios.post('../../server/asu/report/conf.php',{ven_month:ven_month})    
               .then(response => {
                   if (response.data.status) { 
                     this.alert('success',response.data.message,1000)

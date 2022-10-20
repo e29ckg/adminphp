@@ -39,7 +39,7 @@ require_once('../../server/authen.php');
                                                 <tr>
                                                     <th colspan="2" class="text-start">
                                                         เวรเดือน {{cvg.ven_month}} 
-                                                        <button type="button" class="btn btn-danger" :disabled='isLoading' @click="con_f()">
+                                                        <button type="button" class="btn btn-danger" :disabled='isLoading' @click="con_f(cvg.ven_month)">
                                                             {{isLoading ? 'Londing..': 'เผยแพร่'}}</button>
                                                     </th>
 

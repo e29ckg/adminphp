@@ -22,14 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(array('staus' => false, 'message' => 'ไม่มีสิทธิ์'));
         exit;
     }
-
-    if($data->vc){
-        $data = $data->vc;
-    }else{
-        http_response_code(200);
-        echo json_encode(array('staus' => false, 'message' => 'no-data'));
-        exit;
-    }    
+   
 
 $datas = array();
     // The request is using the POST method
@@ -51,16 +44,22 @@ $datas = array();
         // }
 
 
-        $ven_name = $data->ven_name;
-        $ven_com_date = $data->ven_com_date;
+        $ven_month = $data->ven_month;
         // $sql = "UPDATE ven SET status = 1 WHERE ven_name = '$data->ven_name' AND  ven_month = '$data->ven_month'";
-        $sql = "UPDATE ven SET status = 1 WHERE status = 2 AND ven_month = '$data->ven_month'";
+        $sql = "UPDATE ven SET status = 1 WHERE status = 2 AND ven_month = '$ven_month'";
         $query = $conn->prepare($sql);       
         $query->execute();   
 
-        http_response_code(200);
-        echo json_encode(array('status' => true, 'message' => 'สำเร็จ '));
-        exit;
+        if($query->rowCount()){
+            http_response_code(200);
+            echo json_encode(array('status' => true, 'message' => 'สำเร็จ '));
+            exit;
+        } else {
+            http_response_code(200);
+            echo json_encode(array('status' => false, 'message' => 'ไม่มีรายการ update'));
+            exit;
+        }
+
        
     }catch(PDOException $e){
         echo "Faild to connect to database" . $e->getMessage();
