@@ -58,7 +58,7 @@ require_once('../../server/authen.php');
                                                     
                                                     <td>
                                                         <p @click="view(d.uid)">
-                                                            <b><i class="bi bi-person-circle"></i> {{d.name}}</b>({{d.username}}) 
+                                                            <i class="bi bi-person-circle"></i> {{d.name}}</b>({{d.username}}) 
                                                             <span :class="'badge text-sm ' + (d.status == 10 ? 'bg-primary' : 'bg-danger')">{{d.status == 10 ? '(ปกติ)' : '(ระงับการใช้งาน)'}}</span>
                                                             <br><i class="bi bi-person-badge"></i> <span class="text-sm">{{d.dep}}</span> 
                                                         </p>

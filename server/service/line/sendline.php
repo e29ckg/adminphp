@@ -21,51 +21,52 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	$sToken = "";
 	$sMessage = "";
 
-	$sql = "SELECT * FROM line WHERE name = 'ven'";
+	$sql = "SELECT * FROM line WHERE name = 'ven' AND status=1";
 	$query = $conn->prepare($sql);
 	$query->execute();
 	$res = $query->fetch(PDO::FETCH_OBJ);
-	$sToken = $res->token;
-
-	$sMessage .= DateThai($date_now)."\n";
-
-	$sql = "SELECT v.*
-                FROM ven as v
-                WHERE v.ven_date = '$date_now' AND (v.status=1 OR v.status=2)
-				ORDER BY v.ven_time ASC";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $result = $query->fetchAll(PDO::FETCH_OBJ);
-
-		foreach($result as $rs){
-			$rs->DN == 'กลางวัน' ? $sMessage .= "☀️ ": $sMessage .= "🌙 " ; 
-			$sMessage .= $rs->u_name."\n";
-		}
 	
+	if($query->rowCount()){
+		$sToken = $res->token;
+		$sMessage .= DateThai($date_now)."\n";	
+		$sql = "SELECT v.*
+					FROM ven as v
+					WHERE v.ven_date = '$date_now' AND (v.status=1 OR v.status=2)
+					ORDER BY v.ven_time ASC";
+			$query = $conn->prepare($sql);
+			$query->execute();
+			$result = $query->fetchAll(PDO::FETCH_OBJ);
+	
+			foreach($result as $rs){
+				$rs->DN == 'กลางวัน' ? $sMessage .= "☀️ ": $sMessage .= "🌙 " ; 
+				$sMessage .= $rs->u_name."\n";
+			}
+		
+			http_response_code(200);
+			echo sendLine($sToken,$sMessage);
+
+	}else{
+		$sql = "SELECT * FROM line WHERE name = 'admin'";
+		$query = $conn->prepare($sql);
+		$query->execute();
+		$res = $query->fetch(PDO::FETCH_OBJ);
+		$sToken = $res->token;
+
+		$sMessage = 'ไม่สามารถแจ้งผ่านกลุ่ม ven ได้';
 		http_response_code(200);
 		echo sendLine($sToken,$sMessage);
+	}
+	    
+}    
 
-	// $chOne = curl_init(); 
-	// curl_setopt( $chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify"); 
-	// curl_setopt( $chOne, CURLOPT_SSL_VERIFYHOST, 0); 
-	// curl_setopt( $chOne, CURLOPT_SSL_VERIFYPEER, 0); 
-	// curl_setopt( $chOne, CURLOPT_POST, 1); 
-	// curl_setopt( $chOne, CURLOPT_POSTFIELDS, "message=".$sMessage); 
-	// $headers = array( 'Content-type: application/x-www-form-urlencoded', 'Authorization: Bearer '.$sToken.'', );
-	// curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers); 
-	// curl_setopt( $chOne, CURLOPT_RETURNTRANSFER, 1); 
-	// $result = curl_exec( $chOne ); 
-
-	// //Result error 
-	// if(curl_error($chOne)) 
-	// { 
-	// 	echo 'error:' . curl_error($chOne); 
-	// } 
-	// else { 
-	// 	$result_ = json_decode($result, true); 
-	// 	echo "status : ".$result_['status']; echo "message : ". $result_['message'];
-	// } 
-	// curl_close( $chOne ); 
-    
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	
+	$date_now = date("Y-m-d H:i:s");
+	$sToken 	= $data->token;
+	$sMessage 	= $data->message;
+	
+	http_response_code(200);
+	echo sendLine($sToken,$sMessage);
+	    
 }    
 ?>

@@ -180,8 +180,10 @@ Vue.createApp({
         this.get_lines()
       }
     },
-    sendline(){
-      axios.get('../../server/service/line/sendline.php')
+    line_send_test(token,message){
+      sms = 'ทดสอบ'
+      sms += "\n"+message
+      axios.post('../../server/service/line/sendline.php',{token:token, message:sms})
           .then(response => {
             console.log(response.status)
               if (response.status == 200){

@@ -25,7 +25,7 @@ require_once('../../server/authen.php');
                 <div class="row">
                     <div class="col-12 text-center">
                        <a :href="url_base+'/adminphp/server/service/line/sendline.php'" target="_blank">{{url_base}}/adminphp/server/service/line/sendline.php</a> 
-                        <button class="btn bth-success" @click="sendline">ส่ง line</button>
+                        
                     </div>
                 </div>
                 <section class="row">
@@ -64,7 +64,7 @@ require_once('../../server/authen.php');
                                                     
                                                     <td>
                                                         <p @click="view(d.id)">
-                                                            <i class="bi bi-person-circle me-1"></i> 
+                                                        <i class="bi bi-broadcast me-2"></i>
                                                             <b class="me-1"> {{d.name}} </b> 
                                                             <small :class="'badge text-sm ' + (d.status == 1 ? 'bg-primary' : 'bg-danger')">{{d.status == 1 ? '(ปกติ)' : '(ระงับการใช้งาน)'}}</small>
                                                             <br>token : {{d.token}}
@@ -82,6 +82,7 @@ require_once('../../server/authen.php');
                                                         </div>
                                                     </td>
                                                     <td>
+                                                        <button class="btn btn-primary btn-sm me-2 mb-1" @click="line_send_test(d.token,d.name)">ทดสอบ</button>    
                                                         <button class="btn btn-warning btn-sm me-2 mb-1" @click="line_update(d.id)">แก้ไข</button>    
                                                         <button class="btn btn-danger btn-sm me-2 mb-1" @click="line_del(d.id)">ลบ</button>    
                                                         
